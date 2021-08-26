@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import OrdersModule from '@modules/orders/orders.module';
+import Container from '@shared/container/container.module';
+import ClientsModule from '@modules/clients/clients.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -10,6 +14,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       cache: true,
     }),
     TypeOrmModule.forRoot(),
+    Container,
+    OrdersModule,
+    ClientsModule,
   ],
 })
 export class AppModule {}
