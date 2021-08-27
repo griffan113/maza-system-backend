@@ -37,8 +37,8 @@
 - company_name
 - cpf
 - cnpj
-- financial_contact
-- technician_contact
+- financial_contact_name
+- technician_contact_name
 - technician_contact_email
 - financial_contact_email
 - invoice_email
@@ -47,7 +47,7 @@
 ## Orders
 
 - id
-- number
+- order_number
 - status
 - client_id
 - client - ManyToOne = Clients
