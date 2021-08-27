@@ -42,21 +42,25 @@
 - technician_contact_email
 - financial_contact_email
 - invoice_email
+- orders - OneToMany = Orders
 
 ## Orders
 
 - id
 - number
 - status
-- client_id - OneToOne = Clients: id
+- client_id
+- client - ManyToOne = Clients
 - date
 - total_price
 - total_quantity
-- services_ids - OneToMany = Saw_Orders: id
+- saw_orders - OneToMany = Saw_Orders
 
 ## Saw_Orders
 
 - id
+- order_id
+- order - ManyToOne = Orders
 - price
 - description
 - saw_code
