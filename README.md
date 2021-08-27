@@ -10,7 +10,7 @@
 - The user should be able to list all orders
 - The user should be able to update an existing order
 - The user should be able to delete an order
-- The user should be able to filter all orders with CPF/CNPJ, name
+- The user should be able to filter all orders with CPF/CNPJ, name, etc
 
 **RNF**
 
