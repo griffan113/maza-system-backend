@@ -9,12 +9,12 @@ import UsersModule from '@modules/users/users.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
       cache: true,
     }),
-    TypeOrmModule.forRoot(),
     Container,
     OrdersModule,
     ClientsModule,

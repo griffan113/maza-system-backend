@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import Order from '@modules/orders/infra/typeorm/entities/Order';
+import Order from '@modules/orders/infra/typeorm/entities/Order.entity';
 
 @Entity('clients')
 class Client {
@@ -38,7 +38,10 @@ class Client {
   @Column()
   invoice_email: string;
 
-  @OneToMany(() => Order, (order) => order.client, { eager: true })
+  @OneToMany(() => Order, (order) => order.client, {
+    eager: true,
+    nullable: true,
+  })
   orders: Order[];
 
   @CreateDateColumn()

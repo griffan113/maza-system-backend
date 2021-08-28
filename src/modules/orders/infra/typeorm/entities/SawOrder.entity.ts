@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Order from './Order';
+import Order from './Order.entity';
 
 @Entity('saw_orders')
 class SawOrder {

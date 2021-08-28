@@ -9,9 +9,9 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Client from '@modules/clients/infra/typeorm/entities/Client';
+import Client from '@modules/clients/infra/typeorm/entities/Client.entity';
 import OrderStatusEnum from '@modules/orders/types/OrderStatusEnum';
-import SawOrder from './SawOrder';
+import SawOrder from './SawOrder.entity';
 
 @Entity('orders')
 class Order {
@@ -40,7 +40,10 @@ class Order {
   @Column()
   total_quantity: number;
 
-  @OneToMany(() => SawOrder, (saw_order) => saw_order.order, { eager: true })
+  @OneToMany(() => SawOrder, (saw_order) => saw_order.order, {
+    eager: true,
+    nullable: true,
+  })
   saw_orders: SawOrder[];
 
   @CreateDateColumn()
