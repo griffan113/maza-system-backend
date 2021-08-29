@@ -68,18 +68,10 @@
 - teeth_number
 - teeth_value
 
-<!-- # Routing
+# Routing
 
 ## Clients Controller:
 
-| Route/endpoint  | Job                         | Method |
-| --------------- | --------------------------- | ------ |
-| /clients        | Create a new client account | POST   |
-| /clients/avatar | Update user's avatar        | PATCH  |
-
-## Orders Controller:
-
-| Route/endpoint | Job                  | Method |
-| -------------- | -------------------- | ------ |
-| /orders        | Create new order     | POST   |
-| /orders/reset  | Change user password | POST   | -->
+| Route/endpoint | Job                         | Method |
+| -------------- | --------------------------- | ------ |
+| /clients       | Create a new client account | POST   |
