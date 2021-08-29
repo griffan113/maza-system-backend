@@ -5,8 +5,8 @@
   "username": "postgres",
   "password": "docker",
   "database": "maza",
-  "entities": ["src/**/*.entity.ts"],
-  "migrations": ["src/shared/infra/typeorm/migrations/*.ts"],
+  "entities": ["dist/**/*.entity.js"],
+  "migrations": ["dist/shared/infra/typeorm/migrations/*.js"],
   "cli": {
     "migrationsDir": "src/shared/infra/typeorm/migrations"
   }
