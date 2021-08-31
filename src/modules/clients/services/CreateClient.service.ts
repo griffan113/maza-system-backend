@@ -1,19 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 
 import CreateClientDTO from '../dtos/CreateClient.dto';
 import Client from '../infra/typeorm/entities/Client.entity';
-import ClientRepository from '../infra/typeorm/repositories/ClientRepository';
-
+import IClientRepository from '../repositories/IClientRepository';
 @Injectable()
 class CreateClientService {
   constructor(
-    @InjectRepository(ClientRepository)
-    private readonly clientRepository: ClientRepository
+    @Inject('ClientRepository')
+    private readonly clientRepository: IClientRepository
   ) {}
 
   public async execute(data: CreateClientDTO): Promise<Client> {
-    const client = this.clientRepository.create(data);
+    const client = await this.clientRepository.create(data);
     await this.clientRepository.save(client);
 
     return client;
