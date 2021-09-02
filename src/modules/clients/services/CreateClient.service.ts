@@ -12,7 +12,6 @@ class CreateClientService {
 
   public async execute(data: CreateClientDTO): Promise<Client> {
     const client = await this.clientRepository.create(data);
-    await this.clientRepository.save(client);
 
     return client;
   }

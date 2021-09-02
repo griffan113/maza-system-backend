@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common';
 
-@Module({})
+import BCryptHashProvider from './providers/HashProvider/implementations/BCryptHashProvider';
+
+@Module({
+  providers: [{ provide: 'BCryptHashProvider', useClass: BCryptHashProvider }],
+})
 class UsersModule {}
 export default UsersModule;
