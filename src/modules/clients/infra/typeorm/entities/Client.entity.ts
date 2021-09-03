@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import Order from '@modules/orders/infra/typeorm/entities/Order.entity';
+import { PersonType } from '@modules/clients/types/PersonTypeEnum';
 
 @Entity('clients')
 class Client {
@@ -22,6 +23,9 @@ class Client {
 
   @Column()
   cnpj?: string;
+
+  @Column({ nullable: false, enum: PersonType })
+  person_type: PersonType;
 
   @Column()
   financial_contact_name?: string;

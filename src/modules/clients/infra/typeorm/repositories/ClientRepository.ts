@@ -19,13 +19,6 @@ class ClientRepo implements IClientRepository {
     return client;
   }
 
-  public async findByEmail(email: string): Promise<Client | undefined> {
-    const user = await this.ormRepository.findOne({ invoice_email: email });
-    console.log('fafa');
-
-    return user;
-  }
-
   public async create(userData: CreateClientDTO): Promise<Client> {
     const user = this.ormRepository.create(userData);
 

@@ -14,12 +14,6 @@ class FakeClientRepository implements IClientRepository {
     return client;
   }
 
-  public async findByEmail(email: string): Promise<Client | undefined> {
-    const user = this.users.find((user) => user.invoice_email === email);
-
-    return user;
-  }
-
   public async create(userData: CreateClientDTO): Promise<Client> {
     const client = new Client();
 

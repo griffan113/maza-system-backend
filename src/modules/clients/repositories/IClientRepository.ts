@@ -3,7 +3,6 @@ import Client from '../infra/typeorm/entities/Client.entity';
 
 interface IClientRepository {
   findById: (id: string) => Promise<Client | undefined>;
-  findByEmail: (email: string) => Promise<Client | undefined>;
   create: (data: CreateClientDTO) => Promise<Client>;
   save: (client: Client) => Promise<Client>;
 }

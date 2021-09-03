@@ -1,16 +1,22 @@
 import {
   IsEmail,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
   Matches,
-  // ValidateIf,
 } from 'class-validator';
+import { PersonType } from '../types/PersonTypeEnum';
 
 class CreateClientDTO {
   @IsString()
   @IsNotEmpty()
   company_name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsIn([PersonType.LEGAL, PersonType.PHYSICAL])
+  person_type: PersonType;
 
   @IsOptional()
   @Matches(
