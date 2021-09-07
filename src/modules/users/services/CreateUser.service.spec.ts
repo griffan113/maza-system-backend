@@ -39,7 +39,7 @@ describe('CreateUser', () => {
     await expect(
       createUsersService.execute({
         name: 'John Tre',
-        email: 'johntre@gmail.com',
+        email: 'johndoe@gmail.com',
         password: '123456',
       })
     ).rejects.toBeInstanceOf(BadRequestException);

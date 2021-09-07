@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
 import CreateUserDTO from '../dtos/CreateUser.dto';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
@@ -34,15 +29,9 @@ class CreateUserService {
       password: hashedPassword,
     });
 
-    try {
-      await this.userRepository.save(user);
+    await this.userRepository.save(user);
 
-      return user;
-    } catch (error) {
-      throw new InternalServerErrorException(
-        'Error when trying to save user on database: ' + error
-      );
-    }
+    return user;
   }
 }
 

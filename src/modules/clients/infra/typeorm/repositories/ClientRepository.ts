@@ -7,7 +7,7 @@ import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-class ClientRepo implements IClientRepository {
+class TypeORMClientRepository implements IClientRepository {
   constructor(
     @InjectRepository(Client)
     private readonly ormRepository: Repository<Client>
@@ -15,6 +15,28 @@ class ClientRepo implements IClientRepository {
 
   public async findById(id: string): Promise<Client | undefined> {
     const client = await this.ormRepository.findOne(id);
+
+    return client;
+  }
+
+  public async findByCpf(cpf: string): Promise<Client | undefined> {
+    const client = await this.ormRepository.findOne({ where: { cpf } });
+
+    return client;
+  }
+
+  public async findByCnpj(cnpj: string): Promise<Client | undefined> {
+    const client = await this.ormRepository.findOne({ where: { cnpj } });
+
+    return client;
+  }
+
+  public async findByInvoiceEmail(
+    invoice_email: string
+  ): Promise<Client | undefined> {
+    const client = await this.ormRepository.findOne({
+      where: { invoice_email },
+    });
 
     return client;
   }
@@ -32,4 +54,4 @@ class ClientRepo implements IClientRepository {
   }
 }
 
-export default ClientRepo;
+export default TypeORMClientRepository;
