@@ -75,3 +75,15 @@
 | Route/endpoint | Job                         | Method |
 | -------------- | --------------------------- | ------ |
 | /clients       | Create a new client account | POST   |
+
+## Users Controller:
+
+| Route/endpoint | Job               | Method |
+| -------------- | ----------------- | ------ |
+| /users         | Create a new user | POST   |
+
+## Sessions Controller:
+
+| Route/endpoint | Job                  | Method |
+| -------------- | -------------------- | ------ |
+| /sessions      | Create a new session | POST   |

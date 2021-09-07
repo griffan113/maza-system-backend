@@ -21,7 +21,7 @@ class Order {
   @Column()
   order_number: number;
 
-  @Column()
+  @Column({ enum: OrderStatusEnum })
   status: OrderStatusEnum;
 
   @Column()
