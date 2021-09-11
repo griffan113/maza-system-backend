@@ -6,11 +6,6 @@ import IUserRepository from '../repositories/IUserRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import User from '../infra/typeorm/entities/User.entity';
 
-interface IResponse {
-  user: User;
-  token: string;
-}
-
 @Injectable()
 class AuthenticateUserService {
   constructor(
@@ -21,7 +16,10 @@ class AuthenticateUserService {
     private readonly hashProvider: FakeHashProvider
   ) {}
 
-  public async execute({ email, password }): Promise<IResponse> {
+  public async execute({ email, password }): Promise<{
+    user: User;
+    token: string;
+  }> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {

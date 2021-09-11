@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { verify } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
@@ -17,7 +22,7 @@ export class EnsureAuthenticated implements CanActivate {
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {
-      return false;
+      throw new ForbiddenException('JWT token missing.');
     }
 
     const [, token] = authHeader.split(' ');
@@ -34,7 +39,7 @@ export class EnsureAuthenticated implements CanActivate {
 
       return true;
     } catch {
-      return false;
+      throw new ForbiddenException('Invalid JWT token.');
     }
   }
 }

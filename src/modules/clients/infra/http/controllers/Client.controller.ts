@@ -1,10 +1,12 @@
-import { Body, Inject, ValidationPipe } from '@nestjs/common';
+import { Body, Get, Inject, UseGuards, ValidationPipe } from '@nestjs/common';
 import { Controller, Post } from '@nestjs/common';
 
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import CreateClientService from '@modules/clients/services/CreateClient.service';
 import Client from '../../typeorm/entities/Client.entity';
+import { EnsureAuthenticated } from '@modules/users/infra/http/guards/EnsureAuthenticated.guard';
 
+@UseGuards(EnsureAuthenticated)
 @Controller('/clients')
 class ClientsController {
   constructor(
@@ -22,6 +24,9 @@ class ClientsController {
 
     return createClient;
   }
+
+  @Get('/')
+  public async index() {}
 }
 
 export default ClientsController;

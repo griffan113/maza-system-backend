@@ -6,8 +6,11 @@ interface IClientRepository {
   findByCpf: (cpf: string) => Promise<Client | undefined>;
   findByCnpj: (cnpj: string) => Promise<Client | undefined>;
   findByInvoiceEmail: (invoice_email: string) => Promise<Client | undefined>;
+  findAllClients: () => Promise<Client[]>;
   create: (data: CreateClientDTO) => Promise<Client>;
   save: (client: Client) => Promise<Client>;
+  update: (client: Client) => Promise<Client>;
+  delete: (client: Client) => Promise<void>;
 }
 
 export default IClientRepository;

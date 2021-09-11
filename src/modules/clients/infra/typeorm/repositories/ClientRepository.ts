@@ -41,6 +41,10 @@ class TypeORMClientRepository implements IClientRepository {
     return client;
   }
 
+  public async findAllClients(): Promise<Client[]> {
+    return this.ormRepository.find();
+  }
+
   public async create(userData: CreateClientDTO): Promise<Client> {
     const user = this.ormRepository.create(userData);
 
@@ -51,6 +55,30 @@ class TypeORMClientRepository implements IClientRepository {
 
   public async save(client: Client): Promise<Client> {
     return this.ormRepository.save(client);
+  }
+
+  public async update(client: Client) {
+    const { id } = client;
+
+    let findClient = await this.findById(id);
+
+    if (findClient) {
+      findClient = client;
+
+      await this.save(findClient);
+
+      return findClient;
+    }
+  }
+
+  public async delete(client: Client) {
+    const { id } = client;
+
+    const findClient = await this.findById(id);
+
+    if (findClient) {
+      await this.ormRepository.delete(findClient);
+    }
   }
 }
 
