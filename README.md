@@ -74,6 +74,10 @@
 | Route/endpoint | Job                         | Method |
 | -------------- | --------------------------- | ------ |
 | /clients       | Create a new client account | POST   |
+| /clients       | List all clients            | GET    |
+| /clients/:id   | List client by id           | GET    |
+| /clients/:id   | Delete client               | DELETE |
+| /clients/:id   | Update client               | PUT    |
 
 ## Users Controller:
 
