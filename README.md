@@ -29,7 +29,6 @@
 - id
 - name
 - email
-- role
 
 ## Clients
 
