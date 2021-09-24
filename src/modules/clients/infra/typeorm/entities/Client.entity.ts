@@ -43,7 +43,6 @@ class Client {
   invoice_email: string;
 
   @OneToMany(() => Order, (order) => order.client, {
-    eager: true,
     nullable: true,
   })
   orders: Order[];

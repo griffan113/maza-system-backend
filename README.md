@@ -6,21 +6,21 @@
 
 **RF**
 
-- The user should be able to create a new order of service
-- The user should be able to list all orders
-- The user should be able to update an existing order
-- The user should be able to delete an order
-- The user should be able to filter all orders with CPF/CNPJ, name, etc
+- [ ] The user should be able to create a new order of service
+- [ ] The user should be able to list all orders
+- [ ] The user should be able to update an existing order
+- [ ] The user should be able to delete an order
+- [ ] The user should be able to filter all orders with CPF/CNPJ, name, etc
 
 **RNF**
 
-- The list of orders should be stored in cache
+- [ ] The list of orders should be stored in cache
 
 **RN**
 
-- The user cannot edit or delete an order that has not been created by him
-- A saw order can only have more than one quantity if the number of teeth is the same
-- After an order has been finished, it cannot be edited
+- [ ] The user cannot edit or delete an order that has not been created by him
+- [ ] A saw order can only have more than one quantity if the number of teeth is the same
+- [ ] After an order has been finished, it cannot be edited
 
 # Database Tables
 
