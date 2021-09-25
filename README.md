@@ -26,13 +26,13 @@
 
 ## Users
 
-- id
+- id PK
 - name
 - email
 
 ## Clients
 
-- id
+- id PK
 - company_name
 - cpf
 - cnpj
@@ -45,10 +45,10 @@
 
 ## Orders
 
-- id
+- id PK
 - order_number
 - status
-- client_id
+- client_id FK
 - client - ManyToOne = Clients
 - date
 - total_price
@@ -57,8 +57,8 @@
 
 ## Saw_Orders
 
-- id
-- order_id
+- id PK
+- order_id FK
 - order - ManyToOne = Orders
 - price
 - description

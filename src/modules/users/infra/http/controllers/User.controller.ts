@@ -1,15 +1,19 @@
-import CreateUserDTO from '@modules/users/dtos/CreateUser.dto';
-import CreateUserService from '@modules/users/services/CreateUser.service';
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Inject,
   Post,
   UseGuards,
+  UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
+
+import CreateUserDTO from '@modules/users/dtos/CreateUser.dto';
+import CreateUserService from '@modules/users/services/CreateUser.service';
 import { EnsureAuthenticated } from '../guards/EnsureAuthenticated.guard';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @UseGuards(EnsureAuthenticated)
 @Controller('users')
 class UsersController {

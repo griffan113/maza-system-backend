@@ -1,7 +1,17 @@
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Inject,
+  Post,
+  UseInterceptors,
+  ValidationPipe,
+} from '@nestjs/common';
+
 import CreateSessionDTO from '@modules/users/dtos/CreateSession.dto';
 import AuthenticateUserService from '@modules/users/services/AuthenticateUser.service';
-import { Body, Controller, Inject, Post, ValidationPipe } from '@nestjs/common';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('sessions')
 class SessionsController {
   constructor(
