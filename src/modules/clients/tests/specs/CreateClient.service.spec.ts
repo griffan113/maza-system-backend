@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
-import FakeClientRepository from '../repositories/fakes/FakeClientRepository';
-import { PersonType } from '../types/PersonTypeEnum';
-import CreateClientService from './CreateClient.service';
+import FakeClientRepository from '../fakeRepositories/FakeClientRepository';
+import { PersonType } from '../../types/PersonTypeEnum';
+import CreateClientService from '../../services/CreateClient.service';
 
 describe('CreateClientService', () => {
   let createClientService: CreateClientService;

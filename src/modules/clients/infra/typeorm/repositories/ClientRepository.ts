@@ -79,6 +79,8 @@ class TypeORMClientRepository implements IClientRepository {
     if (findClient) {
       await this.ormRepository.delete(findClient);
     }
+
+    return findClient;
   }
 }
 

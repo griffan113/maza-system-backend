@@ -10,7 +10,7 @@ interface IClientRepository {
   create: (data: CreateClientDTO) => Promise<Client>;
   save: (client: Client) => Promise<Client>;
   update: (client: Client) => Promise<Client>;
-  delete: (client: Client) => Promise<void>;
+  delete: (client: Client) => Promise<Client>;
 }
 
 export default IClientRepository;

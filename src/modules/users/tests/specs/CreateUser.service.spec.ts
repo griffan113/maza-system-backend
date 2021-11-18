@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import FakeUsersRepository from '../repositories/fakes/FakeUserRepository';
-import CreateUserService from './CreateUser.service';
+import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
+import FakeUsersRepository from '../fakeRepositories/FakeUserRepository';
+import CreateUserService from '../../services/CreateUser.service';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
