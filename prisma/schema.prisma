@@ -9,3 +9,69 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("users")
+}
+
+model Client {
+  id                       String   @id @default(uuid())
+  company_name             String
+  cpf                      String?  @unique
+  cnpj                     String?  @unique
+  financial_contact_name   String?
+  technician_contact_name  String?
+  technician_contact_email String?
+  financial_contact_email  String?
+  invoice_email            String?
+  orders                   Order[]
+  created_at               DateTime @default(now())
+  updated_at               DateTime @default(now())
+
+  @@map("clients")
+}
+
+enum OrderStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+}
+
+model Order {
+  id             String      @id @default(uuid())
+  order_number   Int
+  status         OrderStatus
+  client_id      String
+  client         Client      @relation(fields: [client_id], references: [id])
+  date           DateTime
+  total_price    Int
+  total_quantity Int
+  saw_orders     SawOrder[]
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @default(now())
+
+  @@map("orders")
+}
+
+model SawOrder {
+  id           String   @id @default(uuid())
+  price        Int
+  description  String
+  saw_code     String
+  quantity     Int
+  teeth_number Int
+  teeth_value  Float
+  order        Order    @relation(fields: [order_id], references: [id])
+  order_id     String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+
+  @@map("saw_orders")
+}
