@@ -7,7 +7,7 @@ import IUserRepository from '../repositories/IUserRepository';
 @Injectable()
 class CreateUserService {
   constructor(
-    @Inject('TypeOrmUserRepository')
+    @Inject('UserRepository')
     private readonly userRepository: IUserRepository,
 
     @Inject('HashProvider')
@@ -28,8 +28,6 @@ class CreateUserService {
       email,
       password: hashedPassword,
     });
-
-    await this.userRepository.save(user);
 
     return user;
   }

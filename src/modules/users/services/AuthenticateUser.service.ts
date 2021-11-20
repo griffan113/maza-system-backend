@@ -1,15 +1,15 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
+import { User } from '.prisma/client';
 
 import authConfig from '@config/auth';
 import IUserRepository from '../repositories/IUserRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import User from '../infra/typeorm/entities/User.entity';
 
 @Injectable()
 class AuthenticateUserService {
   constructor(
-    @Inject('TypeOrmUserRepository')
+    @Inject('UserRepository')
     private readonly usersRepository: IUserRepository,
 
     @Inject('HashProvider')

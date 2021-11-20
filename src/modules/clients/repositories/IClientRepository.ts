@@ -1,5 +1,6 @@
+import { Client } from '.prisma/client';
+
 import CreateClientDTO from '../dtos/CreateClient.dto';
-import Client from '../infra/typeorm/entities/Client.entity';
 
 interface IClientRepository {
   findById: (id: string) => Promise<Client | undefined>;
@@ -8,9 +9,8 @@ interface IClientRepository {
   findByInvoiceEmail: (invoice_email: string) => Promise<Client | undefined>;
   findAllClients: () => Promise<Client[]>;
   create: (data: CreateClientDTO) => Promise<Client>;
-  save: (client: Client) => Promise<Client>;
   update: (client: Client) => Promise<Client>;
-  delete: (client: Client) => Promise<void>;
+  delete: (id: string) => Promise<Client>;
 }
 
 export default IClientRepository;
