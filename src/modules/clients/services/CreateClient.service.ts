@@ -1,12 +1,13 @@
+import { Client } from '.prisma/client';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
 import CreateClientDTO from '../dtos/CreateClient.dto';
-import Client from '../infra/typeorm/entities/Client.entity';
 import IClientRepository from '../repositories/IClientRepository';
+
 @Injectable()
 class CreateClientService {
   constructor(
-    @Inject('TypeORMClientRepository')
+    @Inject('ClientRepository')
     private readonly clientRepository: IClientRepository
   ) {}
 

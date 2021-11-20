@@ -1,8 +1,9 @@
 import { v4 as uuid } from 'uuid';
+import { User } from '.prisma/client';
 
 import CreateUserDTO from '@modules/users/dtos/CreateUser.dto';
-import User from '../../infra/typeorm/entities/User.entity';
 import IUserRepository from '../../repositories/IUserRepository';
+import { FakeUser } from '../fakeEntities/FakeUser';
 
 class FakeUserRepository implements IUserRepository {
   private users: User[] = [];
@@ -20,7 +21,7 @@ class FakeUserRepository implements IUserRepository {
   }
 
   public async create(userData: CreateUserDTO): Promise<User> {
-    const user = new User();
+    const user = new FakeUser();
 
     // Pushes all passaded properties to the user passed in the first param
     Object.assign(user, { id: uuid() }, userData);

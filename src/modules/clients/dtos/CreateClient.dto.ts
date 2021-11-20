@@ -6,7 +6,7 @@ import {
   IsString,
   Matches,
 } from 'class-validator';
-import { PersonType } from '../types/PersonTypeEnum';
+import { PersonTypeEnum } from '../types/PersonType.enum';
 
 class CreateClientDTO {
   @IsString()
@@ -15,8 +15,8 @@ class CreateClientDTO {
 
   @IsString()
   @IsNotEmpty()
-  @IsIn([PersonType.LEGAL, PersonType.PHYSICAL])
-  person_type: PersonType;
+  @IsIn([PersonTypeEnum.LEGAL, PersonTypeEnum.PHYSICAL])
+  person_type: PersonTypeEnum;
 
   @IsOptional()
   @Matches(

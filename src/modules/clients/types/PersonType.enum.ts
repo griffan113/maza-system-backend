@@ -1,4 +1,4 @@
-export enum PersonType {
+export enum PersonTypeEnum {
   PHYSICAL = 'physical',
   LEGAL = 'legal',
 }

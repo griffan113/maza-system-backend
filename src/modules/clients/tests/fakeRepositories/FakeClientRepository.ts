@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid';
+import { Client } from '.prisma/client';
 
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
-import Client from '@modules/clients/infra/typeorm/entities/Client.entity';
-
 import IClientRepository from '../../repositories/IClientRepository';
+import { FakeClient } from '../fakeEntities/FakeClient';
 
 class FakeClientRepository implements IClientRepository {
   private clients: Client[] = [];
@@ -41,7 +41,7 @@ class FakeClientRepository implements IClientRepository {
   }
 
   public async create(clientData: CreateClientDTO): Promise<Client> {
-    const client = new Client();
+    const client = new FakeClient();
 
     // Pushes all passaded properties to the client passed in the first param
     Object.assign(client, { id: uuid() }, clientData);
@@ -71,10 +71,8 @@ class FakeClientRepository implements IClientRepository {
     return client;
   }
 
-  public async delete(client: Client): Promise<Client> {
-    const findIndex = this.clients.findIndex(
-      (findUser) => findUser.id === client.id
-    );
+  public async delete(id: string): Promise<Client> {
+    const findIndex = this.clients.findIndex((findUser) => findUser.id === id);
 
     const findClient = this.clients.find((_, index) => findIndex === index);
 
