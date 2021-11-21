@@ -1,0 +1,9 @@
+input CreateUserDTO {
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(createUserDTO: CreateUserDTO!): User
+}

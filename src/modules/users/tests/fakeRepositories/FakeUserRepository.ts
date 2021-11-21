@@ -20,6 +20,10 @@ class FakeUserRepository implements IUserRepository {
     return user;
   }
 
+  public async findAllUsers(): Promise<User[]> {
+    return this.users;
+  }
+
   public async create(userData: CreateUserDTO): Promise<User> {
     const user = new FakeUser();
 
@@ -31,7 +35,15 @@ class FakeUserRepository implements IUserRepository {
     return user;
   }
 
-  public async save(user: User): Promise<User> {
+  public async delete(id: string): Promise<User> {
+    const findIndex = this.users.findIndex((findUser) => findUser.id === id);
+
+    this.users.splice(findIndex, 1);
+
+    return this.users[findIndex];
+  }
+
+  public async update(user: User): Promise<User> {
     const findIndex = this.users.findIndex(
       (findUser) => findUser.id === user.id
     );
