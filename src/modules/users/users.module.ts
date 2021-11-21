@@ -8,17 +8,20 @@ import SessionsController from './infra/http/controllers/Sessions.controller';
 import UsersController from './infra/http/controllers/User.controller';
 import AuthenticateUserService from './services/AuthenticateUser.service';
 import UserRepository from './infra/prisma/repositories/UserRepository';
+import UserResolver from './infra/graphql/resolvers/User.resolver';
+import IndexUsersService from './services/IndexUsers.service';
 
 @Module({
   controllers: [UsersController, SessionsController],
   providers: [
     PrismaService,
+    UserResolver,
     { provide: 'UserRepository', useClass: UserRepository },
     { provide: 'HashProvider', useClass: BCryptHashProvider },
     { provide: 'EnsureAuthenticated', useClass: EnsureAuthenticated },
     { provide: 'CreateUserService', useClass: CreateUserService },
+    { provide: 'IndexUsersService', useClass: IndexUsersService },
     { provide: 'AuthenticateUserService', useClass: AuthenticateUserService },
   ],
 })
-class UsersModule {}
-export default UsersModule;
+export default class UsersModule {}
