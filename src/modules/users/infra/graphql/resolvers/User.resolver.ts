@@ -1,11 +1,13 @@
-import { Inject, ValidationPipe } from '@nestjs/common';
+import { Inject, UseGuards, ValidationPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { User } from '@shared/infra/graphql/graphql';
 import CreateUserDTO from '@modules/users/dtos/CreateUser.dto';
 import CreateUserService from '@modules/users/services/CreateUser.service';
 import IndexUsersService from '@modules/users/services/IndexUsers.service';
+import { EnsureAuthenticated } from '../guards/EnsureAuthenticated.guard';
 
+@UseGuards(EnsureAuthenticated)
 @Resolver(() => User)
 export default class UserResolver {
   constructor(
@@ -18,7 +20,7 @@ export default class UserResolver {
 
   @Mutation(() => User, { name: 'createUser' })
   public async create(
-    @Args('CreateUserDTO', ValidationPipe)
+    @Args('createUserDTO', ValidationPipe)
     createUserDTO: CreateUserDTO
   ) {
     const createUser = await this.createUserService.execute(createUserDTO);
