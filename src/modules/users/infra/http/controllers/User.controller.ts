@@ -9,7 +9,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 
-import CreateUserDTO from '@modules/users/dtos/CreateUser.dto';
+import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
 import CreateUserService from '@modules/users/services/CreateUser.service';
 import { EnsureAuthenticated } from '../guards/EnsureAuthenticated.guard';
 

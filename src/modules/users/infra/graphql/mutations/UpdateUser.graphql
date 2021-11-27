@@ -1,0 +1,11 @@
+input UpdateUserDTO {
+  user_id: String
+  name: String
+  email: String
+  password: String
+  old_password: String
+}
+
+type Mutation {
+  updateUser(updateUserDTO: UpdateUserDTO!): User
+}

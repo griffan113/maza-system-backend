@@ -1,47 +1,21 @@
 import { BadRequestException } from '@nestjs/common';
 
-import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
-import FakeUsersRepository from '../fakeRepositories/FakeUserRepository';
-import CreateUserService from '../../services/CreateUser.service';
-
-let fakeUsersRepository: FakeUsersRepository;
-let fakeHashProvider: FakeHashProvider;
-let createUsersService: CreateUserService;
+import { createUserData, mockCreateUserService } from '../mocks';
 
 describe('CreateUser', () => {
-  beforeEach(() => {
-    fakeUsersRepository = new FakeUsersRepository();
-    fakeHashProvider = new FakeHashProvider();
-
-    createUsersService = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider
-    );
-  });
-
   it('should be able to create a new user', async () => {
-    const user = await createUsersService.execute({
-      name: 'John Doe',
-      email: 'johndoe@gmail.com',
-      password: '123456',
-    });
+    const createUserService = mockCreateUserService();
+    const user = await createUserService.execute(createUserData({}));
 
     expect(user).toHaveProperty('id');
   });
 
-  it('should not be able to create a new user with a repeated email', async () => {
-    await createUsersService.execute({
-      name: 'John Doe',
-      email: 'johndoe@gmail.com',
-      password: '123456',
-    });
+  it('should not be able to create two users with the same email', async () => {
+    const createUserService = mockCreateUserService();
+    await createUserService.execute(createUserData({}));
 
     await expect(
-      createUsersService.execute({
-        name: 'John Tre',
-        email: 'johndoe@gmail.com',
-        password: '123456',
-      })
+      createUserService.execute(createUserData({}))
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 });

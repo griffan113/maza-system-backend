@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { User } from '.prisma/client';
 
-import CreateUserDTO from '@modules/users/dtos/CreateUser.dto';
+import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
 import IUserRepository from '../../repositories/IUserRepository';
 import { FakeUser } from '../fakeEntities/FakeUser';
 

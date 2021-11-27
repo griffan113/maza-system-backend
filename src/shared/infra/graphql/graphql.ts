@@ -13,8 +13,18 @@ export class CreateUserDTO {
     password: string;
 }
 
+export class UpdateUserDTO {
+    user_id?: Nullable<string>;
+    name?: Nullable<string>;
+    email?: Nullable<string>;
+    password?: Nullable<string>;
+    old_password?: Nullable<string>;
+}
+
 export abstract class IMutation {
     abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract updateUser(updateUserDTO: UpdateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IQuery {

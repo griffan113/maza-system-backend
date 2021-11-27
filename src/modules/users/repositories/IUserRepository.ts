@@ -1,6 +1,6 @@
 import { User } from '.prisma/client';
 
-import CreateUserDTO from '../dtos/CreateUser.dto';
+import CreateUserDTO from '../dtos/CreateUserDTO';
 
 interface IUserRepository {
   findById(id: string): Promise<User | undefined>;

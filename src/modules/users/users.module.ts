@@ -10,6 +10,7 @@ import AuthenticateUserService from './services/AuthenticateUser.service';
 import UserRepository from './infra/prisma/repositories/UserRepository';
 import UserResolver from './infra/graphql/resolvers/User.resolver';
 import IndexUsersService from './services/IndexUsers.service';
+import UpdateUserService from './services/UpdateUser.service';
 
 @Module({
   controllers: [UsersController, SessionsController],
@@ -22,6 +23,7 @@ import IndexUsersService from './services/IndexUsers.service';
     { provide: 'CreateUserService', useClass: CreateUserService },
     { provide: 'IndexUsersService', useClass: IndexUsersService },
     { provide: 'AuthenticateUserService', useClass: AuthenticateUserService },
+    { provide: 'UpdateUserService', useClass: UpdateUserService },
   ],
 })
 export default class UsersModule {}

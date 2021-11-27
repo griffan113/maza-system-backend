@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
-import CreateUserDTO from '../dtos/CreateUser.dto';
+import CreateUserDTO from '../dtos/CreateUserDTO';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IUserRepository from '../repositories/IUserRepository';
 

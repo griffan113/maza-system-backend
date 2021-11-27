@@ -8,7 +8,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 
-import CreateSessionDTO from '@modules/users/dtos/CreateSession.dto';
+import CreateSessionDTO from '@modules/users/dtos/CreateSessionDTO';
 import AuthenticateUserService from '@modules/users/services/AuthenticateUser.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
