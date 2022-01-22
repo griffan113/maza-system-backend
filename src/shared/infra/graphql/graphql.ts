@@ -24,6 +24,8 @@ export class UpdateUserDTO {
 export abstract class IMutation {
     abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 
+    abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
+
     abstract updateUser(updateUserDTO: UpdateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 }
 

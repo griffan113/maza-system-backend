@@ -29,7 +29,10 @@ export class EnsureAuthenticated implements CanActivate {
     const [, token] = authHeader.split(' ');
 
     try {
-      const decoded = verify(token, authConfig.jwt.secret);
+      console.log('a');
+
+      const decoded = verify(token, authConfig.jwt.secret, {});
+      console.log(decoded);
 
       const { sub } = decoded as TokenPayload;
 

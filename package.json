@@ -1,9 +1,9 @@
 {
-  "name": "api-maza-system",
+  "name": "maza-system-backend",
   "version": "0.0.1",
   "description": "Maza's API Packing System",
-  "author": "eliel <elielgaspar.xyz>",
-  "private": true,
+  "author": "Eliel<elielgaspar.xyz>",
+  "private": false,
   "license": "MIT",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

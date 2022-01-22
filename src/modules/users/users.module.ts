@@ -11,6 +11,7 @@ import UserRepository from './infra/prisma/repositories/UserRepository';
 import UserResolver from './infra/graphql/resolvers/User.resolver';
 import IndexUsersService from './services/IndexUsers.service';
 import UpdateUserService from './services/UpdateUser.service';
+import DeleteUserService from './services/DeleteUser.service';
 
 @Module({
   controllers: [UsersController, SessionsController],
@@ -24,6 +25,7 @@ import UpdateUserService from './services/UpdateUser.service';
     { provide: 'IndexUsersService', useClass: IndexUsersService },
     { provide: 'AuthenticateUserService', useClass: AuthenticateUserService },
     { provide: 'UpdateUserService', useClass: UpdateUserService },
+    { provide: 'DeleteUserService', useClass: DeleteUserService },
   ],
 })
 export default class UsersModule {}
