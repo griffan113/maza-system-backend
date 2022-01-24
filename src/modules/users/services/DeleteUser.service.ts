@@ -4,6 +4,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import IUserRepository from '../repositories/IUserRepository';
 
 interface IRequest {
+  currentUserId: string;
   id: string;
 }
 
@@ -14,8 +15,8 @@ export default class DeleteUserService {
     private userRepository: IUserRepository
   ) {}
 
-  public async execute(currentUser: User, { id }: IRequest): Promise<User> {
-    if (currentUser.id === id)
+  public async execute({ id, currentUserId }: IRequest): Promise<User> {
+    if (currentUserId === id)
       throw new NotFoundException('Você não pode se deletar!');
 
     const findUser = await this.userRepository.findById(id);

@@ -1,9 +1,4 @@
-import {
-  Inject,
-  ParseUUIDPipe,
-  UseGuards,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Inject, ParseUUIDPipe, ValidationPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { User } from '@shared/infra/graphql/graphql';
@@ -13,9 +8,10 @@ import IndexUsersService from '@modules/users/services/IndexUsers.service';
 import UpdateUserDTO from '@modules/users/dtos/UpdateUserDTO';
 import UpdateUserService from '@modules/users/services/UpdateUser.service';
 import DeleteUserService from '@modules/users/services/DeleteUser.service';
-import { EnsureAuthenticated } from '../guards/EnsureAuthenticated.guard';
+import { CurrentUserId } from '../decorators/CurrentUserId.decorator';
+import { SetPrivateRoute } from '../decorators/SetPrivateRoute.decorator';
 
-@UseGuards(EnsureAuthenticated)
+@SetPrivateRoute()
 @Resolver(() => User)
 export default class UserResolver {
   constructor(
@@ -59,13 +55,17 @@ export default class UserResolver {
     return updateUser;
   }
 
-  /*   @Mutation(() => User, { name: 'deleteUser' })
+  @Mutation(() => User, { name: 'deleteUser' })
   public async delete(
+    @CurrentUserId() currentUserId: string,
     @Args('id', ParseUUIDPipe)
     id: string
   ) {
-    const deleteUser = await this.deleteUserService.execute({ id });
+    const deleteUser = await this.deleteUserService.execute({
+      id,
+      currentUserId,
+    });
 
     return deleteUser;
-  } */
+  }
 }

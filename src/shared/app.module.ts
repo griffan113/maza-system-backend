@@ -1,3 +1,4 @@
+import { GraphQLModule } from '@nestjs/graphql';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
@@ -7,7 +8,6 @@ import Container from '@shared/container/container.module';
 import ClientsModule from '@modules/clients/clients.module';
 import UsersModule from '@modules/users/users.module';
 import { PrismaService } from '@shared/services/Prisma.service';
-import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
   imports: [
