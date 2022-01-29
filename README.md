@@ -2,15 +2,15 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
-# Orders
-
 **RF**
 
 - [ ] The user should be able to create a new order of service
 - [ ] The user should be able to list all orders
 - [ ] The user should be able to update an existing order
 - [ ] The user should be able to delete an order
-- [ ] The user should be able to filter all orders with CPF/CNPJ, name, etc
+- [ ] The user should be able to filter all orders.
+- [ ] The CPF or CNPJ must be valid
+- [ ] The user should be able to choose if the type of person is legal or physical
 
 **RNF**
 
@@ -68,22 +68,6 @@
 - teeth_value
 
 # Routing
-
-## Clients Controller:
-
-| Route/endpoint | Job                         | Method |
-| -------------- | --------------------------- | ------ |
-| /clients       | Create a new client account | POST   |
-| /clients       | List all clients            | GET    |
-| /clients/:id   | List client by id           | GET    |
-| /clients/:id   | Delete client               | DELETE |
-| /clients/:id   | Update client               | PUT    |
-
-## Users Controller:
-
-| Route/endpoint | Job               | Method |
-| -------------- | ----------------- | ------ |
-| /users         | Create a new user | POST   |
 
 ## Sessions Controller:
 
