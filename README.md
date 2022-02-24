@@ -1,6 +1,10 @@
+# Maza System Backend
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
+
+![ci](https://github.com/griffan113/maza-system-backend/actions/workflows/jest.yml/badge.svg)
 
 **RF**
 
