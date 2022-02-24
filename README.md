@@ -5,6 +5,7 @@
 </p>
 
 ![ci](https://github.com/griffan113/maza-system-backend/actions/workflows/jest.yml/badge.svg)
+[![codecov](https://codecov.io/gh/griffan113/maza-system-backend/branch/master/graph/badge.svg?token=5AYT7LNEIF)](https://codecov.io/gh/griffan113/maza-system-backend)
 
 **RF**
 
