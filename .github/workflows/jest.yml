@@ -1,6 +1,6 @@
 name: Jest CI
 
-push:
+on:
   push:
     branches:
       - main
