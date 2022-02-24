@@ -28,5 +28,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install
-      - run: yarn test
+
+      - name: "Install packages"
+          run: yarn install
+      - name: Run tests
+          run: yarn test -- --coverage
+      - name: Run CodeCov script
+        run: bash <(curl -s https://codecov.io/bash)
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
