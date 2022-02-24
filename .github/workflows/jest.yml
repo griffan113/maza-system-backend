@@ -28,10 +28,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: "Install packages"
-          run: yarn install
+      - name: 'Install packages'
+        run: yarn install
       - name: Run tests
-          run: yarn test -- --coverage
+        run: yarn test -- --coverage
       - name: Run CodeCov script
         run: bash <(curl -s https://codecov.io/bash)
         env:
