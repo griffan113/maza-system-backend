@@ -32,10 +32,6 @@ jobs:
         run: yarn install
       - name: Run tests
         run: yarn test -- --coverage
-      - name: Run CodeCov script
-        run: bash <(curl -s https://codecov.io/bash)
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
