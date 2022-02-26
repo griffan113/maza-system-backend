@@ -8,8 +8,9 @@ import IndexUsersService from '@modules/users/services/IndexUsers.service';
 import UpdateUserDTO from '@modules/users/dtos/UpdateUserDTO';
 import UpdateUserService from '@modules/users/services/UpdateUser.service';
 import DeleteUserService from '@modules/users/services/DeleteUser.service';
-import { CurrentUserId } from '../decorators/CurrentUserId.decorator';
-import { SetPrivateRoute } from '../decorators/SetPrivateRoute.decorator';
+import { CurrentUserId } from '@modules/users/infra/graphql/decorators/CurrentUserId.decorator';
+import { SetPrivateRoute } from '@modules/users/infra/graphql/decorators/SetPrivateRoute.decorator';
+import ShowUserService from '@modules/users/services/ShowUser.service';
 
 @SetPrivateRoute()
 @Resolver(() => User)
@@ -25,7 +26,10 @@ export default class UserResolver {
     private readonly updateUserService: UpdateUserService,
 
     @Inject('DeleteUserService')
-    private readonly deleteUserService: DeleteUserService
+    private readonly deleteUserService: DeleteUserService,
+
+    @Inject('ShowUserService')
+    private readonly showUserService: ShowUserService
   ) {}
 
   @Mutation(() => User, { name: 'createUser' })
@@ -43,6 +47,16 @@ export default class UserResolver {
     const indexUsers = await this.indexUsersService.execute();
 
     return indexUsers;
+  }
+
+  @Query(() => User, { name: 'showUser' })
+  public async show(
+    @Args('user_id', ParseUUIDPipe)
+    user_id: string
+  ) {
+    const showUser = await this.showUserService.execute({ user_id });
+
+    return showUser;
   }
 
   @Mutation(() => User, { name: 'updateUser' })

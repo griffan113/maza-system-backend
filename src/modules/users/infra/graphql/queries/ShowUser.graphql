@@ -1,0 +1,3 @@
+type Query {
+  showUser(user_id: String!): User
+}
