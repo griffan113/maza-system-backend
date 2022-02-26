@@ -44,8 +44,6 @@ export class EnsureAuthenticated implements CanActivate {
     const [, token] = authHeader.split(' ');
 
     try {
-      console.log('a');
-
       const decoded = verify(token, authConfig.jwt.secret, {});
       console.log(decoded);
 

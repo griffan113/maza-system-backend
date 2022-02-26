@@ -5,7 +5,6 @@ import { EnsureAuthenticated } from './infra/http/guards/EnsureAuthenticated.gua
 import BCryptHashProvider from './providers/HashProvider/implementations/BCryptHashProvider';
 import CreateUserService from './services/CreateUser.service';
 import SessionsController from './infra/http/controllers/Sessions.controller';
-import UsersController from './infra/http/controllers/User.controller';
 import AuthenticateUserService from './services/AuthenticateUser.service';
 import UserRepository from './infra/prisma/repositories/UserRepository';
 import UserResolver from './infra/graphql/resolvers/User.resolver';
@@ -14,7 +13,7 @@ import UpdateUserService from './services/UpdateUser.service';
 import DeleteUserService from './services/DeleteUser.service';
 
 @Module({
-  controllers: [UsersController, SessionsController],
+  controllers: [SessionsController],
   providers: [
     PrismaService,
     UserResolver,
