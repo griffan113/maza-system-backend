@@ -31,6 +31,8 @@ export abstract class IMutation {
 
 export abstract class IQuery {
     abstract indexUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+
+    abstract showUser(user_id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class User {

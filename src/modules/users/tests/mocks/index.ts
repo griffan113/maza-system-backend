@@ -4,8 +4,9 @@ import AuthenticateUserService from '@modules/users/services/AuthenticateUser.se
 import CreateUserService from '@modules/users/services/CreateUser.service';
 import IndexUsersService from '@modules/users/services/IndexUsers.service';
 import UpdateUserService from '@modules/users/services/UpdateUser.service';
-import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
+import DeleteUserService from '@modules/users/services/DeleteUser.service';
+import ShowUserService from '@modules/users/services/ShowUser.service';
 
 interface ICreateUserData {
   email?: string;
@@ -48,6 +49,18 @@ export const mockUpdateUserService = () => {
   );
 
   return { fakeUserRepository, updateUserService, fakeHashProvider };
+};
+
+export const mockDeleteUserService = () => {
+  const fakeUserRepository = new FakeUserRepository();
+  const deleteUserService = new DeleteUserService(fakeUserRepository);
+  return { fakeUserRepository, deleteUserService };
+};
+
+export const mockShowUserService = () => {
+  const fakeUserRepository = new FakeUserRepository();
+  const showUserService = new ShowUserService(fakeUserRepository);
+  return { showUserService, fakeUserRepository };
 };
 
 export const createUserData = ({ email, name, password }: ICreateUserData) => ({
