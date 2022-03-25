@@ -21,18 +21,34 @@ export class UpdateUserDTO {
     old_password?: Nullable<string>;
 }
 
+export abstract class IQuery {
+    abstract indexClients(): Nullable<Nullable<Client>[]> | Promise<Nullable<Nullable<Client>[]>>;
+
+    abstract indexUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+
+    abstract showUser(user_id: string): Nullable<User> | Promise<Nullable<User>>;
+}
+
+export class Client {
+    id: string;
+    cnpj: string;
+    company_name: string;
+    cpf: string;
+    financial_contact_email: string;
+    financial_contact_name: string;
+    invoice_email: string;
+    technician_contact_email: string;
+    technician_contact_name: string;
+    created_at: Date;
+    updated_at: Date;
+}
+
 export abstract class IMutation {
     abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 
     abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
 
     abstract updateUser(updateUserDTO: UpdateUserDTO): Nullable<User> | Promise<Nullable<User>>;
-}
-
-export abstract class IQuery {
-    abstract indexUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-
-    abstract showUser(user_id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class User {

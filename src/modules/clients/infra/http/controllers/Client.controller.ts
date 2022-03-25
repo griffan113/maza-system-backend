@@ -24,9 +24,6 @@ class ClientsController {
 
     return createClient;
   }
-
-  @Get('/')
-  public async index() {}
 }
 
 export default ClientsController;

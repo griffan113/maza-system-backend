@@ -1,0 +1,15 @@
+scalar Date
+
+type Client {
+  id: String!
+  cnpj: String!
+  company_name: String!
+  cpf: String!
+  financial_contact_email: String!
+  financial_contact_name: String!
+  invoice_email: String!
+  technician_contact_email: String!
+  technician_contact_name: String!
+  created_at: Date!
+  updated_at: Date!
+}
