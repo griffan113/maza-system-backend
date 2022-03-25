@@ -7,6 +7,18 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class CreateClientDTO {
+    cnpj?: Nullable<string>;
+    person_type: string;
+    company_name: string;
+    cpf?: Nullable<string>;
+    financial_contact_email?: Nullable<string>;
+    financial_contact_name?: Nullable<string>;
+    invoice_email?: Nullable<string>;
+    technician_contact_email?: Nullable<string>;
+    technician_contact_name?: Nullable<string>;
+}
+
 export class CreateUserDTO {
     name: string;
     email: string;
@@ -21,6 +33,16 @@ export class UpdateUserDTO {
     old_password?: Nullable<string>;
 }
 
+export abstract class IMutation {
+    abstract createClient(createClientDTO: CreateClientDTO): Nullable<Client> | Promise<Nullable<Client>>;
+
+    abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract updateUser(updateUserDTO: UpdateUserDTO): Nullable<User> | Promise<Nullable<User>>;
+}
+
 export abstract class IQuery {
     abstract indexClients(): Nullable<Nullable<Client>[]> | Promise<Nullable<Nullable<Client>[]>>;
 
@@ -31,24 +53,16 @@ export abstract class IQuery {
 
 export class Client {
     id: string;
-    cnpj: string;
+    cnpj?: Nullable<string>;
     company_name: string;
-    cpf: string;
-    financial_contact_email: string;
-    financial_contact_name: string;
-    invoice_email: string;
-    technician_contact_email: string;
-    technician_contact_name: string;
+    cpf?: Nullable<string>;
+    financial_contact_email?: Nullable<string>;
+    financial_contact_name?: Nullable<string>;
+    invoice_email?: Nullable<string>;
+    technician_contact_email?: Nullable<string>;
+    technician_contact_name?: Nullable<string>;
     created_at: Date;
     updated_at: Date;
-}
-
-export abstract class IMutation {
-    abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract updateUser(updateUserDTO: UpdateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class User {
