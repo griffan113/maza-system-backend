@@ -1,16 +1,14 @@
-name: Jest CI
+name: Jest Development
 
 on:
   push:
     branches:
-      - main
       - development
       - feat/*
       - refactor/*
       - test/*
   pull_request:
     branches:
-      - main
       - development
 
 jobs:
