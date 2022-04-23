@@ -1,8 +1,8 @@
 import { Client } from '.prisma/client';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
-import CreateClientDTO from '../dtos/CreateClient.dto';
-import IClientRepository from '../repositories/IClientRepository';
+import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
+import IClientRepository from '@modules/clients/repositories/IClientRepository';
 
 @Injectable()
 class CreateClientService {
@@ -14,27 +14,35 @@ class CreateClientService {
   public async execute(data: CreateClientDTO): Promise<Client> {
     const { cpf, cnpj, invoice_email, person_type } = data;
 
-    if (person_type === 'legal' && !cnpj) {
-      throw new BadRequestException('CNPJ is required for legal person type.');
+    if (person_type === 'LEGAL' && !cnpj) {
+      throw new BadRequestException(
+        'É necessário informar um CNPJ para uma pessoa jurídica'
+      );
     }
 
-    if (person_type === 'physical' && !cpf) {
-      throw new BadRequestException('CPF is required for legal person type.');
+    if (person_type === 'PHYSICAL' && !cpf) {
+      throw new BadRequestException(
+        'É necessário informar um CPF para uma pessoa física.'
+      );
     }
 
-    const isCpfAlreadyUsed = await this.clientRepository.findByCpf(cpf);
+    if (cpf) {
+      const isCpfAlreadyUsed = await this.clientRepository.findByCpf(cpf);
 
-    if (isCpfAlreadyUsed) throw new BadRequestException('CPF already used.');
+      if (isCpfAlreadyUsed) throw new BadRequestException('CPF já usado.');
+    }
 
-    const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(cnpj);
+    if (cnpj) {
+      const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(cnpj);
 
-    if (isCnpjAlreadyUsed) throw new BadRequestException('CNPJ already used.');
+      if (isCnpjAlreadyUsed) throw new BadRequestException('CNPJ já usado.');
+    }
 
     const isInvoiceEmailAlreadyUsed =
       await this.clientRepository.findByInvoiceEmail(invoice_email);
 
     if (isInvoiceEmailAlreadyUsed)
-      throw new BadRequestException('Invoice email already used.');
+      throw new BadRequestException('E-mail da nota fiscal já usado.');
 
     const client = await this.clientRepository.create(data);
 

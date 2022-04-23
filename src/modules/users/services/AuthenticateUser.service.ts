@@ -23,7 +23,7 @@ class AuthenticateUserService {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new BadRequestException('Incorrect email/password combination.');
+      throw new BadRequestException('Credenciais incorretas.');
     }
 
     const passwordMatched = await this.hashProvider.compareHash(
@@ -32,7 +32,7 @@ class AuthenticateUserService {
     );
 
     if (!passwordMatched) {
-      throw new BadRequestException('Incorrect email/password combination.');
+      throw new BadRequestException('Credenciais incorretas.');
     }
 
     const token = sign({}, authConfig.jwt.secret, {

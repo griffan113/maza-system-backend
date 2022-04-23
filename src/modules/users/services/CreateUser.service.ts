@@ -19,7 +19,7 @@ class CreateUserService {
 
     const checkUserExists = await this.userRepository.findByEmail(email);
 
-    if (checkUserExists) throw new BadRequestException('Email already used');
+    if (checkUserExists) throw new BadRequestException('E-mail já usado.');
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 

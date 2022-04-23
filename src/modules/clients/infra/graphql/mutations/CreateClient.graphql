@@ -1,13 +1,13 @@
 input CreateClientDTO {
   cnpj: String
+  cpf: String
   person_type: String!
   company_name: String!
-  cpf: String
   financial_contact_email: String
   financial_contact_name: String
-  invoice_email: String
   technician_contact_email: String
   technician_contact_name: String
+  invoice_email: String
 }
 
 type Mutation {

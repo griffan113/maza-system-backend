@@ -1,0 +1,3 @@
+type Query {
+  showClient(client_id: String!): Client
+}

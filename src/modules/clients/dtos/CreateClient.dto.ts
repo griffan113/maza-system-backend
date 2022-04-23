@@ -4,9 +4,11 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  Matches,
 } from 'class-validator';
-import { PersonTypeEnum } from '../types/PersonType.enum';
+
+import IsCNPJ from '@modules/clients/providers/DocumentValidatorProvider/decorators/IsCNPJ.decorator';
+import IsCPF from '@modules/clients/providers/DocumentValidatorProvider/decorators/IsCPF.decorator';
+import { PersonTypeEnum } from '@modules/clients/types/PersonType.enum';
 
 class CreateClientDTO {
   @IsString()
@@ -19,16 +21,11 @@ class CreateClientDTO {
   person_type: PersonTypeEnum;
 
   @IsOptional()
-  @Matches(
-    /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/g
-  )
-  // @ValidateIf((o) => isEmpty(o.cnpj), {})
+  @IsCPF({ message: 'CPF inválido.' })
   cpf?: string;
 
   @IsOptional()
-  @Matches(
-    /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/g
-  )
+  @IsCNPJ({ message: 'CNPJ inválido.' })
   cnpj?: string;
 
   @IsOptional()
@@ -47,6 +44,7 @@ class CreateClientDTO {
   @IsEmail()
   technician_contact_email?: string;
 
+  @IsOptional()
   @IsEmail()
   invoice_email: string;
 }

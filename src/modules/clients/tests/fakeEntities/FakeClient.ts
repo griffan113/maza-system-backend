@@ -1,8 +1,9 @@
-import { Client } from '.prisma/client';
+import { Client, PersonType } from '.prisma/client';
 
 export class FakeClient implements Client {
   id: string;
   cnpj: string;
+  person_type: PersonType;
   company_name: string;
   cpf: string;
   financial_contact_email: string;

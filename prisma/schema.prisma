@@ -21,19 +21,25 @@ model User {
   @@map("users")
 }
 
+enum PersonType {
+  PHYSICAL
+  LEGAL
+}
+
 model Client {
-  id                       String   @id @default(uuid())
+  id                       String     @id @default(uuid())
   company_name             String
-  cpf                      String?  @unique
-  cnpj                     String?  @unique
+  person_type              PersonType
+  cpf                      String?    @unique
+  cnpj                     String?    @unique
   financial_contact_name   String?
   technician_contact_name  String?
   technician_contact_email String?
   financial_contact_email  String?
   invoice_email            String?
   orders                   Order[]
-  created_at               DateTime @default(now())
-  updated_at               DateTime @default(now())
+  created_at               DateTime   @default(now())
+  updated_at               DateTime   @default(now())
 
   @@map("clients")
 }

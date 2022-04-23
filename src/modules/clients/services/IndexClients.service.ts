@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Client } from '@prisma/client';
 
-import IClientRepository from '../repositories/IClientRepository';
+import IClientRepository from '@modules/clients/repositories/IClientRepository';
 @Injectable()
 export default class IndexClientsService {
   constructor(

@@ -9,14 +9,14 @@
 /* eslint-disable */
 export class CreateClientDTO {
     cnpj?: Nullable<string>;
+    cpf?: Nullable<string>;
     person_type: string;
     company_name: string;
-    cpf?: Nullable<string>;
     financial_contact_email?: Nullable<string>;
     financial_contact_name?: Nullable<string>;
-    invoice_email?: Nullable<string>;
     technician_contact_email?: Nullable<string>;
     technician_contact_name?: Nullable<string>;
+    invoice_email?: Nullable<string>;
 }
 
 export class CreateUserDTO {
@@ -45,6 +45,8 @@ export abstract class IMutation {
 
 export abstract class IQuery {
     abstract indexClients(): Nullable<Nullable<Client>[]> | Promise<Nullable<Nullable<Client>[]>>;
+
+    abstract showClient(client_id: string): Nullable<Client> | Promise<Nullable<Client>>;
 
     abstract indexUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 

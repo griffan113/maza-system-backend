@@ -1,5 +1,6 @@
-import { GraphQLModule } from '@nestjs/graphql';
 import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 
@@ -11,7 +12,8 @@ import { PrismaService } from '@shared/services/Prisma.service';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
       playground: true,
       definitions: {
         path: join(process.cwd(), 'src/shared/infra/graphql/graphql.ts'),
