@@ -4,7 +4,7 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
-![ci](https://github.com/griffan113/maza-system-backend/actions/workflows/jest.yml/badge.svg)
+![ci](https://github.com/griffan113/maza-system-backend/actions/workflows/jest_development.yml/badge.svg)
 [![codecov](https://codecov.io/gh/griffan113/maza-system-backend/branch/master/graph/badge.svg?token=5AYT7LNEIF)](https://codecov.io/gh/griffan113/maza-system-backend)
 
 **RF**
