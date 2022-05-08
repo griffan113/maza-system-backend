@@ -8,6 +8,7 @@ const userData: Prisma.UserCreateInput[] = [
     name: 'Administrador',
     email: 'mazaafiacao@gmail.com',
     password: '',
+    is_admin: true,
   },
 ];
 

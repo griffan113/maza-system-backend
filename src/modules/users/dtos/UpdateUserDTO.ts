@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsOptional,
@@ -26,6 +27,10 @@ class UpdateUserDTO {
   @IsOptional()
   @IsString()
   old_password?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  is_admin?: boolean;
 }
 
 export default UpdateUserDTO;

@@ -10,7 +10,9 @@ import {
 
 import CreateSessionDTO from '@modules/users/dtos/CreateSessionDTO';
 import AuthenticateUserService from '@modules/users/services/AuthenticateUser.service';
+import { SetPublicRoute } from '../../graphql/decorators/SetPublicRoute.decorator';
 
+@SetPublicRoute()
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('sessions')
 class SessionsController {

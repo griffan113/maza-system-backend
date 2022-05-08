@@ -23,18 +23,22 @@ export class CreateUserDTO {
     name: string;
     email: string;
     password: string;
+    is_admin?: Nullable<boolean>;
 }
 
 export class UpdateUserDTO {
     user_id?: Nullable<string>;
     name?: Nullable<string>;
     email?: Nullable<string>;
+    is_admin?: Nullable<boolean>;
     password?: Nullable<string>;
     old_password?: Nullable<string>;
 }
 
 export abstract class IMutation {
     abstract createClient(createClientDTO: CreateClientDTO): Nullable<Client> | Promise<Nullable<Client>>;
+
+    abstract deleteClient(id: string): Nullable<Client> | Promise<Nullable<Client>>;
 
     abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 
@@ -70,6 +74,7 @@ export class Client {
 export class User {
     id: string;
     email: string;
+    is_admin: boolean;
     name: string;
     password: string;
     created_at: Date;

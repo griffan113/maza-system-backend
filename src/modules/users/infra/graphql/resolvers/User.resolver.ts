@@ -8,9 +8,10 @@ import IndexUsersService from '@modules/users/services/IndexUsers.service';
 import UpdateUserDTO from '@modules/users/dtos/UpdateUserDTO';
 import UpdateUserService from '@modules/users/services/UpdateUser.service';
 import DeleteUserService from '@modules/users/services/DeleteUser.service';
+import ShowUserService from '@modules/users/services/ShowUser.service';
 import { CurrentUserId } from '@modules/users/infra/graphql/decorators/CurrentUserId.decorator';
 import { SetPrivateRoute } from '@modules/users/infra/graphql/decorators/SetPrivateRoute.decorator';
-import ShowUserService from '@modules/users/services/ShowUser.service';
+import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
 
 @SetPrivateRoute()
 @Resolver(() => User)
@@ -32,6 +33,7 @@ export default class UserResolver {
     private readonly showUserService: ShowUserService
   ) {}
 
+  @SetAdminRoute()
   @Mutation(() => User, { name: 'createUser' })
   public async create(
     @Args('createUserDTO', ValidationPipe)
@@ -59,6 +61,7 @@ export default class UserResolver {
     return showUser;
   }
 
+  @SetAdminRoute()
   @Mutation(() => User, { name: 'updateUser' })
   public async update(
     @Args('updateUserDTO', ValidationPipe)
@@ -69,6 +72,7 @@ export default class UserResolver {
     return updateUser;
   }
 
+  @SetAdminRoute()
   @Mutation(() => User, { name: 'deleteUser' })
   public async delete(
     @CurrentUserId() currentUserId: string,

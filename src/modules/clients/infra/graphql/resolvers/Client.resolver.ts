@@ -1,11 +1,13 @@
 import { Inject, ParseUUIDPipe, ValidationPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import CreateClientService from '@modules/clients/services/CreateClient.service';
 import { Client } from '@shared/infra/graphql/graphql';
+import CreateClientService from '@modules/clients/services/CreateClient.service';
 import IndexClientsService from '@modules/clients/services/IndexClients.service';
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import ShowClientService from '@modules/clients/services/ShowClient.service';
+import DeleteClientService from '@modules/clients/services/DeleteClient.service';
+import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
 
 @Resolver(() => Client)
 export default class ClientResolver {
@@ -17,7 +19,10 @@ export default class ClientResolver {
     private readonly indexClientsService: IndexClientsService,
 
     @Inject('ShowClientService')
-    private readonly showClientService: ShowClientService
+    private readonly showClientService: ShowClientService,
+
+    @Inject('DeleteClientService')
+    private readonly deleteClientService: DeleteClientService
   ) {}
 
   @Query(() => [Client], { name: 'indexClients' })
@@ -37,6 +42,20 @@ export default class ClientResolver {
     return showClient;
   }
 
+  @SetAdminRoute()
+  @Mutation(() => Client, { name: 'deleteClient' })
+  public async delete(
+    @Args('id', ParseUUIDPipe)
+    id: string
+  ) {
+    const deleteClient = await this.deleteClientService.execute({
+      id,
+    });
+
+    return deleteClient;
+  }
+
+  @SetAdminRoute()
   @Mutation(() => Client, { name: 'createClient' })
   public async create(
     @Args('createClientDTO', ValidationPipe)
