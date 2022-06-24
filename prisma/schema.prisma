@@ -67,18 +67,36 @@ model Order {
   @@map("orders")
 }
 
+enum SawOrderService {
+  SHARPE
+  SELL
+}
+
 model SawOrder {
-  id           String   @id @default(uuid())
-  price        Int
-  description  String
-  saw_code     String
-  quantity     Int
-  teeth_number Int
-  teeth_value  Float
-  order        Order    @relation(fields: [order_id], references: [id])
-  order_id     String
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
+  id          String          @id @default(uuid())
+  price       Int
+  service     SawOrderService
+  description String
+  quantity    Int
+  product     Product         @relation(fields: [product_id], references: [id])
+  order       Order           @relation(fields: [order_id], references: [id])
+  order_id    String
+  product_id  String
+  created_at  DateTime        @default(now())
+  updated_at  DateTime        @default(now())
 
   @@map("saw_orders")
+}
+
+model Product {
+  id           String   @id @default(uuid())
+  name         String
+  teeth_number Int
+  diameter     Int
+  price        Float
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+  saw_orders   SawOrder[]
+
+  @@map("products")
 }
