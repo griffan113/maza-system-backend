@@ -57,21 +57,21 @@ ALTER TABLE "clients" DROP COLUMN "invoice_email";
 ALTER TABLE "clients" DROP COLUMN "person_type";
 ALTER TABLE "clients" DROP COLUMN "technician_contact_email";
 ALTER TABLE "clients" DROP COLUMN "technician_contact_name";
-ALTER TABLE "clients" ADD COLUMN     "address" STRING;
-ALTER TABLE "clients" ADD COLUMN     "address_number" STRING;
+ALTER TABLE "clients" ADD COLUMN     "address" TEXT;
+ALTER TABLE "clients" ADD COLUMN     "address_number" TEXT;
 ALTER TABLE "clients" ADD COLUMN     "cep" INT4 NOT NULL;
-ALTER TABLE "clients" ADD COLUMN     "corporate_name" STRING;
-ALTER TABLE "clients" ADD COLUMN     "fantasy_name" STRING;
-ALTER TABLE "clients" ADD COLUMN     "name" STRING;
-ALTER TABLE "clients" ADD COLUMN     "nfe_email" STRING;
-ALTER TABLE "clients" ADD COLUMN     "phone" STRING;
-ALTER TABLE "clients" ADD COLUMN     "state_registration" STRING;
+ALTER TABLE "clients" ADD COLUMN     "corporate_name" TEXT;
+ALTER TABLE "clients" ADD COLUMN     "fantasy_name" TEXT;
+ALTER TABLE "clients" ADD COLUMN     "name" TEXT;
+ALTER TABLE "clients" ADD COLUMN     "nfe_email" TEXT;
+ALTER TABLE "clients" ADD COLUMN     "phone" TEXT;
+ALTER TABLE "clients" ADD COLUMN     "state_registration" TEXT;
 
 -- AlterTable
 ALTER TABLE "orders" DROP COLUMN "date";
 ALTER TABLE "orders" DROP COLUMN "status";
 ALTER TABLE "orders" ADD COLUMN     "delivery_fee" DOUBLE PRECISION;
-ALTER TABLE "orders" ADD COLUMN     "observations" STRING;
+ALTER TABLE "orders" ADD COLUMN     "observations" TEXT;
 ALTER TABLE "orders" ADD COLUMN     "payment_date" TIMESTAMP(3);
 ALTER TABLE "orders" ADD COLUMN     "payment_method" "OrderPaymentMethod";
 ALTER TABLE "orders" ALTER COLUMN "order_number" SET DATA TYPE INT4;
@@ -101,12 +101,12 @@ DROP TYPE "SawOrderService";
 
 -- CreateTable
 CREATE TABLE "client_contacts" (
-    "id" STRING NOT NULL,
-    "name" STRING NOT NULL,
-    "sector" STRING NOT NULL,
-    "email" STRING NOT NULL,
-    "phone" STRING NOT NULL,
-    "client_id" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "sector" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "client_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -115,7 +115,7 @@ CREATE TABLE "client_contacts" (
 
 -- CreateTable
 CREATE TABLE "order_statuses" (
-    "id" STRING NOT NULL,
+    "id" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "status" "OrderStatusEnum" NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -126,9 +126,9 @@ CREATE TABLE "order_statuses" (
 
 -- CreateTable
 CREATE TABLE "order_entries" (
-    "id" STRING NOT NULL,
-    "order_id" STRING NOT NULL,
-    "description" STRING NOT NULL,
+    "id" TEXT NOT NULL,
+    "order_id" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "diameter" INT4,
     "quantity" INT4 NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
@@ -140,20 +140,20 @@ CREATE TABLE "order_entries" (
 
 -- CreateTable
 CREATE TABLE "order_item" (
-    "id" STRING NOT NULL,
+    "id" TEXT NOT NULL,
     "total_price" DOUBLE PRECISION NOT NULL,
     "type" "OrderItemType" NOT NULL,
     "sharpe_type" "SharpeType",
-    "description" STRING NOT NULL,
+    "description" TEXT NOT NULL,
     "quantity" INT4 NOT NULL,
     "product_unity_price" DOUBLE PRECISION,
-    "code" STRING NOT NULL,
+    "code" TEXT NOT NULL,
     "pallet_quantity" INT4,
     "pallet_price" DOUBLE PRECISION,
     "insertion_quantity" INT4,
     "insertion_price" DOUBLE PRECISION,
-    "order_id" STRING NOT NULL,
-    "product_id" STRING NOT NULL,
+    "order_id" TEXT NOT NULL,
+    "product_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -162,8 +162,8 @@ CREATE TABLE "order_item" (
 
 -- CreateTable
 CREATE TABLE "_OrderToOrderStatus" (
-    "A" STRING NOT NULL,
-    "B" STRING NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateIndex

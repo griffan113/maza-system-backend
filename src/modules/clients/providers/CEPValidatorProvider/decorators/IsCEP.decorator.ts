@@ -1,21 +1,21 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
 
-import CPFCNPJValidatorProvider from '@modules/clients/providers/DocumentValidatorProvider/implementations/CPFCNPJValidatorProvider';
+import RegexCEPValidatorProvider from '@modules/clients/providers/CEPValidatorProvider/implementations/RegexCEPValidatorProvider';
 
-const IsCPF = (validationOptions?: ValidationOptions) => {
+const IsCEP = (validationOptions?: ValidationOptions) => {
   return (object: any, propertyName: string) => {
     registerDecorator({
-      name: 'IsCPF',
+      name: 'IsCEP',
       target: object.constructor,
       propertyName,
       options: validationOptions,
       validator: {
         validate(value: any): boolean {
-          return CPFCNPJValidatorProvider.isCPFValid(value);
+          return RegexCEPValidatorProvider.isCEPValid(value);
         },
       },
     });
   };
 };
 
-export default IsCPF;
+export default IsCEP;

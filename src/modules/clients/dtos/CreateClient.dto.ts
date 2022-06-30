@@ -1,52 +1,23 @@
-import {
-  IsEmail,
-  IsIn,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
-
-import IsCNPJ from '@modules/clients/providers/DocumentValidatorProvider/decorators/IsCNPJ.decorator';
-import IsCPF from '@modules/clients/providers/DocumentValidatorProvider/decorators/IsCPF.decorator';
-import { PersonTypeEnum } from '@modules/clients/types/PersonType.enum';
-
 class CreateClientDTO {
-  @IsString()
-  @IsNotEmpty()
-  company_name: string;
+  name?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @IsIn([PersonTypeEnum.LEGAL, PersonTypeEnum.PHYSICAL])
-  person_type: PersonTypeEnum;
+  corporate_name?: string;
 
-  @IsOptional()
-  @IsCPF({ message: 'CPF inválido.' })
-  cpf?: string;
+  fantasy_name?: string;
 
-  @IsOptional()
-  @IsCNPJ({ message: 'CNPJ inválido.' })
+  phone?: string;
+
   cnpj?: string;
 
-  @IsOptional()
-  @IsString()
-  financial_contact_name?: string;
+  state_registration?: string;
 
-  @IsOptional()
-  @IsString()
-  technician_contact_name?: string;
+  nfe_email?: string;
 
-  @IsOptional()
-  @IsEmail()
-  financial_contact_email?: string;
+  cep: string;
 
-  @IsOptional()
-  @IsEmail()
-  technician_contact_email?: string;
+  address_number?: string;
 
-  @IsOptional()
-  @IsEmail()
-  invoice_email: string;
+  address?: string;
 }
 
 export default CreateClientDTO;

@@ -14,15 +14,15 @@ export enum UserRole {
 }
 
 export class CreateClientDTO {
+    name?: Nullable<string>;
+    corporate_name?: Nullable<string>;
+    fantasy_name?: Nullable<string>;
+    phone?: Nullable<string>;
     cnpj?: Nullable<string>;
-    cpf?: Nullable<string>;
-    person_type: string;
-    company_name: string;
-    financial_contact_email?: Nullable<string>;
-    financial_contact_name?: Nullable<string>;
-    technician_contact_email?: Nullable<string>;
-    technician_contact_name?: Nullable<string>;
-    invoice_email?: Nullable<string>;
+    state_registration?: Nullable<string>;
+    nfe_email?: Nullable<string>;
+    cep: string;
+    address_number?: Nullable<string>;
 }
 
 export class CreateUserDTO {
@@ -64,21 +64,23 @@ export abstract class IQuery {
 }
 
 export class Client {
-    id: string;
+    id: UUID;
+    name?: Nullable<string>;
+    corporate_name?: Nullable<string>;
+    fantasy_name?: Nullable<string>;
+    phone?: Nullable<string>;
     cnpj?: Nullable<string>;
-    company_name: string;
-    cpf?: Nullable<string>;
-    financial_contact_email?: Nullable<string>;
-    financial_contact_name?: Nullable<string>;
-    invoice_email?: Nullable<string>;
-    technician_contact_email?: Nullable<string>;
-    technician_contact_name?: Nullable<string>;
-    created_at: Date;
-    updated_at: Date;
+    state_registration?: Nullable<string>;
+    nfe_email?: Nullable<string>;
+    cep: string;
+    address_number?: Nullable<string>;
+    address?: Nullable<string>;
+    created_at: DateTime;
+    updated_at: DateTime;
 }
 
 export class User {
-    id: string;
+    id: UUID;
     email: EmailAddress;
     role: UserRole;
     name: string;
@@ -88,5 +90,6 @@ export class User {
 }
 
 export type DateTime = any;
+export type UUID = any;
 export type EmailAddress = any;
 type Nullable<T> = T | null;

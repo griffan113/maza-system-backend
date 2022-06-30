@@ -4,10 +4,10 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Client } from '@shared/infra/graphql/graphql';
 import CreateClientService from '@modules/clients/services/CreateClient.service';
 import IndexClientsService from '@modules/clients/services/IndexClients.service';
-import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import ShowClientService from '@modules/clients/services/ShowClient.service';
 import DeleteClientService from '@modules/clients/services/DeleteClient.service';
 import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
+import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
 
 @Resolver(() => Client)
 export default class ClientResolver {
@@ -59,10 +59,10 @@ export default class ClientResolver {
   @Mutation(() => Client, { name: 'createClient' })
   public async create(
     @Args('createClientDTO', ValidationPipe)
-    createClientDTO: CreateClientDTO
+    createClientRequestDTO: CreateClientRequestDTO
   ): Promise<Client> {
     const createClient = await this.createClientService.execute(
-      createClientDTO
+      createClientRequestDTO
     );
 
     return createClient;

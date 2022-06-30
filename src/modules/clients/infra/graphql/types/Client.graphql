@@ -1,15 +1,18 @@
-scalar Date
+scalar DateTime
+scalar UUID
 
 type Client {
-  id: String!
+  id: UUID!
+  name: String
+  corporate_name: String
+  fantasy_name: String
+  phone: String
   cnpj: String
-  company_name: String!
-  cpf: String
-  financial_contact_email: String
-  financial_contact_name: String
-  invoice_email: String
-  technician_contact_email: String
-  technician_contact_name: String
-  created_at: Date!
-  updated_at: Date!
+  state_registration: String
+  nfe_email: String
+  cep: String!
+  address_number: String
+  address: String
+  created_at: DateTime!
+  updated_at: DateTime!
 }

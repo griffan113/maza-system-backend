@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PrismaClient, Client } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 import { PrismaService } from '@shared/services/Prisma.service';
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
+import Client from '@modules/clients/infra/prisma/models/Client';
 
 @Injectable()
 export default class ClientRepository implements IClientRepository {
@@ -12,7 +13,7 @@ export default class ClientRepository implements IClientRepository {
     private ormRepository: PrismaClient
   ) {}
 
-  public async findById(id: string): Promise<Client | undefined> {
+  public async findById(id: string): Promise<Client | null> {
     const client = await this.ormRepository.client.findUnique({
       where: { id },
     });
@@ -26,15 +27,7 @@ export default class ClientRepository implements IClientRepository {
     return clients;
   }
 
-  public async findByCpf(cpf: string): Promise<Client | undefined> {
-    const client = await this.ormRepository.client.findUnique({
-      where: { cpf },
-    });
-
-    return client;
-  }
-
-  public async findByCnpj(cnpj: string): Promise<Client | undefined> {
+  public async findByCnpj(cnpj: string): Promise<Client | null> {
     const client = await this.ormRepository.client.findUnique({
       where: { cnpj },
     });
@@ -42,11 +35,9 @@ export default class ClientRepository implements IClientRepository {
     return client;
   }
 
-  public async findByInvoiceEmail(
-    invoice_email: string
-  ): Promise<Client | undefined> {
+  public async findByNfeEmail(nfe_email: string): Promise<Client | null> {
     const client = await this.ormRepository.client.findFirst({
-      where: { invoice_email },
+      where: { nfe_email },
     });
 
     return client;

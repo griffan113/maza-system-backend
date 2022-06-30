@@ -9,6 +9,9 @@ import UpdateClientService from '@modules/clients/services/UpdateClient.service'
 import UsersModule from '@modules/users/users.module';
 import ClientRepository from '@modules/clients/infra/prisma/repositories/ClientRepository';
 import ClientResolver from '@modules/clients/infra/graphql/resolvers/Client.resolver';
+import CPFCNPJValidatorProvider from '@modules/clients/providers/DocumentValidatorProvider/implementations/CPFCNPJValidatorProvider';
+import RegexCEPValidatorProvider from '@modules/clients/providers/CEPValidatorProvider/implementations/RegexCEPValidatorProvider';
+import ViaCepCEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/implementations/ViaCepCEPQueryProvider';
 
 @Module({
   imports: [UsersModule],
@@ -21,6 +24,18 @@ import ClientResolver from '@modules/clients/infra/graphql/resolvers/Client.reso
     { provide: 'UpdateClientService', useClass: UpdateClientService },
     { provide: 'IndexClientsService', useClass: IndexClientsService },
     { provide: 'ShowClientService', useClass: ShowClientService },
+    {
+      provide: 'DocumentValidatorProvider',
+      useClass: CPFCNPJValidatorProvider,
+    },
+    {
+      provide: 'CEPValidatorProvider',
+      useClass: RegexCEPValidatorProvider,
+    },
+    {
+      provide: 'CEPQueryProvider',
+      useClass: ViaCepCEPQueryProvider,
+    },
   ],
 })
 class ClientsModule {}

@@ -17,15 +17,15 @@ export default class UpdateClientService {
 
   public async execute({
     client_id,
-    company_name,
     cnpj,
-    cpf,
-    invoice_email,
-    person_type,
-    financial_contact_email,
-    financial_contact_name,
-    technician_contact_email,
-    technician_contact_name,
+    cep,
+    address_number,
+    corporate_name,
+    fantasy_name,
+    name,
+    nfe_email,
+    phone,
+    state_registration,
   }: UpdateClientDTO): Promise<Client> {
     const client = await this.clientRepository.findById(client_id);
 
@@ -44,25 +44,14 @@ export default class UpdateClientService {
       client.cnpj = cnpj;
     }
 
-    if (cpf) {
-      const findClientWithThisCpf = await this.clientRepository.findByCpf(cpf);
-      if (findClientWithThisCpf && findClientWithThisCpf.id !== client.id) {
-        throw new BadRequestException('CPF já está em uso.');
-      }
-
-      client.cpf = cpf;
-    }
-
-    if (technician_contact_name)
-      client.technician_contact_name = technician_contact_name;
-    if (technician_contact_email)
-      client.technician_contact_email = technician_contact_email;
-    if (financial_contact_name)
-      client.financial_contact_name = financial_contact_name;
-    if (financial_contact_email)
-      client.financial_contact_email = financial_contact_email;
-
-    if (company_name) client.company_name = company_name;
+    if (cep) client.cep = cep;
+    if (address_number) client.address_number = address_number;
+    if (corporate_name) client.corporate_name = corporate_name;
+    if (fantasy_name) client.fantasy_name = fantasy_name;
+    if (name) client.name = name;
+    if (nfe_email) client.nfe_email = nfe_email;
+    if (phone) client.phone = phone;
+    if (state_registration) client.state_registration = state_registration;
 
     await this.clientRepository.update(client);
 
