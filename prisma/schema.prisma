@@ -55,7 +55,7 @@ model ClientContact {
   email      String
   phone      String
   client_id  String
-  client     Client  @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  client     Client   @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -70,11 +70,11 @@ enum OrderPaymentMethod {
 }
 
 model Order {
-  id             String         @id @default(uuid())
+  id             String              @id @default(uuid())
   order_number   Int
   statuses       OrderStatus[]
   client_id      String
-  client         Client         @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  client         Client              @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   total_price    Float
   total_quantity Int
   observations   String?
@@ -83,8 +83,8 @@ model Order {
   payment_date   DateTime?
   items          OrderItem[]
   order_entries  OrderEntries[]
-  created_at     DateTime       @default(now())
-  updated_at     DateTime       @default(now())
+  created_at     DateTime            @default(now())
+  updated_at     DateTime            @default(now())
 
   @@map("orders")
 }
@@ -136,24 +136,24 @@ enum SharpeType {
 }
 
 model OrderItem {
-  id          String             @id @default(uuid())
-  total_price Float
-  type        OrderItemType
-  sharpe_type SharpeType?
-  description String
-  quantity    Int
+  id                  String        @id @default(uuid())
+  total_price         Float
+  type                OrderItemType
+  sharpe_type         SharpeType?
+  description         String
+  quantity            Int
   product_unity_price Float?
-  code        String
-  product     Product            @relation(fields: [product_id], references: [id])
-  order       Order              @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  pallet_quantity Int?
-  pallet_price   Float?
-  insertion_quantity Int?
-  insertion_price   Float?
-  order_id    String
-  product_id  String
-  created_at  DateTime           @default(now())
-  updated_at  DateTime           @default(now())
+  code                String
+  product             Product       @relation(fields: [product_id], references: [id])
+  order               Order         @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  pallet_quantity     Int?
+  pallet_price        Float?
+  insertion_quantity  Int?
+  insertion_price     Float?
+  order_id            String
+  product_id          String
+  created_at          DateTime      @default(now())
+  updated_at          DateTime      @default(now())
 
   @@map("order_item")
 }
