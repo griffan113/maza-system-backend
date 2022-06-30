@@ -49,15 +49,15 @@ export class EnsureAuthenticated implements CanActivate {
       const decoded = verify(token, authConfig.jwt.secret, {});
       console.log(decoded);
 
-      const { sub, is_admin } = decoded as JWTPayload;
+      const { sub, role } = decoded as JWTPayload;
 
-      if (!isAdminRequired && !is_admin)
+      if (!isAdminRequired && role !== 'ADMIN')
         throw new UnauthorizedException('Você não tem acesso a este recurso.');
 
       // Expose user object inside request
       request.user = {
         id: sub,
-        is_admin,
+        role,
       };
 
       return true;

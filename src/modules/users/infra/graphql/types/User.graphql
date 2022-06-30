@@ -1,11 +1,18 @@
-scalar Date
+scalar DateTime
+scalar EmailAddress
+
+enum UserRole {
+  ADMIN
+  PRODUCTION
+  EDITOR
+}
 
 type User {
   id: String!
-  email: String!
-  is_admin: Boolean!
+  email: EmailAddress!
+  role: UserRole!
   name: String!
   password: String!
-  created_at: Date!
-  updated_at: Date!
+  created_at: DateTime!
+  updated_at: DateTime!
 }

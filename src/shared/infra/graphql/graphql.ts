@@ -7,6 +7,12 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum UserRole {
+    ADMIN = "ADMIN",
+    PRODUCTION = "PRODUCTION",
+    EDITOR = "EDITOR"
+}
+
 export class CreateClientDTO {
     cnpj?: Nullable<string>;
     cpf?: Nullable<string>;
@@ -23,14 +29,14 @@ export class CreateUserDTO {
     name: string;
     email: string;
     password: string;
-    is_admin?: Nullable<boolean>;
+    role?: Nullable<UserRole>;
 }
 
 export class UpdateUserDTO {
     user_id?: Nullable<string>;
     name?: Nullable<string>;
     email?: Nullable<string>;
-    is_admin?: Nullable<boolean>;
+    role?: Nullable<UserRole>;
     password?: Nullable<string>;
     old_password?: Nullable<string>;
 }
@@ -73,12 +79,14 @@ export class Client {
 
 export class User {
     id: string;
-    email: string;
-    is_admin: boolean;
+    email: EmailAddress;
+    role: UserRole;
     name: string;
     password: string;
-    created_at: Date;
-    updated_at: Date;
+    created_at: DateTime;
+    updated_at: DateTime;
 }
 
+export type DateTime = any;
+export type EmailAddress = any;
 type Nullable<T> = T | null;

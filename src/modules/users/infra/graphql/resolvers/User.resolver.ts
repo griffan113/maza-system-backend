@@ -1,4 +1,10 @@
-import { Inject, ParseUUIDPipe, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Inject,
+  ParseUUIDPipe,
+  UseInterceptors,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { User } from '@shared/infra/graphql/graphql';
@@ -13,6 +19,7 @@ import { CurrentUserId } from '@modules/users/infra/graphql/decorators/CurrentUs
 import { SetPrivateRoute } from '@modules/users/infra/graphql/decorators/SetPrivateRoute.decorator';
 import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @SetPrivateRoute()
 @Resolver(() => User)
 export default class UserResolver {

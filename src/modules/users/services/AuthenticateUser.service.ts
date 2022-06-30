@@ -35,7 +35,7 @@ class AuthenticateUserService {
       throw new BadRequestException('Credenciais incorretas.');
     }
 
-    const token = sign({ is_admin: user.is_admin }, authConfig.jwt.secret, {
+    const token = sign({ role: user.role }, authConfig.jwt.secret, {
       subject: user.id,
       expiresIn: authConfig.jwt.expiresIn,
     });
