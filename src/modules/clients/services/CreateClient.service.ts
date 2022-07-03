@@ -1,9 +1,9 @@
-import { Client } from '.prisma/client';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
 import ICEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/models/ICEPQueryProvider';
 import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
+import Client from '@modules/clients/infra/prisma/models/Client';
 
 @Injectable()
 class CreateClientService {

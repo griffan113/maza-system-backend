@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
-import { PrismaService } from '@shared/services/Prisma.service';
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import Client from '@modules/clients/infra/prisma/models/Client';
+import { PrismaService } from '@shared/services/Prisma.service';
+import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
 
 @Injectable()
 export default class ClientRepository implements IClientRepository {
@@ -21,8 +22,13 @@ export default class ClientRepository implements IClientRepository {
     return client;
   }
 
-  public async findAllClients(): Promise<Client[]> {
-    const clients = await this.ormRepository.client.findMany();
+  public async findAllClients({
+    page,
+    take,
+  }: Required<PaginationRequestDTO>): Promise<Client[]> {
+    const skip = page === 1 ? 0 : page * take - take;
+
+    const clients = await this.ormRepository.client.findMany({ skip, take });
 
     return clients;
   }

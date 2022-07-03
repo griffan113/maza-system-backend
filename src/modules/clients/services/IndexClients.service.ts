@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Client } from '@prisma/client';
 
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
+import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
+import Client from '@modules/clients/infra/prisma/models/Client';
 @Injectable()
 export default class IndexClientsService {
   constructor(
@@ -9,8 +10,11 @@ export default class IndexClientsService {
     private clientRepository: IClientRepository
   ) {}
 
-  public async execute(): Promise<Client[]> {
-    const clients = await this.clientRepository.findAllClients();
+  public async execute({
+    page,
+    take,
+  }: Required<PaginationRequestDTO>): Promise<Client[]> {
+    const clients = await this.clientRepository.findAllClients({ page, take });
 
     return clients;
   }

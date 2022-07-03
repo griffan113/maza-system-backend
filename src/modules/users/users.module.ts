@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 
-import { PrismaService } from '@shared/services/Prisma.service';
 import BCryptHashProvider from '@modules/users/providers/HashProvider/implementations/BCryptHashProvider';
 import CreateUserService from '@modules/users/services/CreateUser.service';
 import SessionsController from '@modules/users/infra/http/controllers/Sessions.controller';
@@ -15,7 +14,6 @@ import ShowUserService from '@modules/users/services/ShowUser.service';
 @Module({
   controllers: [SessionsController],
   providers: [
-    PrismaService,
     UserResolver,
     { provide: 'UserRepository', useClass: UserRepository },
     { provide: 'HashProvider', useClass: BCryptHashProvider },

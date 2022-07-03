@@ -9,7 +9,6 @@ import OrdersModule from '@modules/orders/orders.module';
 import Container from '@shared/container/container.module';
 import ClientsModule from '@modules/clients/clients.module';
 import UsersModule from '@modules/users/users.module';
-import { PrismaService } from '@shared/services/Prisma.service';
 import { EnsureAuthenticated } from '@modules/users/infra/graphql/guards/EnsureAuthenticated.guard';
 
 @Module({
@@ -34,7 +33,6 @@ import { EnsureAuthenticated } from '@modules/users/infra/graphql/guards/EnsureA
     UsersModule,
   ],
   providers: [
-    PrismaService,
     {
       provide: APP_GUARD,
       useClass: EnsureAuthenticated,

@@ -41,6 +41,11 @@ export class UpdateUserDTO {
     old_password?: Nullable<string>;
 }
 
+export class PaginationRequestDTO {
+    page?: Nullable<number>;
+    take?: Nullable<number>;
+}
+
 export abstract class IMutation {
     abstract createClient(createClientDTO: CreateClientDTO): Nullable<Client> | Promise<Nullable<Client>>;
 
@@ -53,8 +58,13 @@ export abstract class IMutation {
     abstract updateUser(updateUserDTO: UpdateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 }
 
+export class WithPaginationResponse {
+    metadata?: Nullable<PaginationMetadata>;
+    data?: Nullable<Nullable<Client>[]>;
+}
+
 export abstract class IQuery {
-    abstract indexClients(): Nullable<Nullable<Client>[]> | Promise<Nullable<Nullable<Client>[]>>;
+    abstract indexClients(paginationRequestDTO?: Nullable<PaginationRequestDTO>): Nullable<WithPaginationResponse> | Promise<Nullable<WithPaginationResponse>>;
 
     abstract showClient(client_id: string): Nullable<Client> | Promise<Nullable<Client>>;
 
@@ -87,6 +97,14 @@ export class User {
     password: string;
     created_at: DateTime;
     updated_at: DateTime;
+}
+
+export class PaginationMetadata {
+    page: number;
+    take: number;
+    pageCount: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
 }
 
 export type DateTime = any;
