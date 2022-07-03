@@ -22,6 +22,7 @@
 - [x] The user should be able to update an existing client
 - [x] The user should be able to delete an client
 - [ ] The user should be able to filter all clients.
-- [ ] The user should be able to paginate all clients.
+- [x] The user should be able to paginate all clients.
 - [x] The client CNPJ must be valid
+- [x] The client CNPJ must be parsed
 - [x] The client CEP must be valid
