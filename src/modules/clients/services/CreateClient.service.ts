@@ -19,7 +19,13 @@ class CreateClientService {
     const { cep, cnpj, corporate_name, name, nfe_email } = data;
 
     if (cnpj) {
-      const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(cnpj);
+      const parsedCNPJ = cnpj
+        .replace(/\D/g, '')
+        .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
+
+      const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(
+        parsedCNPJ
+      );
 
       if (isCnpjAlreadyUsed) throw new BadRequestException('CNPJ já usado.');
     }

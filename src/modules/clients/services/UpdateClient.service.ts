@@ -39,14 +39,19 @@ export default class UpdateClientService {
     }
 
     if (cnpj) {
+      const parsedCNPJ = cnpj
+        .replace(/\D/g, '')
+        .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
+
       const findClientWithThisCnpj = await this.clientRepository.findByCnpj(
-        cnpj
+        parsedCNPJ
       );
+
       if (findClientWithThisCnpj && findClientWithThisCnpj.id !== client.id) {
         throw new BadRequestException('CNPJ já está em uso.');
       }
 
-      client.cnpj = cnpj;
+      client.cnpj = parsedCNPJ;
     }
 
     if (cep) {
