@@ -30,13 +30,13 @@ export default class UpdateUserService {
     const user = await this.userRepository.findById(user_id);
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Usuário não encontrado.');
     }
 
     if (email) {
       const userWithUpdatedEmail = await this.userRepository.findByEmail(email);
       if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
-        throw new BadRequestException('Email alread in use');
+        throw new BadRequestException('E-mail já está em uso.');
       }
 
       user.email = email;
@@ -44,7 +44,7 @@ export default class UpdateUserService {
 
     if (password && !old_password) {
       throw new BadRequestException(
-        'You need to inform the old password to set a new pssword'
+        'Você precisa informar a sua senha antiga para criar uma nova senha.'
       );
     }
 
@@ -54,7 +54,7 @@ export default class UpdateUserService {
         user.password
       );
       if (!checkOldPassword) {
-        throw new BadRequestException('The old password is wrong');
+        throw new BadRequestException('A senha antiga está incorreta');
       }
 
       user.password = await this.hashProvider.generateHash(password);

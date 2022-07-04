@@ -1,54 +1,23 @@
-import {
-  IsEmail,
-  IsIn,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Matches,
-} from 'class-validator';
-import { PersonTypeEnum } from '../types/PersonType.enum';
-
 class CreateClientDTO {
-  @IsString()
-  @IsNotEmpty()
-  company_name: string;
+  name?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @IsIn([PersonTypeEnum.LEGAL, PersonTypeEnum.PHYSICAL])
-  person_type: PersonTypeEnum;
+  corporate_name?: string;
 
-  @IsOptional()
-  @Matches(
-    /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/g
-  )
-  // @ValidateIf((o) => isEmpty(o.cnpj), {})
-  cpf?: string;
+  fantasy_name?: string;
 
-  @IsOptional()
-  @Matches(
-    /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/g
-  )
+  phone?: string;
+
   cnpj?: string;
 
-  @IsOptional()
-  @IsString()
-  financial_contact_name?: string;
+  state_registration?: string;
 
-  @IsOptional()
-  @IsString()
-  technician_contact_name?: string;
+  nfe_email?: string;
 
-  @IsOptional()
-  @IsEmail()
-  financial_contact_email?: string;
+  cep: string;
 
-  @IsOptional()
-  @IsEmail()
-  technician_contact_email?: string;
+  address_number?: string;
 
-  @IsEmail()
-  invoice_email: string;
+  address?: string;
 }
 
 export default CreateClientDTO;

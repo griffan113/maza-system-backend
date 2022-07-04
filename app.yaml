@@ -1,0 +1,12 @@
+runtime: nodejs16
+env: standard
+instance_class: F1
+
+automatic_scaling:
+  max_instances: 1
+
+env_variables:
+  PORT: 3333
+
+includes:
+  - credentials.yaml

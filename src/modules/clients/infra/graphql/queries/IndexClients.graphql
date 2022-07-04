@@ -1,0 +1,10 @@
+type WithPaginationResponse {
+  metadata: PaginationMetadata
+  data: [Client]
+}
+
+type Query {
+  indexClients(
+    paginationRequestDTO: PaginationRequestDTO
+  ): WithPaginationResponse
+}

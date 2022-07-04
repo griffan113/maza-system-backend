@@ -2,6 +2,7 @@ input UpdateUserDTO {
   user_id: String
   name: String
   email: String
+  role: UserRole
   password: String
   old_password: String
 }

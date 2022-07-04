@@ -15,11 +15,11 @@ class CreateUserService {
   ) {}
 
   public async execute(createUserDTO: CreateUserDTO) {
-    const { name, email, password } = createUserDTO;
+    const { name, email, password, role } = createUserDTO;
 
     const checkUserExists = await this.userRepository.findByEmail(email);
 
-    if (checkUserExists) throw new BadRequestException('Email already used');
+    if (checkUserExists) throw new BadRequestException('E-mail já usado.');
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 
@@ -27,6 +27,7 @@ class CreateUserService {
       name,
       email,
       password: hashedPassword,
+      role,
     });
 
     return user;

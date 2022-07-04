@@ -10,9 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  PRODUCTION
+  EDITOR
+}
+
 model User {
   id         String   @id @default(uuid())
   email      String   @unique
+  role       UserRole @default(EDITOR)
   name       String
   password   String
   created_at DateTime @default(now())
@@ -22,56 +29,144 @@ model User {
 }
 
 model Client {
-  id                       String   @id @default(uuid())
-  company_name             String
-  cpf                      String?  @unique
-  cnpj                     String?  @unique
-  financial_contact_name   String?
-  technician_contact_name  String?
-  technician_contact_email String?
-  financial_contact_email  String?
-  invoice_email            String?
-  orders                   Order[]
-  created_at               DateTime @default(now())
-  updated_at               DateTime @default(now())
+  id                 String          @id @default(uuid())
+  name               String?
+  corporate_name     String?
+  fantasy_name       String?
+  phone              String?
+  cnpj               String?         @unique
+  state_registration String?
+  nfe_email          String?
+  cep                String
+  address_number     String?
+  address            String?
+  orders             Order[]
+  contacts           ClientContact[]
+  created_at         DateTime        @default(now())
+  updated_at         DateTime        @default(now())
 
   @@map("clients")
 }
 
-enum OrderStatus {
-  OPEN
-  IN_PROGRESS
-  DONE
+model ClientContact {
+  id         String   @id @default(uuid())
+  name       String
+  sector     String
+  email      String
+  phone      String
+  client_id  String
+  client     Client   @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("client_contacts")
+}
+
+enum OrderPaymentMethod {
+  CARD
+  CASH
+  PIX
+  BANK_BILL
 }
 
 model Order {
-  id             String      @id @default(uuid())
+  id             String              @id @default(uuid())
   order_number   Int
-  status         OrderStatus
+  statuses       OrderStatus[]
   client_id      String
-  client         Client      @relation(fields: [client_id], references: [id])
-  date           DateTime
-  total_price    Int
+  client         Client              @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  total_price    Float
   total_quantity Int
-  saw_orders     SawOrder[]
-  created_at     DateTime    @default(now())
-  updated_at     DateTime    @default(now())
+  observations   String?
+  delivery_fee   Float?
+  payment_method OrderPaymentMethod?
+  payment_date   DateTime?
+  items          OrderItem[]
+  order_entries  OrderEntries[]
+  created_at     DateTime            @default(now())
+  updated_at     DateTime            @default(now())
 
   @@map("orders")
 }
 
-model SawOrder {
-  id           String   @id @default(uuid())
-  price        Int
-  description  String
-  saw_code     String
-  quantity     Int
-  teeth_number Int
-  teeth_value  Float
-  order        Order    @relation(fields: [order_id], references: [id])
-  order_id     String
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
+enum OrderStatusEnum {
+  RECEPT
+  IN_PROGRESS
+  WAITING_WITHDRAW
+  WAITING_PAYMENT
+  DONE
+  CANCELED
+}
 
-  @@map("saw_orders")
+model OrderStatus {
+  id         String          @id @default(uuid())
+  date       DateTime
+  status     OrderStatusEnum
+  created_at DateTime        @default(now())
+  updated_at DateTime        @default(now())
+  Order      Order[]
+
+  @@map("order_statuses")
+}
+
+model OrderEntries {
+  id          String   @id @default(uuid())
+  order_id    String
+  order       Order    @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  description String
+  diameter    Int?
+  quantity    Int
+  price       Float
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  @@map("order_entries")
+}
+
+enum OrderItemType {
+  SHARPE
+  SELL
+  ESTIMATE
+}
+
+enum SharpeType {
+  COMPLETE
+  PARTIAL
+  WITH_REPAIR
+}
+
+model OrderItem {
+  id                  String        @id @default(uuid())
+  total_price         Float
+  type                OrderItemType
+  sharpe_type         SharpeType?
+  description         String
+  quantity            Int
+  product_unity_price Float?
+  code                String
+  product             Product       @relation(fields: [product_id], references: [id])
+  order               Order         @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  pallet_quantity     Int?
+  pallet_price        Float?
+  insertion_quantity  Int?
+  insertion_price     Float?
+  order_id            String
+  product_id          String
+  created_at          DateTime      @default(now())
+  updated_at          DateTime      @default(now())
+
+  @@map("order_item")
+}
+
+model Product {
+  id           String      @id @default(uuid())
+  name         String
+  teeth_number Int
+  diameter     Int
+  price        Float
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @default(now())
+  saw_orders   OrderItem[]
+
+  @@map("products")
 }

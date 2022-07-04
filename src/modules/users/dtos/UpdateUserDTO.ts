@@ -1,5 +1,7 @@
+import { UserRole } from '@prisma/client';
 import {
   IsEmail,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -26,6 +28,10 @@ class UpdateUserDTO {
   @IsOptional()
   @IsString()
   old_password?: string;
+
+  @IsOptional()
+  @IsIn([...Object.values(UserRole)])
+  role?: UserRole;
 }
 
 export default UpdateUserDTO;

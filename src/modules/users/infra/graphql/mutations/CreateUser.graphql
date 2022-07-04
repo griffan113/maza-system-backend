@@ -2,6 +2,7 @@ input CreateUserDTO {
   name: String!
   email: String!
   password: String!
+  role: UserRole
 }
 
 type Mutation {

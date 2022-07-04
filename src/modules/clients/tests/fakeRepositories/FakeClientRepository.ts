@@ -1,39 +1,30 @@
 import { v4 as uuid } from 'uuid';
-import { Client } from '.prisma/client';
 
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import IClientRepository from '../../repositories/IClientRepository';
-import { FakeClient } from '../fakeEntities/FakeClient';
+import Client from '@modules/clients/infra/prisma/models/Client';
 
 class FakeClientRepository implements IClientRepository {
   private clients: Client[] = [];
 
-  public async findById(id: string): Promise<Client | undefined> {
+  public async findById(id: string): Promise<Client | null> {
     const client = this.clients.find((client) => client.id === id);
 
-    return client;
+    return client || null;
   }
 
-  public async findByCpf(cpf: string): Promise<Client | undefined> {
-    const client = this.clients.find((client) => client.cpf === cpf);
-
-    return client;
-  }
-
-  public async findByCnpj(cnpj: string): Promise<Client | undefined> {
+  public async findByCnpj(cnpj: string): Promise<Client | null> {
     const client = this.clients.find((client) => client.cnpj === cnpj);
 
-    return client;
+    return client || null;
   }
 
-  public async findByInvoiceEmail(
-    invoice_email: string
-  ): Promise<Client | undefined> {
+  public async findByNfeEmail(nfe_email: string): Promise<Client | null> {
     const client = this.clients.find(
-      (client) => client.invoice_email === invoice_email
+      (client) => client.nfe_email === nfe_email
     );
 
-    return client;
+    return client || null;
   }
 
   public async findAllClients(): Promise<Client[]> {
@@ -41,7 +32,7 @@ class FakeClientRepository implements IClientRepository {
   }
 
   public async create(clientData: CreateClientDTO): Promise<Client> {
-    const client = new FakeClient();
+    const client = new Client();
 
     // Pushes all passaded properties to the client passed in the first param
     Object.assign(client, { id: uuid() }, clientData);
@@ -72,11 +63,13 @@ class FakeClientRepository implements IClientRepository {
   }
 
   public async delete(id: string): Promise<Client> {
-    const findIndex = this.clients.findIndex((findUser) => findUser.id === id);
+    const findIndex = this.clients.findIndex(
+      (findClient) => findClient.id === id
+    );
 
-    const findClient = this.clients.find((_, index) => findIndex === index);
+    this.clients.splice(findIndex, 1);
 
-    return findClient;
+    return this.clients[findIndex];
   }
 }
 

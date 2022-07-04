@@ -1,0 +1,15 @@
+input CreateClientDTO {
+  name: String
+  corporate_name: String
+  fantasy_name: String
+  phone: String
+  cnpj: String
+  state_registration: String
+  nfe_email: String
+  cep: String!
+  address_number: String
+}
+
+type Mutation {
+  createClient(createClientDTO: CreateClientDTO!): Client
+}

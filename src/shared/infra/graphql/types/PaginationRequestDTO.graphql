@@ -1,0 +1,4 @@
+input PaginationRequestDTO {
+  page: Int
+  take: Int
+}

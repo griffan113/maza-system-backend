@@ -3,19 +3,16 @@ import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Reflector } from '@nestjs/core';
 import { verify } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
-import { IS_PUBLIC_KEY } from '../decorators/SetPublicRoute.decorator';
-
-interface TokenPayload {
-  iat: number;
-  exp: number;
-  sub: string;
-}
+import { IS_PUBLIC_KEY } from '@modules/users/infra/graphql/decorators/SetPublicRoute.decorator';
+import { IS_ADMIN_KEY } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
+import { JWTPayload } from '@modules/users/types/JWTPayload';
 
 @Injectable()
 export class EnsureAuthenticated implements CanActivate {
@@ -26,6 +23,11 @@ export class EnsureAuthenticated implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
+
+    const isAdminRequired = this.reflector.getAllAndOverride<boolean>(
+      IS_ADMIN_KEY,
+      [context.getHandler(), context.getClass()]
+    );
 
     if (isPublic) {
       return true;
@@ -38,7 +40,7 @@ export class EnsureAuthenticated implements CanActivate {
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {
-      throw new ForbiddenException('JWT token missing.');
+      throw new ForbiddenException('Token JWT não encontrado.');
     }
 
     const [, token] = authHeader.split(' ');
@@ -47,16 +49,20 @@ export class EnsureAuthenticated implements CanActivate {
       const decoded = verify(token, authConfig.jwt.secret, {});
       console.log(decoded);
 
-      const { sub } = decoded as TokenPayload;
+      const { sub, role } = decoded as JWTPayload;
+
+      if (!isAdminRequired && role !== 'ADMIN')
+        throw new UnauthorizedException('Você não tem acesso a este recurso.');
 
       // Expose user object inside request
       request.user = {
         id: sub,
+        role,
       };
 
       return true;
     } catch {
-      throw new ForbiddenException('Invalid JWT token.');
+      throw new ForbiddenException('Token JWT inválido.');
     }
   }
 }
