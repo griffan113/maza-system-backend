@@ -26,3 +26,7 @@
 - [x] The client CNPJ must be valid
 - [x] The client CNPJ must be parsed
 - [x] The client CEP must be valid
+
+**RNF**
+
+- [ ] Only the logic-centered services may have services

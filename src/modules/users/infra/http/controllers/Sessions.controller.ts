@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 import CreateSessionDTO from '@modules/users/dtos/CreateSessionDTO';
-import AuthenticateUserService from '@modules/users/services/AuthenticateUser.service';
+import AuthenticateUserService from '@modules/users/services/AuthenticateUser.req.service';
 import { SetPublicRoute } from '@modules/users/infra/graphql/decorators/SetPublicRoute.decorator';
 
 @SetPublicRoute()

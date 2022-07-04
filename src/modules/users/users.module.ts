@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import BCryptHashProvider from '@modules/users/providers/HashProvider/implementations/BCryptHashProvider';
 import CreateUserService from '@modules/users/services/CreateUser.service';
 import SessionsController from '@modules/users/infra/http/controllers/Sessions.controller';
-import AuthenticateUserService from '@modules/users/services/AuthenticateUser.service';
+import AuthenticateUserService from '@modules/users/services/AuthenticateUser.req.service';
 import UserRepository from '@modules/users/infra/prisma/repositories/UserRepository';
 import UserResolver from '@modules/users/infra/graphql/resolvers/User.resolver';
 import IndexUsersService from '@modules/users/services/IndexUsers.service';
