@@ -1,6 +1,8 @@
+import { UserRole } from '@prisma/client';
+
 import FakeUserRepository from '@modules/users/tests/fakeRepositories/FakeUserRepository';
 
-import AuthenticateUserService from '@modules/users/services/AuthenticateUser.service';
+import AuthenticateUserService from '@modules/users/services/AuthenticateUser.req.service';
 import CreateUserService from '@modules/users/services/CreateUser.service';
 import IndexUsersService from '@modules/users/services/IndexUsers.service';
 import UpdateUserService from '@modules/users/services/UpdateUser.service';
@@ -12,6 +14,7 @@ interface ICreateUserData {
   email?: string;
   password?: string;
   name?: string;
+  role?: UserRole;
 }
 
 export const mockAuthenticateUserService = () => {

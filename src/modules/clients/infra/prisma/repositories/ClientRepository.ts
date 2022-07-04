@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PrismaClient, Client } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
-import { PrismaService } from '@shared/services/Prisma.service';
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
+import Client from '@modules/clients/infra/prisma/models/Client';
+import { PrismaService } from '@shared/services/Prisma.service';
+import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
 
 @Injectable()
 export default class ClientRepository implements IClientRepository {
@@ -12,7 +14,7 @@ export default class ClientRepository implements IClientRepository {
     private ormRepository: PrismaClient
   ) {}
 
-  public async findById(id: string): Promise<Client | undefined> {
+  public async findById(id: string): Promise<Client | null> {
     const client = await this.ormRepository.client.findUnique({
       where: { id },
     });
@@ -20,21 +22,18 @@ export default class ClientRepository implements IClientRepository {
     return client;
   }
 
-  public async findAllClients(): Promise<Client[]> {
-    const clients = await this.ormRepository.client.findMany();
+  public async findAllClients({
+    page,
+    take,
+  }: Required<PaginationRequestDTO>): Promise<Client[]> {
+    const skip = page === 1 ? 0 : page * take - take;
+
+    const clients = await this.ormRepository.client.findMany({ skip, take });
 
     return clients;
   }
 
-  public async findByCpf(cpf: string): Promise<Client | undefined> {
-    const client = await this.ormRepository.client.findUnique({
-      where: { cpf },
-    });
-
-    return client;
-  }
-
-  public async findByCnpj(cnpj: string): Promise<Client | undefined> {
+  public async findByCnpj(cnpj: string): Promise<Client | null> {
     const client = await this.ormRepository.client.findUnique({
       where: { cnpj },
     });
@@ -42,11 +41,9 @@ export default class ClientRepository implements IClientRepository {
     return client;
   }
 
-  public async findByInvoiceEmail(
-    invoice_email: string
-  ): Promise<Client | undefined> {
+  public async findByNfeEmail(nfe_email: string): Promise<Client | null> {
     const client = await this.ormRepository.client.findFirst({
-      where: { invoice_email },
+      where: { nfe_email },
     });
 
     return client;

@@ -4,28 +4,33 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Client } from '.prisma/client';
-import UpdateClientDTO from '../dtos/UpdateClient.dto';
-import IClientRepository from '../repositories/IClientRepository';
+
+import Client from '@modules/clients/infra/prisma/models/Client';
+import UpdateClientDTO from '@modules/clients/dtos/UpdateClient.dto';
+import IClientRepository from '@modules/clients/repositories/IClientRepository';
+import ICEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/models/ICEPQueryProvider';
 
 @Injectable()
 export default class UpdateClientService {
   constructor(
     @Inject('ClientRepository')
-    private clientRepository: IClientRepository
+    private readonly clientRepository: IClientRepository,
+
+    @Inject('CEPQueryProvider')
+    private readonly cepQueryProvider: ICEPQueryProvider
   ) {}
 
   public async execute({
     client_id,
-    company_name,
     cnpj,
-    cpf,
-    invoice_email,
-    person_type,
-    financial_contact_email,
-    financial_contact_name,
-    technician_contact_email,
-    technician_contact_name,
+    cep,
+    address_number,
+    corporate_name,
+    fantasy_name,
+    name,
+    nfe_email,
+    phone,
+    state_registration,
   }: UpdateClientDTO): Promise<Client> {
     const client = await this.clientRepository.findById(client_id);
 
@@ -34,35 +39,47 @@ export default class UpdateClientService {
     }
 
     if (cnpj) {
+      const parsedCNPJ = cnpj
+        .replace(/\D/g, '')
+        .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
+
       const findClientWithThisCnpj = await this.clientRepository.findByCnpj(
-        cnpj
+        parsedCNPJ
       );
+
       if (findClientWithThisCnpj && findClientWithThisCnpj.id !== client.id) {
         throw new BadRequestException('CNPJ já está em uso.');
       }
 
-      client.cnpj = cnpj;
+      client.cnpj = parsedCNPJ;
     }
 
-    if (cpf) {
-      const findClientWithThisCpf = await this.clientRepository.findByCpf(cpf);
-      if (findClientWithThisCpf && findClientWithThisCpf.id !== client.id) {
-        throw new BadRequestException('CPF já está em uso.');
-      }
+    if (cep) {
+      const cepInfo = await this.cepQueryProvider.getCEPInfo(cep);
 
-      client.cpf = cpf;
+      const address = this.cepQueryProvider.buildAddress(cepInfo);
+
+      client.cep = cep;
+      client.address = address;
     }
 
-    if (technician_contact_name)
-      client.technician_contact_name = technician_contact_name;
-    if (technician_contact_email)
-      client.technician_contact_email = technician_contact_email;
-    if (financial_contact_name)
-      client.financial_contact_name = financial_contact_name;
-    if (financial_contact_email)
-      client.financial_contact_email = financial_contact_email;
+    if (nfe_email) {
+      const isNfeEmailAlreadyUsed = await this.clientRepository.findByNfeEmail(
+        nfe_email
+      );
 
-    if (company_name) client.company_name = company_name;
+      if (isNfeEmailAlreadyUsed)
+        throw new BadRequestException('E-mail da nota fiscal já usado.');
+
+      client.nfe_email = nfe_email;
+    }
+
+    if (address_number) client.address_number = address_number;
+    if (corporate_name) client.corporate_name = corporate_name;
+    if (fantasy_name) client.fantasy_name = fantasy_name;
+    if (name) client.name = name;
+    if (phone) client.phone = phone;
+    if (state_registration) client.state_registration = state_registration;
 
     await this.clientRepository.update(client);
 

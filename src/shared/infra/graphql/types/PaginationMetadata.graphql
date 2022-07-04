@@ -1,0 +1,7 @@
+type PaginationMetadata {
+  page: Int!
+  take: Int!
+  pageCount: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}

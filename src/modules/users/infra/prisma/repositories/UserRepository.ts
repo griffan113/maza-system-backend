@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import { PrismaService } from '@shared/services/Prisma.service';
 import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
+import User from '@modules/users/infra/prisma/models/User';
 
 @Injectable()
 export default class UserRepository implements IUserRepository {
@@ -12,7 +13,7 @@ export default class UserRepository implements IUserRepository {
     private ormRepository: PrismaClient
   ) {}
 
-  public async findById(id: string): Promise<User | undefined> {
+  public async findById(id: string): Promise<User | null> {
     const user = await this.ormRepository.user.findUnique({ where: { id } });
 
     return user;
@@ -24,7 +25,7 @@ export default class UserRepository implements IUserRepository {
     return users;
   }
 
-  public async findByEmail(email: string): Promise<User | undefined> {
+  public async findByEmail(email: string): Promise<User | null> {
     const user = await this.ormRepository.user.findUnique({ where: { email } });
 
     return user;

@@ -1,23 +1,22 @@
 import { v4 as uuid } from 'uuid';
-import { User } from '.prisma/client';
 
 import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
 import IUserRepository from '../../repositories/IUserRepository';
-import { FakeUser } from '../fakeEntities/FakeUser';
+import User from '@modules/users/infra/prisma/models/User';
 
 class FakeUserRepository implements IUserRepository {
   private users: User[] = [];
 
-  public async findByEmail(email: string): Promise<User | undefined> {
+  public async findByEmail(email: string): Promise<User | null> {
     const user = this.users.find((user) => user.email === email);
 
-    return user;
+    return user || null;
   }
 
-  public async findById(id: string): Promise<User | undefined> {
+  public async findById(id: string): Promise<User | null> {
     const user = this.users.find((user) => user.id === id);
 
-    return user;
+    return user || null;
   }
 
   public async findAllUsers(): Promise<User[]> {
@@ -25,7 +24,7 @@ class FakeUserRepository implements IUserRepository {
   }
 
   public async create(userData: CreateUserDTO): Promise<User> {
-    const user = new FakeUser();
+    const user = new User();
 
     // Pushes all passaded properties to the user passed in the first param
     Object.assign(user, { id: uuid() }, userData);

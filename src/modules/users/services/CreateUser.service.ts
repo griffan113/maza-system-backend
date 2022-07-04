@@ -15,7 +15,7 @@ class CreateUserService {
   ) {}
 
   public async execute(createUserDTO: CreateUserDTO) {
-    const { name, email, password, is_admin } = createUserDTO;
+    const { name, email, password, role } = createUserDTO;
 
     const checkUserExists = await this.userRepository.findByEmail(email);
 
@@ -27,7 +27,7 @@ class CreateUserService {
       name,
       email,
       password: hashedPassword,
-      is_admin,
+      role,
     });
 
     return user;

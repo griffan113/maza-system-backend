@@ -1,7 +1,5 @@
 import {
-  IsBoolean,
   IsEmail,
-  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -9,27 +7,28 @@ import {
 } from 'class-validator';
 
 import IsCNPJ from '@modules/clients/providers/DocumentValidatorProvider/decorators/IsCNPJ.decorator';
-import IsCPF from '@modules/clients/providers/DocumentValidatorProvider/decorators/IsCPF.decorator';
-import { PersonTypeEnum } from '@modules/clients/types/PersonType.enum';
+import IsCEP from '@modules/clients/providers/CEPValidatorProvider/decorators/IsCEP.decorator';
 
 class UpdateClientDTO {
+  @IsNotEmpty()
   @IsUUID()
   client_id: string;
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  company_name: string;
+  name?: string;
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  @IsIn([PersonTypeEnum.LEGAL, PersonTypeEnum.PHYSICAL])
-  person_type: PersonTypeEnum;
+  corporate_name?: string;
 
   @IsOptional()
-  @IsCPF({ message: 'CPF inválido.' })
-  cpf?: string;
+  @IsString()
+  fantasy_name?: string;
+
+  @IsOptional()
+  @IsString()
+  phone?: string;
 
   @IsOptional()
   @IsCNPJ({ message: 'CNPJ inválido.' })
@@ -37,29 +36,20 @@ class UpdateClientDTO {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  financial_contact_name?: string;
+  state_registration?: string;
+
+  @IsOptional()
+  @IsEmail()
+  nfe_email?: string;
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  technician_contact_name?: string;
+  @IsCEP({ message: 'CEP inválido.' })
+  cep: string;
 
   @IsOptional()
-  @IsEmail()
-  financial_contact_email?: string;
-
-  @IsOptional()
-  @IsEmail()
-  technician_contact_email?: string;
-
-  @IsOptional()
-  @IsEmail()
-  invoice_email?: string;
-
-  @IsOptional()
-  @IsBoolean()
-  is_admin?: boolean;
+  @IsString()
+  address_number?: string;
 }
 
 export default UpdateClientDTO;

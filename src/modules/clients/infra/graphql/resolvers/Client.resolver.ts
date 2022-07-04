@@ -1,13 +1,15 @@
 import { Inject, ParseUUIDPipe, ValidationPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { Client } from '@shared/infra/graphql/graphql';
 import CreateClientService from '@modules/clients/services/CreateClient.service';
 import IndexClientsService from '@modules/clients/services/IndexClients.service';
-import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import ShowClientService from '@modules/clients/services/ShowClient.service';
 import DeleteClientService from '@modules/clients/services/DeleteClient.service';
-import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
+import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
+import { Client } from '@shared/infra/graphql/graphql';
+import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
+import { WithPaginationResponse } from '@shared/types/WithPaginationResponse';
+import { PaginateService } from '@shared/services/Paginate.service';
 
 @Resolver(() => Client)
 export default class ClientResolver {
@@ -22,14 +24,22 @@ export default class ClientResolver {
     private readonly showClientService: ShowClientService,
 
     @Inject('DeleteClientService')
-    private readonly deleteClientService: DeleteClientService
+    private readonly deleteClientService: DeleteClientService,
+
+    @Inject('PaginateService')
+    private readonly paginateService: PaginateService
   ) {}
 
   @Query(() => [Client], { name: 'indexClients' })
-  public async index(): Promise<Client[]> {
-    const indexClients = await this.indexClientsService.execute();
+  public async index(
+    @Args('paginationRequestDTO', ValidationPipe)
+    { page = 1, take = 5 }: PaginationRequestDTO
+  ): Promise<WithPaginationResponse<Client[]>> {
+    const indexClients = await this.indexClientsService.execute({ page, take });
 
-    return indexClients;
+    const paginate = this.paginateService.execute(indexClients, take, page);
+
+    return paginate;
   }
 
   @Query(() => Client, { name: 'showClient' })
@@ -42,7 +52,6 @@ export default class ClientResolver {
     return showClient;
   }
 
-  @SetAdminRoute()
   @Mutation(() => Client, { name: 'deleteClient' })
   public async delete(
     @Args('id', ParseUUIDPipe)
@@ -55,14 +64,13 @@ export default class ClientResolver {
     return deleteClient;
   }
 
-  @SetAdminRoute()
   @Mutation(() => Client, { name: 'createClient' })
   public async create(
     @Args('createClientDTO', ValidationPipe)
-    createClientDTO: CreateClientDTO
+    createClientRequestDTO: CreateClientRequestDTO
   ): Promise<Client> {
     const createClient = await this.createClientService.execute(
-      createClientDTO
+      createClientRequestDTO
     );
 
     return createClient;
