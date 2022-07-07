@@ -8,6 +8,7 @@ import {
 import Client from '@modules/clients/infra/prisma/models/Client';
 import UpdateClientDTO from '@modules/clients/dtos/UpdateClient.dto';
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
+import IClientContactRepository from '@modules/clients/repositories/IClientContactRepository';
 import ICEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/models/ICEPQueryProvider';
 
 @Injectable()
@@ -15,6 +16,9 @@ export default class UpdateClientService {
   constructor(
     @Inject('ClientRepository')
     private readonly clientRepository: IClientRepository,
+
+    @Inject('ClientContactRepository')
+    private readonly clientContactRepository: IClientContactRepository,
 
     @Inject('CEPQueryProvider')
     private readonly cepQueryProvider: ICEPQueryProvider
@@ -25,12 +29,12 @@ export default class UpdateClientService {
     cnpj,
     cep,
     address_number,
-    corporate_name,
     fantasy_name,
-    name,
+    company_name,
     nfe_email,
     phone,
     state_registration,
+    contacts,
   }: UpdateClientDTO): Promise<Client> {
     const client = await this.clientRepository.findById(client_id);
 
@@ -74,14 +78,22 @@ export default class UpdateClientService {
       client.nfe_email = nfe_email;
     }
 
+    if (contacts) {
+      const oldContactsIds = client.contacts?.map(({ id }) => id) || [];
+
+      await this.clientContactRepository.deleteMany(oldContactsIds);
+    }
+
     if (address_number) client.address_number = address_number;
-    if (corporate_name) client.corporate_name = corporate_name;
     if (fantasy_name) client.fantasy_name = fantasy_name;
-    if (name) client.name = name;
+    if (company_name) client.company_name = company_name;
     if (phone) client.phone = phone;
     if (state_registration) client.state_registration = state_registration;
 
-    await this.clientRepository.update(client);
+    await this.clientRepository.update({
+      client,
+      contacts,
+    });
 
     return client;
   }

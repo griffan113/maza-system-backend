@@ -1,7 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
-import IClientRepository from '@modules/clients/repositories/IClientRepository';
+import IClientRepository, {
+  UpdateData,
+} from '@modules/clients/repositories/IClientRepository';
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import Client from '@modules/clients/infra/prisma/models/Client';
 import { PrismaService } from '@shared/services/Prisma.service';
@@ -17,6 +19,9 @@ export default class ClientRepository implements IClientRepository {
   public async findById(id: string): Promise<Client | null> {
     const client = await this.ormRepository.client.findUnique({
       where: { id },
+      include: {
+        contacts: true,
+      },
     });
 
     return client;
@@ -28,7 +33,11 @@ export default class ClientRepository implements IClientRepository {
   }: Required<PaginationRequestDTO>): Promise<Client[]> {
     const skip = page === 1 ? 0 : page * take - take;
 
-    const clients = await this.ormRepository.client.findMany({ skip, take });
+    const clients = await this.ormRepository.client.findMany({
+      skip,
+      take,
+      include: { contacts: true },
+    });
 
     return clients;
   }
@@ -57,22 +66,35 @@ export default class ClientRepository implements IClientRepository {
     return deleteClient;
   }
 
-  public async create(clientData: CreateClientDTO): Promise<Client> {
+  public async create({
+    contacts = [],
+    ...rest
+  }: CreateClientDTO): Promise<Client> {
     const client = await this.ormRepository.client.create({
-      data: clientData,
+      data: {
+        ...rest,
+        contacts: {
+          createMany: { data: contacts },
+        },
+      },
     });
 
     return client;
   }
 
-  public async update(client: Client): Promise<Client> {
+  public async update({ client, contacts = [] }: UpdateData): Promise<Client> {
     const { id, ...rest } = client;
 
-    const updateUser = await this.ormRepository.client.update({
-      data: rest,
+    const updateClient = await this.ormRepository.client.update({
+      data: {
+        ...rest,
+        contacts: {
+          createMany: { data: contacts },
+        },
+      },
       where: { id },
     });
 
-    return updateUser;
+    return updateClient;
   }
 }

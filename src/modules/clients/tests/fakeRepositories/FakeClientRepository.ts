@@ -1,8 +1,11 @@
 import { v4 as uuid } from 'uuid';
 
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
-import IClientRepository from '../../repositories/IClientRepository';
+import IClientRepository, {
+  UpdateData,
+} from '@modules/clients/repositories/IClientRepository';
 import Client from '@modules/clients/infra/prisma/models/Client';
+import ClientContact from '@modules/clients/infra/prisma/models/ClientContact';
 
 class FakeClientRepository implements IClientRepository {
   private clients: Client[] = [];
@@ -52,10 +55,21 @@ class FakeClientRepository implements IClientRepository {
     return client;
   }
 
-  public async update(client: Client): Promise<Client> {
+  public async update({ client, contacts = [] }: UpdateData): Promise<Client> {
     const findIndex = this.clients.findIndex(
       (findUser) => findUser.id === client.id
     );
+
+    let createdContacts: ClientContact[];
+
+    contacts.forEach((contactDTO) => {
+      const clientContact = new ClientContact();
+
+      // Pushes all passaded properties to the client passed in the first param
+      Object.assign(clientContact, { id: uuid() }, contactDTO);
+
+      createdContacts.push(clientContact);
+    });
 
     this.clients[findIndex] = client;
 

@@ -47,12 +47,11 @@ export class EnsureAuthenticated implements CanActivate {
 
     try {
       const decoded = verify(token, authConfig.jwt.secret, {});
-      console.log(decoded);
 
       const { sub, role } = decoded as JWTPayload;
 
-      if (!isAdminRequired && role !== 'ADMIN')
-        throw new UnauthorizedException('Você não tem acesso a este recurso.');
+      if (isAdminRequired && role !== 'ADMIN')
+        throw new UnauthorizedException();
 
       // Expose user object inside request
       request.user = {
@@ -61,7 +60,10 @@ export class EnsureAuthenticated implements CanActivate {
       };
 
       return true;
-    } catch {
+    } catch (error) {
+      if (error instanceof UnauthorizedException)
+        throw new UnauthorizedException('Você não tem acesso a este recurso.');
+
       throw new ForbiddenException('Token JWT inválido.');
     }
   }

@@ -1,16 +1,20 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 import IsCNPJ from '@modules/clients/providers/DocumentValidatorProvider/decorators/IsCNPJ.decorator';
 import IsCEP from '@modules/clients/providers/CEPValidatorProvider/decorators/IsCEP.decorator';
+import CreateClientContactDTO from '@modules/clients/dtos/CreateClientContact.dto';
 
 class CreateClientRequestDTO {
   @IsOptional()
   @IsString()
-  name?: string;
-
-  @IsOptional()
-  @IsString()
-  corporate_name?: string;
+  company_name?: string;
 
   @IsOptional()
   @IsString()
@@ -40,6 +44,11 @@ class CreateClientRequestDTO {
   @IsOptional()
   @IsString()
   address_number?: string;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested()
+  contacts?: CreateClientContactDTO[];
 }
 
 export default CreateClientRequestDTO;

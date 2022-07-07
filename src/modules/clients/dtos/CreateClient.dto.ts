@@ -1,7 +1,7 @@
-class CreateClientDTO {
-  name?: string;
+import CreateClientContactDTO from '@modules/clients/dtos/CreateClientContact.dto';
 
-  corporate_name?: string;
+class CreateClientDTO {
+  company_name?: string;
 
   fantasy_name?: string;
 
@@ -18,6 +18,8 @@ class CreateClientDTO {
   address_number?: string;
 
   address?: string;
+
+  contacts?: CreateClientContactDTO[];
 }
 
 export default CreateClientDTO;

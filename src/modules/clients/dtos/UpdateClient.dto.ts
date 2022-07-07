@@ -1,13 +1,16 @@
 import {
+  IsArray,
   IsEmail,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUUID,
+  ValidateNested,
 } from 'class-validator';
 
 import IsCNPJ from '@modules/clients/providers/DocumentValidatorProvider/decorators/IsCNPJ.decorator';
 import IsCEP from '@modules/clients/providers/CEPValidatorProvider/decorators/IsCEP.decorator';
+import CreateClientContactDTO from '@modules/clients/dtos/CreateClientContact.dto';
 
 class UpdateClientDTO {
   @IsNotEmpty()
@@ -16,11 +19,7 @@ class UpdateClientDTO {
 
   @IsOptional()
   @IsString()
-  name?: string;
-
-  @IsOptional()
-  @IsString()
-  corporate_name?: string;
+  company_name?: string;
 
   @IsOptional()
   @IsString()
@@ -45,11 +44,16 @@ class UpdateClientDTO {
   @IsOptional()
   @IsString()
   @IsCEP({ message: 'CEP inválido.' })
-  cep: string;
+  cep?: string;
 
   @IsOptional()
   @IsString()
   address_number?: string;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested()
+  contacts?: CreateClientContactDTO[];
 }
 
 export default UpdateClientDTO;

@@ -1,8 +1,5 @@
-scalar DateTime
-scalar UUID
-
-type Client {
-  id: UUID!
+input UpdateClientDTO {
+  client_id: String!
   company_name: String
   fantasy_name: String
   phone: String
@@ -11,8 +8,9 @@ type Client {
   nfe_email: String
   cep: String!
   address_number: String
-  address: String
-  contacts: [ClientContact]
-  created_at: DateTime!
-  updated_at: DateTime!
+  contacts: [CreateClientContactDTO]
+}
+
+type Mutation {
+  updateClient(updateClientDTO: UpdateClientDTO!): Client
 }

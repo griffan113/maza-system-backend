@@ -14,8 +14,7 @@ export enum UserRole {
 }
 
 export class CreateClientDTO {
-    name?: Nullable<string>;
-    corporate_name?: Nullable<string>;
+    company_name?: Nullable<string>;
     fantasy_name?: Nullable<string>;
     phone?: Nullable<string>;
     cnpj?: Nullable<string>;
@@ -23,6 +22,27 @@ export class CreateClientDTO {
     nfe_email?: Nullable<string>;
     cep: string;
     address_number?: Nullable<string>;
+    contacts?: Nullable<Nullable<CreateClientContactDTO>[]>;
+}
+
+export class UpdateClientDTO {
+    client_id: string;
+    company_name?: Nullable<string>;
+    fantasy_name?: Nullable<string>;
+    phone?: Nullable<string>;
+    cnpj?: Nullable<string>;
+    state_registration?: Nullable<string>;
+    nfe_email?: Nullable<string>;
+    cep: string;
+    address_number?: Nullable<string>;
+    contacts?: Nullable<Nullable<CreateClientContactDTO>[]>;
+}
+
+export class CreateClientContactDTO {
+    name?: Nullable<string>;
+    sector?: Nullable<string>;
+    email?: Nullable<string>;
+    phone?: Nullable<string>;
 }
 
 export class CreateUserDTO {
@@ -51,6 +71,8 @@ export abstract class IMutation {
 
     abstract deleteClient(id: string): Nullable<Client> | Promise<Nullable<Client>>;
 
+    abstract updateClient(updateClientDTO: UpdateClientDTO): Nullable<Client> | Promise<Nullable<Client>>;
+
     abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 
     abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
@@ -75,8 +97,7 @@ export abstract class IQuery {
 
 export class Client {
     id: UUID;
-    name?: Nullable<string>;
-    corporate_name?: Nullable<string>;
+    company_name?: Nullable<string>;
     fantasy_name?: Nullable<string>;
     phone?: Nullable<string>;
     cnpj?: Nullable<string>;
@@ -85,8 +106,20 @@ export class Client {
     cep: string;
     address_number?: Nullable<string>;
     address?: Nullable<string>;
+    contacts?: Nullable<Nullable<ClientContact>[]>;
     created_at: DateTime;
     updated_at: DateTime;
+}
+
+export class ClientContact {
+    id: UUID;
+    name?: Nullable<string>;
+    sector?: Nullable<string>;
+    email?: Nullable<string>;
+    phone?: Nullable<string>;
+    client_id: string;
+    created_at?: Nullable<DateTime>;
+    updated_at?: Nullable<DateTime>;
 }
 
 export class User {

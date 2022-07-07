@@ -5,17 +5,24 @@ import CreateClientService from '@modules/clients/services/CreateClient.service'
 import IndexClientsService from '@modules/clients/services/IndexClients.service';
 import ShowClientService from '@modules/clients/services/ShowClient.service';
 import DeleteClientService from '@modules/clients/services/DeleteClient.service';
-import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
-import { Client } from '@shared/infra/graphql/graphql';
-import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
-import { WithPaginationResponse } from '@shared/types/WithPaginationResponse';
+import UpdateClientService from '@modules/clients/services/UpdateClient.service';
 import { PaginateService } from '@shared/services/Paginate.service';
+import { Client } from '@shared/infra/graphql/graphql';
+import { WithPaginationResponse } from '@shared/types/WithPaginationResponse';
+import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
+import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
+import UpdateClientDTO from '@modules/clients/dtos/UpdateClient.dto';
+import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
 
-@Resolver(() => Client)
+@SetAdminRoute()
+@Resolver('Client')
 export default class ClientResolver {
   constructor(
     @Inject('CreateClientService')
     private readonly createClientService: CreateClientService,
+
+    @Inject('UpdateClientService')
+    private readonly updateClientService: UpdateClientService,
 
     @Inject('IndexClientsService')
     private readonly indexClientsService: IndexClientsService,
@@ -74,5 +81,17 @@ export default class ClientResolver {
     );
 
     return createClient;
+  }
+
+  @Mutation(() => Client, { name: 'updateClient' })
+  public async update(
+    @Args('updateClientDTO', ValidationPipe)
+    updateClientDTO: UpdateClientDTO
+  ): Promise<Client> {
+    const updateClient = await this.updateClientService.execute(
+      updateClientDTO
+    );
+
+    return updateClient;
   }
 }
