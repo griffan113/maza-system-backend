@@ -1,6 +1,5 @@
 input CreateClientDTO {
-  name: String
-  corporate_name: String
+  company_name: String
   fantasy_name: String
   phone: String
   cnpj: String
@@ -8,6 +7,7 @@ input CreateClientDTO {
   nfe_email: String
   cep: String!
   address_number: String
+  contacts: [CreateClientContactDTO]
 }
 
 type Mutation {

@@ -1,0 +1,6 @@
+input CreateClientContactDTO {
+  name: String
+  sector: String
+  email: String
+  phone: String
+}

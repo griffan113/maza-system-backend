@@ -1,23 +1,7 @@
-class CreateClientDTO {
-  name?: string;
+import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
 
-  corporate_name?: string;
-
-  fantasy_name?: string;
-
-  phone?: string;
-
-  cnpj?: string;
-
-  state_registration?: string;
-
-  nfe_email?: string;
-
-  cep: string;
-
-  address_number?: string;
-
+type CreateClientDTO = {
   address?: string;
-}
+} & CreateClientRequestDTO;
 
 export default CreateClientDTO;

@@ -16,16 +16,14 @@ class CreateClientService {
   ) {}
 
   public async execute(data: CreateClientRequestDTO): Promise<Client> {
-    const { cep, cnpj, corporate_name, name, nfe_email } = data;
+    const { cep, cnpj: rawCnpj = '', nfe_email } = data;
 
-    if (cnpj) {
-      const parsedCNPJ = cnpj
-        .replace(/\D/g, '')
-        .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
+    const cnpj = rawCnpj
+      .replace(/\D/g, '')
+      .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
 
-      const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(
-        parsedCNPJ
-      );
+    if (rawCnpj) {
+      const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(cnpj);
 
       if (isCnpjAlreadyUsed) throw new BadRequestException('CNPJ já usado.');
     }
@@ -39,17 +37,13 @@ class CreateClientService {
         throw new BadRequestException('E-mail da nota fiscal já usado.');
     }
 
-    let client_name = name;
-
-    if (!name && corporate_name) client_name = corporate_name;
-
     const cepInfo = await this.cepQueryProvider.getCEPInfo(cep);
 
     const address = this.cepQueryProvider.buildAddress(cepInfo);
 
     const client = await this.clientRepository.create({
       ...data,
-      name: client_name,
+      cnpj,
       address,
     });
 

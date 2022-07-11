@@ -1,0 +1,13 @@
+scalar DateTime
+scalar UUID
+
+type ClientContact {
+  id: UUID!
+  name: String
+  sector: String
+  email: String
+  phone: String
+  client_id: String!
+  created_at: DateTime
+  updated_at: DateTime
+}
