@@ -11,7 +11,7 @@ import { Client } from '@shared/infra/graphql/graphql';
 import { WithPaginationResponse } from '@shared/types/WithPaginationResponse';
 import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
 import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
-import UpdateClientDTO from '@modules/clients/dtos/UpdateClient.dto';
+import UpdateClientRequestDTO from '@modules/clients/dtos/UpdateClientRequest.dto';
 import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
 
 @SetAdminRoute()
@@ -86,7 +86,7 @@ export default class ClientResolver {
   @Mutation(() => Client, { name: 'updateClient' })
   public async update(
     @Args('updateClientDTO', ValidationPipe)
-    updateClientDTO: UpdateClientDTO
+    updateClientDTO: UpdateClientRequestDTO
   ): Promise<Client> {
     const updateClient = await this.updateClientService.execute(
       updateClientDTO

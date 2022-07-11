@@ -1,9 +1,8 @@
 import { v4 as uuid } from 'uuid';
 
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
-import IClientRepository, {
-  UpdateData,
-} from '@modules/clients/repositories/IClientRepository';
+import UpdateClientDTO from '@modules/clients/dtos/UpdateClient.dto';
+import IClientRepository from '@modules/clients/repositories/IClientRepository';
 import Client from '@modules/clients/infra/prisma/models/Client';
 import ClientContact from '@modules/clients/infra/prisma/models/ClientContact';
 
@@ -55,7 +54,10 @@ class FakeClientRepository implements IClientRepository {
     return client;
   }
 
-  public async update({ client, contacts = [] }: UpdateData): Promise<Client> {
+  public async update({
+    client,
+    contacts = [],
+  }: UpdateClientDTO): Promise<Client> {
     const findIndex = this.clients.findIndex(
       (findUser) => findUser.id === client.id
     );

@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
-import IClientRepository, {
-  UpdateData,
-} from '@modules/clients/repositories/IClientRepository';
+import IClientRepository from '@modules/clients/repositories/IClientRepository';
 import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
+import UpdateClientDTO from '@modules/clients/dtos/UpdateClient.dto';
 import Client from '@modules/clients/infra/prisma/models/Client';
 import { PrismaService } from '@shared/services/Prisma.service';
 import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
@@ -82,7 +81,10 @@ export default class ClientRepository implements IClientRepository {
     return client;
   }
 
-  public async update({ client, contacts = [] }: UpdateData): Promise<Client> {
+  public async update({
+    client,
+    contacts = [],
+  }: UpdateClientDTO): Promise<Client> {
     const { id, ...rest } = client;
 
     const updateClient = await this.ormRepository.client.update({

@@ -16,16 +16,14 @@ class CreateClientService {
   ) {}
 
   public async execute(data: CreateClientRequestDTO): Promise<Client> {
-    const { cep, cnpj, nfe_email } = data;
+    const { cep, cnpj: rawCnpj = '', nfe_email } = data;
 
-    if (cnpj) {
-      const parsedCNPJ = cnpj
-        .replace(/\D/g, '')
-        .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
+    const cnpj = rawCnpj
+      .replace(/\D/g, '')
+      .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
 
-      const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(
-        parsedCNPJ
-      );
+    if (rawCnpj) {
+      const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(cnpj);
 
       if (isCnpjAlreadyUsed) throw new BadRequestException('CNPJ já usado.');
     }
@@ -45,6 +43,7 @@ class CreateClientService {
 
     const client = await this.clientRepository.create({
       ...data,
+      cnpj,
       address,
     });
 

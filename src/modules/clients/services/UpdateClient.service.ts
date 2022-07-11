@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 
 import Client from '@modules/clients/infra/prisma/models/Client';
-import UpdateClientDTO from '@modules/clients/dtos/UpdateClient.dto';
+import UpdateClientRequestDTO from '@modules/clients/dtos/UpdateClientRequest.dto';
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
 import IClientContactRepository from '@modules/clients/repositories/IClientContactRepository';
 import ICEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/models/ICEPQueryProvider';
@@ -35,7 +35,7 @@ export default class UpdateClientService {
     phone,
     state_registration,
     contacts,
-  }: UpdateClientDTO): Promise<Client> {
+  }: UpdateClientRequestDTO): Promise<Client> {
     const client = await this.clientRepository.findById(client_id);
 
     if (!client) {
