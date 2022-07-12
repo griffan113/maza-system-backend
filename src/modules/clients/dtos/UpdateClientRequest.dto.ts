@@ -12,7 +12,7 @@ import IsCNPJ from '@modules/clients/providers/DocumentValidatorProvider/decorat
 import IsCEP from '@modules/clients/providers/CEPValidatorProvider/decorators/IsCEP.decorator';
 import CreateClientContactDTO from '@modules/clients/dtos/CreateClientContact.dto';
 
-class UpdateClientDTO {
+class UpdateClientRequestDTO {
   @IsNotEmpty()
   @IsUUID()
   client_id: string;
@@ -56,4 +56,4 @@ class UpdateClientDTO {
   contacts?: CreateClientContactDTO[];
 }
 
-export default UpdateClientDTO;
+export default UpdateClientRequestDTO;

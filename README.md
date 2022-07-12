@@ -13,20 +13,27 @@
 - [ ] The user should be able to list all orders
 - [ ] The user should be able to update an existing order
 - [ ] The user should be able to delete an order
+- [ ] The user should be able to filter all orders.
+- [ ] The user should be able to paginate all orders.
 - [ ] The user should be able to create a new saw order
 - [ ] The user should be able to update an saw order
 - [ ] The user should be able to delete an saw order
-- [ ] The user should be able to filter all orders.
-- [x] The user should be able to create a new client
-- [x] The user should be able to list all clients
-- [x] The user should be able to update an existing client
-- [x] The user should be able to delete an client
-- [ ] The user should be able to filter all clients.
-- [x] The user should be able to paginate all clients.
+- [x] The admin should be able to create a new user
+- [x] All users should be able to read all users
+- [x] The admin should be able to update an existing client
+- [x] The admin should be able to delete an client
+- [ ] All users should be able to filter all clients.
+- [ ] All users should be able to paginate all clients.
+- [x] The admin and the editor should be able to create a new client
+- [x] All users should be able to list all clients
+- [x] The admin and the editor should be able to update an existing client
+- [x] The admin and the editor should be able to delete an client
+- [ ] All users should be able to filter all clients.
+- [x] All users should be able to paginate all clients.
 - [x] The client CNPJ must be valid
 - [x] The client CNPJ must be parsed
 - [x] The client CEP must be valid
 
 **RNF**
 
-- [ ] Only the logic-centered services may have services
+- [ ] Only the logic-centered services may have tests

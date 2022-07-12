@@ -12,9 +12,8 @@ import { WithPaginationResponse } from '@shared/types/WithPaginationResponse';
 import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
 import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
 import UpdateClientRequestDTO from '@modules/clients/dtos/UpdateClientRequest.dto';
-import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
+import { SetRequiredRoles } from '@modules/users/infra/graphql/decorators/SetRequiredRoles.decorator';
 
-@SetAdminRoute()
 @Resolver('Client')
 export default class ClientResolver {
   constructor(
@@ -59,6 +58,7 @@ export default class ClientResolver {
     return showClient;
   }
 
+  @SetRequiredRoles(['ADMIN', 'EDITOR'])
   @Mutation(() => Client, { name: 'deleteClient' })
   public async delete(
     @Args('id', ParseUUIDPipe)
@@ -71,6 +71,7 @@ export default class ClientResolver {
     return deleteClient;
   }
 
+  @SetRequiredRoles(['ADMIN', 'EDITOR'])
   @Mutation(() => Client, { name: 'createClient' })
   public async create(
     @Args('createClientDTO', ValidationPipe)
@@ -83,6 +84,7 @@ export default class ClientResolver {
     return createClient;
   }
 
+  @SetRequiredRoles(['ADMIN', 'EDITOR'])
   @Mutation(() => Client, { name: 'updateClient' })
   public async update(
     @Args('updateClientDTO', ValidationPipe)

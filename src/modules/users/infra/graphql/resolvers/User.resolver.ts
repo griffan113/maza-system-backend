@@ -16,12 +16,10 @@ import UpdateUserService from '@modules/users/services/UpdateUser.service';
 import DeleteUserService from '@modules/users/services/DeleteUser.service';
 import ShowUserService from '@modules/users/services/ShowUser.service';
 import { CurrentUserId } from '@modules/users/infra/graphql/decorators/CurrentUserId.decorator';
-import { SetPrivateRoute } from '@modules/users/infra/graphql/decorators/SetPrivateRoute.decorator';
-import { SetAdminRoute } from '@modules/users/infra/graphql/decorators/SetAdminRoute.decorator';
+import { SetRequiredRoles } from '@modules/users/infra/graphql/decorators/SetRequiredRoles.decorator';
 
 @UseInterceptors(ClassSerializerInterceptor)
-@SetPrivateRoute()
-@Resolver(() => User)
+@Resolver('User')
 export default class UserResolver {
   constructor(
     @Inject('CreateUserService')
@@ -40,7 +38,7 @@ export default class UserResolver {
     private readonly showUserService: ShowUserService
   ) {}
 
-  @SetAdminRoute()
+  @SetRequiredRoles(['ADMIN'])
   @Mutation(() => User, { name: 'createUser' })
   public async create(
     @Args('createUserDTO', ValidationPipe)
@@ -68,7 +66,7 @@ export default class UserResolver {
     return showUser;
   }
 
-  @SetAdminRoute()
+  @SetRequiredRoles(['ADMIN'])
   @Mutation(() => User, { name: 'updateUser' })
   public async update(
     @Args('updateUserDTO', ValidationPipe)
@@ -79,7 +77,7 @@ export default class UserResolver {
     return updateUser;
   }
 
-  @SetAdminRoute()
+  @SetRequiredRoles(['ADMIN'])
   @Mutation(() => User, { name: 'deleteUser' })
   public async delete(
     @CurrentUserId() currentUserId: string,
