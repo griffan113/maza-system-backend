@@ -1,3 +1,11 @@
+type WithPaginationUsersResponse {
+  metadata: PaginationMetadata
+  data: [User]
+}
+
 type Query {
-  indexUsers: [User]
+  indexUsers(
+    paginationRequestDTO: PaginationRequestDTO
+    filter: String
+  ): WithPaginationUsersResponse
 }

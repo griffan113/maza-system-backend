@@ -1,0 +1,36 @@
+name: Jest Development
+
+on:
+  push:
+    branches:
+      - development
+      - feat/*
+      - refactor/*
+      - test/*
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: 'Install packages'
+        run: yarn install
+      - name: Run tests
+        run: yarn test -- --coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

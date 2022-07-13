@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
-import CreateUserDTO from '../dtos/CreateUserDTO';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
-import IUserRepository from '../repositories/IUserRepository';
+import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import IUserRepository from '@modules/users/repositories/IUserRepository';
 
 @Injectable()
 class CreateUserService {
@@ -15,11 +15,11 @@ class CreateUserService {
   ) {}
 
   public async execute(createUserDTO: CreateUserDTO) {
-    const { name, email, password } = createUserDTO;
+    const { name, email, password, role } = createUserDTO;
 
     const checkUserExists = await this.userRepository.findByEmail(email);
 
-    if (checkUserExists) throw new BadRequestException('Email already used');
+    if (checkUserExists) throw new BadRequestException('E-mail já usado.');
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 
@@ -27,6 +27,7 @@ class CreateUserService {
       name,
       email,
       password: hashedPassword,
+      role,
     });
 
     return user;

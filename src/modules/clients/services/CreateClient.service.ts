@@ -1,42 +1,51 @@
-import { Client } from '.prisma/client';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
-import CreateClientDTO from '../dtos/CreateClient.dto';
-import IClientRepository from '../repositories/IClientRepository';
+import IClientRepository from '@modules/clients/repositories/IClientRepository';
+import ICEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/models/ICEPQueryProvider';
+import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
+import Client from '@modules/clients/infra/prisma/models/Client';
 
 @Injectable()
 class CreateClientService {
   constructor(
     @Inject('ClientRepository')
-    private readonly clientRepository: IClientRepository
+    private readonly clientRepository: IClientRepository,
+
+    @Inject('CEPQueryProvider')
+    private readonly cepQueryProvider: ICEPQueryProvider
   ) {}
 
-  public async execute(data: CreateClientDTO): Promise<Client> {
-    const { cpf, cnpj, invoice_email, person_type } = data;
+  public async execute(data: CreateClientRequestDTO): Promise<Client> {
+    const { cep, cnpj: rawCnpj = '', nfe_email } = data;
 
-    if (person_type === 'legal' && !cnpj) {
-      throw new BadRequestException('CNPJ is required for legal person type.');
+    const cnpj = rawCnpj
+      .replace(/\D/g, '')
+      .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
+
+    if (rawCnpj) {
+      const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(cnpj);
+
+      if (isCnpjAlreadyUsed) throw new BadRequestException('CNPJ já usado.');
     }
 
-    if (person_type === 'physical' && !cpf) {
-      throw new BadRequestException('CPF is required for legal person type.');
+    if (nfe_email) {
+      const isNfeEmailAlreadyUsed = await this.clientRepository.findByNfeEmail(
+        nfe_email
+      );
+
+      if (isNfeEmailAlreadyUsed)
+        throw new BadRequestException('E-mail da nota fiscal já usado.');
     }
 
-    const isCpfAlreadyUsed = await this.clientRepository.findByCpf(cpf);
+    const cepInfo = await this.cepQueryProvider.getCEPInfo(cep);
 
-    if (isCpfAlreadyUsed) throw new BadRequestException('CPF already used.');
+    const address = this.cepQueryProvider.buildAddress(cepInfo);
 
-    const isCnpjAlreadyUsed = await this.clientRepository.findByCnpj(cnpj);
-
-    if (isCnpjAlreadyUsed) throw new BadRequestException('CNPJ already used.');
-
-    const isInvoiceEmailAlreadyUsed =
-      await this.clientRepository.findByInvoiceEmail(invoice_email);
-
-    if (isInvoiceEmailAlreadyUsed)
-      throw new BadRequestException('Invoice email already used.');
-
-    const client = await this.clientRepository.create(data);
+    const client = await this.clientRepository.create({
+      ...data,
+      cnpj,
+      address,
+    });
 
     return client;
   }

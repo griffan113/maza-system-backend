@@ -1,11 +1,12 @@
-import { User } from '.prisma/client';
+import { User } from '@prisma/client';
 
-import CreateUserDTO from '../dtos/CreateUserDTO';
+import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
+import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 
 interface IUserRepository {
-  findById(id: string): Promise<User | undefined>;
-  findAllUsers(): Promise<User[]>;
-  findByEmail(email: string): Promise<User | undefined>;
+  findById(id: string): Promise<User | null>;
+  findAllUsers(data: PaginationWithFiltersDTO): Promise<User[]>;
+  findByEmail(email: string): Promise<User | null>;
   create(data: CreateUserDTO): Promise<User>;
   update(data: CreateUserDTO): Promise<User>;
   delete(id: string): Promise<User>;

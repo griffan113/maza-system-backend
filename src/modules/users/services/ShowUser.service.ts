@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { User } from '@prisma/client';
 
 import IUserRepository from '@modules/users/repositories/IUserRepository';
-import { User } from '@prisma/client';
 
 interface IRequest {
   user_id: string;
@@ -18,7 +18,7 @@ class ShowUserService {
     const user = await this.userRepository.findById(user_id);
 
     if (!user) {
-      throw new NotFoundException('Usuário não encontrado');
+      throw new NotFoundException('Usuário não encontrado.');
     }
 
     return user;

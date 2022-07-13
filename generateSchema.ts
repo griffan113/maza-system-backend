@@ -8,4 +8,5 @@ definitionsFactory.generate({
   path: join(process.cwd(), 'src/shared/infra/graphql/graphql.ts'),
   outputAs: 'class',
   watch: true,
+  enumsAsTypes: true,
 });

@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import { PrismaService } from '@shared/services/Prisma.service';
 import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
+import User from '@modules/users/infra/prisma/models/User';
+import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 
 @Injectable()
 export default class UserRepository implements IUserRepository {
@@ -12,19 +14,43 @@ export default class UserRepository implements IUserRepository {
     private ormRepository: PrismaClient
   ) {}
 
-  public async findById(id: string): Promise<User | undefined> {
+  public async findById(id: string): Promise<User | null> {
     const user = await this.ormRepository.user.findUnique({ where: { id } });
 
     return user;
   }
 
-  public async findAllUsers(): Promise<User[]> {
-    const users = await this.ormRepository.user.findMany();
+  public async findAllUsers({
+    pagination,
+    filter,
+  }: PaginationWithFiltersDTO): Promise<User[]> {
+    const { page, take } = pagination;
+
+    const skip = page === 1 ? 0 : page * take - take;
+
+    const users = await this.ormRepository.user.findMany({
+      skip,
+      take,
+      where: {
+        OR: [
+          {
+            name: {
+              contains: filter,
+            },
+          },
+          {
+            email: {
+              contains: filter,
+            },
+          },
+        ],
+      },
+    });
 
     return users;
   }
 
-  public async findByEmail(email: string): Promise<User | undefined> {
+  public async findByEmail(email: string): Promise<User | null> {
     const user = await this.ormRepository.user.findUnique({ where: { email } });
 
     return user;
