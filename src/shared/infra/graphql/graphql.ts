@@ -86,7 +86,7 @@ export class WithPaginationResponse {
 }
 
 export abstract class IQuery {
-    abstract indexClients(paginationRequestDTO?: Nullable<PaginationRequestDTO>): Nullable<WithPaginationResponse> | Promise<Nullable<WithPaginationResponse>>;
+    abstract indexClients(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationResponse> | Promise<Nullable<WithPaginationResponse>>;
 
     abstract showClient(client_id: string): Nullable<Client> | Promise<Nullable<Client>>;
 

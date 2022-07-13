@@ -28,7 +28,7 @@
 - [x] All users should be able to list all clients
 - [x] The admin and the editor should be able to update an existing client
 - [x] The admin and the editor should be able to delete an client
-- [ ] All users should be able to filter all clients.
+- [x] All users should be able to filter all clients.
 - [x] All users should be able to paginate all clients.
 - [x] The client CNPJ must be valid
 - [x] The client CNPJ must be parsed

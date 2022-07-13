@@ -6,5 +6,6 @@ type WithPaginationResponse {
 type Query {
   indexClients(
     paginationRequestDTO: PaginationRequestDTO
+    filter: String
   ): WithPaginationResponse
 }

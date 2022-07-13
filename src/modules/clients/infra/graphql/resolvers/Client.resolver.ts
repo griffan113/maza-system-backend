@@ -1,4 +1,9 @@
-import { Inject, ParseUUIDPipe, ValidationPipe } from '@nestjs/common';
+import {
+  DefaultValuePipe,
+  Inject,
+  ParseUUIDPipe,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import CreateClientService from '@modules/clients/services/CreateClient.service';
@@ -38,12 +43,26 @@ export default class ClientResolver {
 
   @Query(() => [Client], { name: 'indexClients' })
   public async index(
-    @Args('paginationRequestDTO', ValidationPipe)
-    { page = 1, take = 5 }: PaginationRequestDTO
-  ): Promise<WithPaginationResponse<Client[]>> {
-    const indexClients = await this.indexClientsService.execute({ page, take });
+    @Args(
+      'paginationRequestDTO',
+      ValidationPipe,
+      new DefaultValuePipe<PaginationRequestDTO>({ page: 1, take: 5 })
+    )
+    pagination: PaginationRequestDTO,
 
-    const paginate = this.paginateService.execute(indexClients, take, page);
+    @Args('filter', new DefaultValuePipe(''))
+    filter: string
+  ): Promise<WithPaginationResponse<Client[]>> {
+    const indexClients = await this.indexClientsService.execute({
+      filter,
+      pagination: { page: pagination.page, take: pagination.take },
+    });
+
+    const paginate = this.paginateService.execute(
+      indexClients,
+      pagination.page,
+      pagination.take
+    );
 
     return paginate;
   }

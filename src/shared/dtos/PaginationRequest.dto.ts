@@ -3,11 +3,11 @@ import { IsInt, IsOptional } from 'class-validator';
 class PaginationRequestDTO {
   @IsOptional()
   @IsInt()
-  page?: number;
+  page: number;
 
   @IsOptional()
   @IsInt()
-  take?: number;
+  take: number;
 }
 
 export default PaginationRequestDTO;
