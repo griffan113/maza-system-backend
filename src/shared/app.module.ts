@@ -19,6 +19,7 @@ import { EnsureAuthenticated } from '@modules/users/infra/graphql/guards/EnsureA
       definitions: {
         path: join(process.cwd(), 'src/shared/infra/graphql/graphql.ts'),
         outputAs: 'class',
+        enumsAsTypes: true,
       },
       typePaths: ['./**/*.graphql'],
     }),

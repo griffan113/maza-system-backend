@@ -1,4 +1,4 @@
-type WithPaginationResponse {
+type WithPaginationClientsResponse {
   metadata: PaginationMetadata
   data: [Client]
 }
@@ -7,5 +7,5 @@ type Query {
   indexClients(
     paginationRequestDTO: PaginationRequestDTO
     filter: String
-  ): WithPaginationResponse
+  ): WithPaginationClientsResponse
 }

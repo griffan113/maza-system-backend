@@ -7,11 +7,7 @@
 
 /* tslint:disable */
 /* eslint-disable */
-export enum UserRole {
-    ADMIN = "ADMIN",
-    PRODUCTION = "PRODUCTION",
-    EDITOR = "EDITOR"
-}
+export type UserRole = "ADMIN" | "PRODUCTION" | "EDITOR";
 
 export class CreateClientDTO {
     company_name?: Nullable<string>;
@@ -80,17 +76,17 @@ export abstract class IMutation {
     abstract updateUser(updateUserDTO: UpdateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 }
 
-export class WithPaginationResponse {
+export class WithPaginationClientsResponse {
     metadata?: Nullable<PaginationMetadata>;
     data?: Nullable<Nullable<Client>[]>;
 }
 
 export abstract class IQuery {
-    abstract indexClients(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationResponse> | Promise<Nullable<WithPaginationResponse>>;
+    abstract indexClients(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationClientsResponse> | Promise<Nullable<WithPaginationClientsResponse>>;
 
     abstract showClient(client_id: string): Nullable<Client> | Promise<Nullable<Client>>;
 
-    abstract indexUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    abstract indexUsers(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationUsersResponse> | Promise<Nullable<WithPaginationUsersResponse>>;
 
     abstract showUser(user_id: string): Nullable<User> | Promise<Nullable<User>>;
 }
@@ -120,6 +116,11 @@ export class ClientContact {
     client_id: string;
     created_at?: Nullable<DateTime>;
     updated_at?: Nullable<DateTime>;
+}
+
+export class WithPaginationUsersResponse {
+    metadata?: Nullable<PaginationMetadata>;
+    data?: Nullable<Nullable<User>[]>;
 }
 
 export class User {

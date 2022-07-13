@@ -1,7 +1,8 @@
-import { User } from '.prisma/client';
+import { User } from '@prisma/client';
 import { Inject, Injectable } from '@nestjs/common';
 
-import IUserRepository from '../repositories/IUserRepository';
+import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
+import IUserRepository from '@modules/users/repositories/IUserRepository';
 
 @Injectable()
 export default class IndexUsersService {
@@ -10,8 +11,14 @@ export default class IndexUsersService {
     private userRepository: IUserRepository
   ) {}
 
-  public async execute(): Promise<User[]> {
-    const users = await this.userRepository.findAllUsers();
+  public async execute({
+    pagination,
+    filter,
+  }: PaginationWithFiltersDTO): Promise<User[]> {
+    const users = await this.userRepository.findAllUsers({
+      pagination,
+      filter,
+    });
 
     return users;
   }

@@ -15,15 +15,12 @@
 - [ ] The user should be able to delete an order
 - [ ] The user should be able to filter all orders.
 - [ ] The user should be able to paginate all orders.
-- [ ] The user should be able to create a new saw order
-- [ ] The user should be able to update an saw order
-- [ ] The user should be able to delete an saw order
 - [x] The admin should be able to create a new user
 - [x] All users should be able to read all users
 - [x] The admin should be able to update an existing client
 - [x] The admin should be able to delete an client
-- [ ] All users should be able to filter all clients.
-- [ ] All users should be able to paginate all clients.
+- [x] All users should be able to filter all clients.
+- [x] All users should be able to paginate all clients.
 - [x] The admin and the editor should be able to create a new client
 - [x] All users should be able to list all clients
 - [x] The admin and the editor should be able to update an existing client
@@ -37,3 +34,4 @@
 **RNF**
 
 - [ ] Only the logic-centered services may have tests
+- [ ] All the application importations must be in TypeScript paths

@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
-import CreateUserDTO from '../dtos/CreateUserDTO';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
-import IUserRepository from '../repositories/IUserRepository';
+import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import IUserRepository from '@modules/users/repositories/IUserRepository';
 
 @Injectable()
 class CreateUserService {

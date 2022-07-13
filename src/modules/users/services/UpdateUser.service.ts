@@ -4,11 +4,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { User } from '.prisma/client';
+import { User } from '@prisma/client';
 
-import UpdateUserDTO from '../dtos/UpdateUserDTO';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
-import IUserRepository from '../repositories/IUserRepository';
+import UpdateUserDTO from '@modules/users/dtos/UpdateUserDTO';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import IUserRepository from '@modules/users/repositories/IUserRepository';
 
 @Injectable()
 export default class UpdateUserService {

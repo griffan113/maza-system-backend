@@ -1,13 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
-import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
 import Client from '@modules/clients/infra/prisma/models/Client';
-
-interface IIndexClientsServiceWithFiltersRequest {
-  pagination: PaginationRequestDTO;
-  filter?: string;
-}
+import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 
 @Injectable()
 export default class IndexClientsServiceWithFilters {
@@ -19,7 +14,7 @@ export default class IndexClientsServiceWithFilters {
   public async execute({
     pagination,
     filter,
-  }: IIndexClientsServiceWithFiltersRequest): Promise<Client[]> {
+  }: PaginationWithFiltersDTO): Promise<Client[]> {
     const clients = await this.clientRepository.findAllClients({
       pagination,
       filter,
