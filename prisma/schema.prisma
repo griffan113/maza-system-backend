@@ -70,7 +70,7 @@ enum OrderPaymentMethod {
 
 model Order {
   id             String              @id @default(uuid())
-  order_number   Int
+  order_number   String
   statuses       OrderStatus[]
   client_id      String
   client         Client              @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -81,7 +81,7 @@ model Order {
   payment_method OrderPaymentMethod?
   payment_date   DateTime?
   items          OrderItem[]
-  order_entries  OrderEntries[]
+  order_entries  OrderEntry[]
   created_at     DateTime            @default(now())
   updated_at     DateTime            @default(now())
 
@@ -108,7 +108,7 @@ model OrderStatus {
   @@map("order_statuses")
 }
 
-model OrderEntries {
+model OrderEntry {
   id          String   @id @default(uuid())
   order_id    String
   order       Order    @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
