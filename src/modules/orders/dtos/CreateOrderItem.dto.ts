@@ -11,10 +11,12 @@ import {
 import { OrderItemType, SharpeType } from '@prisma/client';
 
 class CreateOrderItemDTO {
+  total_price: number;
+
   order_id: string;
 
   @IsIn([...Object.values(OrderItemType)])
-  type?: string;
+  type: OrderItemType;
 
   @ValidateIf((cls: CreateOrderItemDTO) => cls.type === 'SHARPE')
   @IsIn([...Object.values(SharpeType)])
@@ -29,7 +31,7 @@ class CreateOrderItemDTO {
 
   @IsOptional()
   @IsString()
-  code?: string;
+  code: string;
 
   @IsOptional()
   @IsInt()

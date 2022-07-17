@@ -5,6 +5,7 @@ import { PrismaService } from '@shared/services/Prisma.service';
 import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 import IOrderRepository from '@modules/orders/repositories/IOrderRepository';
 import Order from '@modules/orders/infra/prisma/models/Order';
+import CreateOrderDTO from '@modules/orders/dtos/CreateOrder.dto';
 
 @Injectable()
 export default class OrderRepository implements IOrderRepository {
@@ -87,21 +88,33 @@ export default class OrderRepository implements IOrderRepository {
     return deleteOrder;
   }
 
-  // public async create({
-  //   contacts = [],
-  //   ...rest
-  // }: CreateOrderDTO): Promise<Order> {
-  //   const order = await this.ormRepository.order.create({
-  //     data: {
-  //       ...rest,
-  //       contacts: {
-  //         createMany: { data: contacts },
-  //       },
-  //     },
-  //   });
+  public async create({
+    statuses = [],
+    order_entries = [],
+    items = [],
+    ...rest
+  }: CreateOrderDTO): Promise<Order> {
+    const order = await this.ormRepository.order.create({
+      data: {
+        ...rest,
+        items: {
+          createMany: { data: items },
+        },
+        order_entries: {
+          createMany: { data: order_entries },
+        },
+        statuses: { create: statuses },
+      },
+      include: {
+        client: true,
+        items: true,
+        order_entries: true,
+        statuses: true,
+      },
+    });
 
-  //   return order;
-  // }
+    return order;
+  }
 
   // public async update({
   //   client,

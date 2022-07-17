@@ -139,7 +139,6 @@ model OrderItem {
   total_price         Float
   type                OrderItemType
   sharpe_type         SharpeType?
-  description         String
   quantity            Int
   product_unity_price Float?
   code                String
