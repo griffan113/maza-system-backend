@@ -6,6 +6,7 @@ import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 import IOrderRepository from '@modules/orders/repositories/IOrderRepository';
 import Order from '@modules/orders/infra/prisma/models/Order';
 import CreateOrderDTO from '@modules/orders/dtos/CreateOrder.dto';
+import UpdateOrderDTO from '@modules/orders/dtos/UpdateOrder.dto';
 
 @Injectable()
 export default class OrderRepository implements IOrderRepository {
@@ -116,22 +117,34 @@ export default class OrderRepository implements IOrderRepository {
     return order;
   }
 
-  // public async update({
-  //   client,
-  //   contacts = [],
-  // }: UpdateOrderDTO): Promise<Order> {
-  //   const { id, ...rest } = client;
+  public async update({
+    order,
+    items = [],
+    order_entries = [],
+    statuses = [],
+  }: UpdateOrderDTO): Promise<Order> {
+    const { id, ...rest } = order;
 
-  //   const updateOrder = await this.ormRepository.client.update({
-  //     data: {
-  //       ...rest,
-  //       contacts: {
-  //         createMany: { data: contacts },
-  //       },
-  //     },
-  //     where: { id },
-  //   });
+    const updateOrder = await this.ormRepository.order.update({
+      data: {
+        ...rest,
+        items: {
+          createMany: { data: items },
+        },
+        order_entries: {
+          createMany: { data: order_entries },
+        },
+        statuses: { create: statuses },
+      },
+      where: { id },
+      include: {
+        client: true,
+        items: true,
+        order_entries: true,
+        statuses: true,
+      },
+    });
 
-  //   return updateOrder;
-  // }
+    return updateOrder;
+  }
 }

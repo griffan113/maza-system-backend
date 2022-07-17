@@ -6,8 +6,6 @@ import {
   OrderStatus,
 } from '@prisma/client';
 
-import Client from '@modules/clients/infra/prisma/models/Client';
-
 export default class Order implements PrismaOrder {
   id: string;
 
@@ -16,8 +14,6 @@ export default class Order implements PrismaOrder {
   statuses?: OrderStatus[];
 
   client_id: string;
-
-  client: Client;
 
   total_price: number;
 
