@@ -1,6 +1,6 @@
 import {
   Order as PrismaOrder,
-  OrderEntries,
+  OrderEntry,
   OrderItem,
   OrderPaymentMethod,
   OrderStatus,
@@ -33,7 +33,7 @@ export default class Order implements PrismaOrder {
 
   items?: OrderItem[];
 
-  order_entries?: OrderEntries[];
+  order_entries?: OrderEntry[];
 
   created_at: Date;
 

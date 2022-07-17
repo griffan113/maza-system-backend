@@ -7,7 +7,7 @@ import {
   IsIn,
   IsDate,
 } from 'class-validator';
-import { OrderPaymentMethod } from '@prisma/client';
+import { OrderPaymentMethod, OrderStatus } from '@prisma/client';
 
 import CreateOrderItemDTO from '@modules/orders/dtos/CreateOrderItem.dto';
 import CreateOrderEntryDTO from '@modules/orders/dtos/CreateOrderEntry.dto';
@@ -18,6 +18,8 @@ class CreateOrderDTO {
   total_price: number;
 
   total_quantity: number;
+
+  statuses: OrderStatus[];
 
   @IsUUID()
   client_id: string;
