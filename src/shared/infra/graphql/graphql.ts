@@ -7,6 +7,10 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export type OrderPaymentMethod = "CARD" | "CASH" | "PIX" | "BANK_BILL";
+export type OrderItemType = "SHARPE" | "SELL" | "ESTIMATE";
+export type SharpeType = "COMPLETE" | "PARTIAL" | "WITH_REPAIR";
+export type OrderStatusEnum = "RECEPT" | "IN_PROGRESS" | "WAITING_WITHDRAW" | "WAITING_PAYMENT" | "DONE" | "CANCELED";
 export type UserRole = "ADMIN" | "PRODUCTION" | "EDITOR";
 
 export class CreateClientDTO {
@@ -116,6 +120,64 @@ export class ClientContact {
     client_id: string;
     created_at?: Nullable<DateTime>;
     updated_at?: Nullable<DateTime>;
+}
+
+export class Order {
+    id: UUID;
+    order_number: string;
+    statuses?: Nullable<Nullable<OrderStatus>[]>;
+    client_id: string;
+    client?: Nullable<Client>;
+    total_price: number;
+    total_quantity: number;
+    observations?: Nullable<string>;
+    delivery_fee?: Nullable<number>;
+    payment_method?: Nullable<OrderPaymentMethod>;
+    payment_date?: Nullable<DateTime>;
+    items?: Nullable<Nullable<OrderItem>[]>;
+    order_entries?: Nullable<Nullable<OrderEntry>[]>;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class OrderEntry {
+    id: UUID;
+    order_id: string;
+    order: Order;
+    description: string;
+    diameter?: Nullable<number>;
+    quantity: number;
+    price: number;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class OrderItem {
+    id: UUID;
+    total_price: number;
+    type: OrderItemType;
+    sharpe_type?: Nullable<SharpeType>;
+    quantity: number;
+    product_unity_price?: Nullable<number>;
+    code: string;
+    order: Order;
+    pallet_quantity?: Nullable<number>;
+    pallet_price?: Nullable<number>;
+    insertion_quantity?: Nullable<number>;
+    insertion_price?: Nullable<number>;
+    order_id: string;
+    product_id: string;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class OrderStatus {
+    id: UUID;
+    date?: Nullable<DateTime>;
+    status?: Nullable<OrderStatusEnum>;
+    order?: Nullable<Nullable<Order>[]>;
+    created_at: DateTime;
+    updated_at: DateTime;
 }
 
 export class WithPaginationUsersResponse {

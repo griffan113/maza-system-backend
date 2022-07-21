@@ -101,9 +101,9 @@ model OrderStatus {
   id         String          @id @default(uuid())
   date       DateTime
   status     OrderStatusEnum
+  order      Order[]
   created_at DateTime        @default(now())
   updated_at DateTime        @default(now())
-  Order      Order[]
 
   @@map("order_statuses")
 }

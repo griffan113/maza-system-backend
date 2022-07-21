@@ -1,0 +1,27 @@
+scalar DateTime
+scalar UUID
+
+enum OrderPaymentMethod {
+  CARD
+  CASH
+  PIX
+  BANK_BILL
+}
+
+type Order {
+  id: UUID!
+  order_number: String!
+  statuses: [OrderStatus]
+  client_id: String!
+  client: Client
+  total_price: Float!
+  total_quantity: Int!
+  observations: String
+  delivery_fee: Float
+  payment_method: OrderPaymentMethod
+  payment_date: DateTime
+  items: [OrderItem]
+  order_entries: [OrderEntry]
+  created_at: DateTime!
+  updated_at: DateTime!
+}
