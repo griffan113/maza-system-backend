@@ -45,6 +45,20 @@ export class CreateClientContactDTO {
     phone?: Nullable<string>;
 }
 
+export class CreateProductDTO {
+    name: string;
+    teeth_number: number;
+    diameter: number;
+    price: number;
+}
+
+export class UpdateProductDTO {
+    product_id?: Nullable<string>;
+    teeth_number?: Nullable<number>;
+    diameter?: Nullable<number>;
+    price?: Nullable<number>;
+}
+
 export class CreateUserDTO {
     name: string;
     email: string;
@@ -73,6 +87,12 @@ export abstract class IMutation {
 
     abstract updateClient(updateClientDTO: UpdateClientDTO): Nullable<Client> | Promise<Nullable<Client>>;
 
+    abstract createProduct(createProductDTO: CreateProductDTO): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract deleteProduct(id: string): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract updateProduct(updateProductDTO: UpdateProductDTO): Nullable<Product> | Promise<Nullable<Product>>;
+
     abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 
     abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
@@ -89,6 +109,10 @@ export abstract class IQuery {
     abstract indexClients(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationClientsResponse> | Promise<Nullable<WithPaginationClientsResponse>>;
 
     abstract showClient(client_id: string): Nullable<Client> | Promise<Nullable<Client>>;
+
+    abstract indexProducts(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationProductsResponse> | Promise<Nullable<WithPaginationProductsResponse>>;
+
+    abstract showProduct(product_id: string): Nullable<Product> | Promise<Nullable<Product>>;
 
     abstract indexUsers(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationUsersResponse> | Promise<Nullable<WithPaginationUsersResponse>>;
 
@@ -176,6 +200,21 @@ export class OrderStatus {
     date?: Nullable<DateTime>;
     status?: Nullable<OrderStatusEnum>;
     order?: Nullable<Nullable<Order>[]>;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class WithPaginationProductsResponse {
+    metadata?: Nullable<PaginationMetadata>;
+    data?: Nullable<Nullable<Product>[]>;
+}
+
+export class Product {
+    id: UUID;
+    name: string;
+    teeth_number: number;
+    diameter: number;
+    price: number;
     created_at: DateTime;
     updated_at: DateTime;
 }
