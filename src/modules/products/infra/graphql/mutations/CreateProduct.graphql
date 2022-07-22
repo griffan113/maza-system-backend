@@ -1,0 +1,10 @@
+input CreateProductDTO {
+  name: String!
+  teeth_number: Int!
+  diameter: Int!
+  price: Float!
+}
+
+type Mutation {
+  createProduct(createProductDTO: CreateProductDTO!): Product
+}
