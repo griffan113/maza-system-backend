@@ -130,6 +130,7 @@ export class Client {
     cep: string;
     address_number?: Nullable<string>;
     address?: Nullable<string>;
+    orders?: Nullable<Nullable<Order>[]>;
     contacts?: Nullable<Nullable<ClientContact>[]>;
     created_at: DateTime;
     updated_at: DateTime;
@@ -184,6 +185,7 @@ export class OrderItem {
     quantity: number;
     product_unity_price?: Nullable<number>;
     code: string;
+    product: Product;
     order: Order;
     pallet_quantity?: Nullable<number>;
     pallet_price?: Nullable<number>;

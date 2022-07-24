@@ -21,7 +21,7 @@ type OrderItem {
   quantity: Int!
   product_unity_price: Float
   code: String!
-  # product: Product!
+  product: Product!
   order: Order!
   pallet_quantity: Int
   pallet_price: Float

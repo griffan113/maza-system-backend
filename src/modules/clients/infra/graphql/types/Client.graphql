@@ -12,6 +12,7 @@ type Client {
   cep: String!
   address_number: String
   address: String
+  orders: [Order]
   contacts: [ClientContact]
   created_at: DateTime!
   updated_at: DateTime!
