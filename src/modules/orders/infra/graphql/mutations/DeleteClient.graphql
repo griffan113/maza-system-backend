@@ -1,0 +1,3 @@
+type Mutation {
+  deleteClient(id: String!): Client
+}

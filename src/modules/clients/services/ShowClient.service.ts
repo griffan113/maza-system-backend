@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Client } from '@prisma/client';
 
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
+import Client from '@modules/clients/infra/prisma/models/Client';
 
 interface IRequest {
   client_id: string;
