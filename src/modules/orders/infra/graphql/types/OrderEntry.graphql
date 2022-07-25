@@ -4,7 +4,7 @@ scalar UUID
 type OrderEntry {
   id: UUID!
   order_id: String!
-  order: Order!
+  order: Order
   description: String!
   diameter: Int
   quantity: Int!

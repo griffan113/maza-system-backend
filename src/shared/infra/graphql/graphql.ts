@@ -168,7 +168,7 @@ export class Order {
 export class OrderEntry {
     id: UUID;
     order_id: string;
-    order: Order;
+    order?: Nullable<Order>;
     description: string;
     diameter?: Nullable<number>;
     quantity: number;
@@ -185,8 +185,8 @@ export class OrderItem {
     quantity: number;
     product_unity_price?: Nullable<number>;
     code: string;
-    product: Product;
-    order: Order;
+    product?: Nullable<Product>;
+    order?: Nullable<Order>;
     pallet_quantity?: Nullable<number>;
     pallet_price?: Nullable<number>;
     insertion_quantity?: Nullable<number>;
