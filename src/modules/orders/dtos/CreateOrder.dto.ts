@@ -34,7 +34,7 @@ class CreateOrderDTO {
 
   @IsOptional()
   @IsDate()
-  payment_date?: string;
+  payment_date?: Date;
 
   @IsOptional()
   @IsArray()

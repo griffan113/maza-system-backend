@@ -1,0 +1,3 @@
+type Mutation {
+  deleteOrder(id: String!): Order
+}

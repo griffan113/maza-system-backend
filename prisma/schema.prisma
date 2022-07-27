@@ -41,6 +41,7 @@ model Client {
   address            String?
   orders             Order[]
   contacts           ClientContact[]
+  last_order_number  String?
   created_at         DateTime        @default(now())
   updated_at         DateTime        @default(now())
 

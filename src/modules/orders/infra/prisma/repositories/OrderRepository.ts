@@ -123,7 +123,8 @@ export default class OrderRepository implements IOrderRepository {
     order_entries = [],
     statuses = [],
   }: UpdateOrderDTO): Promise<Order> {
-    const { id, ...rest } = order;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, client: _, ...rest } = order;
 
     const updateOrder = await this.ormRepository.order.update({
       data: {

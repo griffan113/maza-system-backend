@@ -24,6 +24,8 @@ export default class Client implements PrismaClient {
 
   address: string | null;
 
+  last_order_number: string | null;
+
   orders?: Order[];
 
   contacts?: ClientContact[];

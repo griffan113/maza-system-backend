@@ -11,9 +11,26 @@ class CreateOrderService {
     private readonly orderRepository: IOrderRepository
   ) {}
 
-  public async execute(data: CreateOrderDTO): Promise<Order> {
+  public async execute({
+    client_id,
+    statuses,
+    observations,
+    payment_method,
+    payment_date,
+    items,
+    order_entries,
+  }: CreateOrderDTO): Promise<Order> {
     const order = await this.orderRepository.create({
-      ...data,
+      client_id,
+      statuses,
+      observations,
+      payment_method,
+      payment_date,
+      items,
+      order_entries,
+      order_number: '220635',
+      total_price: 0,
+      total_quantity: 0,
     });
 
     return order;
