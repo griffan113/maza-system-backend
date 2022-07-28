@@ -17,7 +17,6 @@ import { WithPaginationResponse } from '@shared/types/WithPaginationResponse';
 import CreateOrderDTO from '@modules/orders/dtos/CreateOrder.dto';
 import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
 import UpdateOrderRequestDTO from '@modules/orders/dtos/UpdateOrderRequest.dto';
-import { SetRequiredRoles } from '@modules/users/infra/graphql/decorators/SetRequiredRoles.decorator';
 
 @Resolver('Order')
 export default class OrderResolver {
@@ -77,7 +76,6 @@ export default class OrderResolver {
     return showOrder;
   }
 
-  @SetRequiredRoles(['ADMIN', 'EDITOR'])
   @Mutation(() => Order, { name: 'deleteOrder' })
   public async delete(
     @Args('id', ParseUUIDPipe)
@@ -90,7 +88,6 @@ export default class OrderResolver {
     return deleteOrder;
   }
 
-  @SetRequiredRoles(['ADMIN', 'EDITOR'])
   @Mutation(() => Order, { name: 'createOrder' })
   public async create(
     @Args('createOrderDTO', ValidationPipe)
@@ -103,7 +100,6 @@ export default class OrderResolver {
     return createOrder;
   }
 
-  @SetRequiredRoles(['ADMIN', 'EDITOR'])
   @Mutation(() => Order, { name: 'updateOrder' })
   public async update(
     @Args('updateOrderDTO', ValidationPipe)

@@ -45,6 +45,45 @@ export class CreateClientContactDTO {
     phone?: Nullable<string>;
 }
 
+export class CreateOrderDTO {
+    client_id: UUID;
+    observations?: Nullable<string>;
+    payment_method?: Nullable<OrderPaymentMethod>;
+    payment_date?: Nullable<DateTime>;
+    items?: Nullable<Nullable<CreateOrderItemDTO>[]>;
+    order_entries?: Nullable<Nullable<CreateOrderEntryDTO>[]>;
+}
+
+export class UpdateOrderDTO {
+    order_id: UUID;
+    client_id?: Nullable<UUID>;
+    observations?: Nullable<string>;
+    payment_method?: Nullable<OrderPaymentMethod>;
+    payment_date?: Nullable<DateTime>;
+    items?: Nullable<Nullable<CreateOrderItemDTO>[]>;
+    order_entries?: Nullable<Nullable<CreateOrderEntryDTO>[]>;
+}
+
+export class CreateOrderEntryDTO {
+    description: string;
+    diameter?: Nullable<number>;
+    quantity: number;
+    price: number;
+}
+
+export class CreateOrderItemDTO {
+    type: OrderItemType;
+    sharpe_type?: Nullable<SharpeType>;
+    quantity?: Nullable<number>;
+    product_unity_price?: Nullable<number>;
+    code?: Nullable<string>;
+    pallet_quantity?: Nullable<number>;
+    pallet_price?: Nullable<number>;
+    insertion_quantity?: Nullable<number>;
+    insertion_price?: Nullable<number>;
+    product_id?: Nullable<UUID>;
+}
+
 export class CreateProductDTO {
     name: string;
     teeth_number: number;
@@ -87,6 +126,12 @@ export abstract class IMutation {
 
     abstract updateClient(updateClientDTO: UpdateClientDTO): Nullable<Client> | Promise<Nullable<Client>>;
 
+    abstract createOrder(createOrderDTO: CreateOrderDTO): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract deleteOrder(id: string): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract updateOrder(updateOrderDTO: UpdateOrderDTO): Nullable<Order> | Promise<Nullable<Order>>;
+
     abstract createProduct(createProductDTO: CreateProductDTO): Nullable<Product> | Promise<Nullable<Product>>;
 
     abstract deleteProduct(id: string): Nullable<Product> | Promise<Nullable<Product>>;
@@ -110,6 +155,10 @@ export abstract class IQuery {
 
     abstract showClient(client_id: string): Nullable<Client> | Promise<Nullable<Client>>;
 
+    abstract indexOrders(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationOrdersResponse> | Promise<Nullable<WithPaginationOrdersResponse>>;
+
+    abstract showOrder(order_id: string): Nullable<Order> | Promise<Nullable<Order>>;
+
     abstract indexProducts(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationProductsResponse> | Promise<Nullable<WithPaginationProductsResponse>>;
 
     abstract showProduct(product_id: string): Nullable<Product> | Promise<Nullable<Product>>;
@@ -132,6 +181,7 @@ export class Client {
     address?: Nullable<string>;
     orders?: Nullable<Nullable<Order>[]>;
     contacts?: Nullable<Nullable<ClientContact>[]>;
+    last_order_number?: Nullable<string>;
     created_at: DateTime;
     updated_at: DateTime;
 }
@@ -145,6 +195,11 @@ export class ClientContact {
     client_id: string;
     created_at?: Nullable<DateTime>;
     updated_at?: Nullable<DateTime>;
+}
+
+export class WithPaginationOrdersResponse {
+    metadata?: Nullable<PaginationMetadata>;
+    data?: Nullable<Nullable<Order>[]>;
 }
 
 export class Order {

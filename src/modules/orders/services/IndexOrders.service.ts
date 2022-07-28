@@ -5,7 +5,7 @@ import Order from '@modules/orders/infra/prisma/models/Order';
 import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 
 @Injectable()
-export default class IndexOrdersServiceWithFilters {
+export default class IndexOrdersService {
   constructor(
     @Inject('OrderRepository')
     private orderRepository: IOrderRepository

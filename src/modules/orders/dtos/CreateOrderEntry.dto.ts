@@ -7,8 +7,6 @@ import {
 } from 'class-validator';
 
 class CreateOrderEntryDTO {
-  order_id: string;
-
   @IsString()
   @IsNotEmpty()
   description: string;

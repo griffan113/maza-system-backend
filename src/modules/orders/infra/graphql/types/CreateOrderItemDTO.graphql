@@ -1,0 +1,14 @@
+scalar UUID
+
+input CreateOrderItemDTO {
+  type: OrderItemType!
+  sharpe_type: SharpeType
+  quantity: Int
+  product_unity_price: Float
+  code: String
+  pallet_quantity: Int
+  pallet_price: Float
+  insertion_quantity: Int
+  insertion_price: Float
+  product_id: UUID
+}
