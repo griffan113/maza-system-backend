@@ -1,0 +1,14 @@
+scalar DateTime
+scalar UUID
+
+type OrderEntry {
+  id: UUID!
+  order_id: String!
+  order: Order
+  description: String!
+  diameter: Int
+  quantity: Int!
+  price: Float!
+  created_at: DateTime!
+  updated_at: DateTime!
+}

@@ -15,10 +15,16 @@
 - [ ] The user should be able to delete an order
 - [ ] The user should be able to filter all orders.
 - [ ] The user should be able to paginate all orders.
+- [x] The user should be able to create a new product
+- [x] The user should be able to list all products
+- [x] The user should be able to update an existing product
+- [x] The user should be able to delete a product
+- [x] The user should be able to filter all products.
+- [x] The user should be able to paginate all products.
 - [x] The admin should be able to create a new user
 - [x] All users should be able to read all users
 - [x] The admin should be able to update an existing client
-- [x] The admin should be able to delete an client
+- [x] The admin should be able to delete a client
 - [x] All users should be able to filter all clients.
 - [x] All users should be able to paginate all clients.
 - [x] The admin and the editor should be able to create a new client

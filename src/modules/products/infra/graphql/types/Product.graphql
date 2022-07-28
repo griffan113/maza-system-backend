@@ -1,0 +1,12 @@
+scalar DateTime
+scalar UUID
+
+type Product {
+  id: UUID!
+  name: String!
+  teeth_number: Int!
+  diameter: Int!
+  price: Float!
+  created_at: DateTime!
+  updated_at: DateTime!
+}

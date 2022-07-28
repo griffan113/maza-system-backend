@@ -1,0 +1,34 @@
+scalar DateTime
+scalar UUID
+
+enum OrderItemType {
+  SHARPE
+  SELL
+  ESTIMATE
+}
+
+enum SharpeType {
+  COMPLETE
+  PARTIAL
+  WITH_REPAIR
+}
+
+type OrderItem {
+  id: UUID!
+  total_price: Float!
+  type: OrderItemType!
+  sharpe_type: SharpeType
+  quantity: Int!
+  product_unity_price: Float
+  code: String!
+  product: Product
+  order: Order
+  pallet_quantity: Int
+  pallet_price: Float
+  insertion_quantity: Int
+  insertion_price: Float
+  order_id: String!
+  product_id: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}

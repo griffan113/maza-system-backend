@@ -21,7 +21,6 @@ import ViaCepCEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/
     { provide: 'DeleteClientService', useClass: DeleteClientService },
     { provide: 'UpdateClientService', useClass: UpdateClientService },
     { provide: 'IndexClientsService', useClass: IndexClientsService },
-
     { provide: 'ShowClientService', useClass: ShowClientService },
     {
       provide: 'DocumentValidatorProvider',

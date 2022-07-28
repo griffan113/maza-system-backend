@@ -14,7 +14,7 @@ import UpdateClientService from '@modules/clients/services/UpdateClient.service'
 import { PaginateService } from '@shared/services/Paginate.service';
 import { Client } from '@shared/infra/graphql/graphql';
 import { WithPaginationResponse } from '@shared/types/WithPaginationResponse';
-import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
+import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
 import UpdateClientRequestDTO from '@modules/clients/dtos/UpdateClientRequest.dto';
 import { SetRequiredRoles } from '@modules/users/infra/graphql/decorators/SetRequiredRoles.decorator';
@@ -94,7 +94,7 @@ export default class ClientResolver {
   @Mutation(() => Client, { name: 'createClient' })
   public async create(
     @Args('createClientDTO', ValidationPipe)
-    createClientRequestDTO: CreateClientRequestDTO
+    createClientRequestDTO: CreateClientDTO
   ): Promise<Client> {
     const createClient = await this.createClientService.execute(
       createClientRequestDTO

@@ -20,6 +20,7 @@ export default class ClientRepository implements IClientRepository {
       where: { id },
       include: {
         contacts: true,
+        orders: true,
       },
     });
 

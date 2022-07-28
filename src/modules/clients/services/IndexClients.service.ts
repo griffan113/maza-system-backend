@@ -5,7 +5,7 @@ import Client from '@modules/clients/infra/prisma/models/Client';
 import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 
 @Injectable()
-export default class IndexClientsServiceWithFilters {
+export default class IndexClientsService {
   constructor(
     @Inject('ClientRepository')
     private clientRepository: IClientRepository

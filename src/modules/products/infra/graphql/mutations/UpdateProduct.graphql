@@ -1,0 +1,10 @@
+input UpdateProductDTO {
+  product_id: String
+  teeth_number: Int
+  diameter: Int
+  price: Float
+}
+
+type Mutation {
+  updateProduct(updateProductDTO: UpdateProductDTO!): Product
+}

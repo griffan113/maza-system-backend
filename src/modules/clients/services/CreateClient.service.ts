@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
 import IClientRepository from '@modules/clients/repositories/IClientRepository';
 import ICEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/models/ICEPQueryProvider';
-import CreateClientRequestDTO from '@modules/clients/dtos/CreateClientRequest.dto';
+import CreateClientDTO from '@modules/clients/dtos/CreateClient.dto';
 import Client from '@modules/clients/infra/prisma/models/Client';
 
 @Injectable()
@@ -15,7 +15,7 @@ class CreateClientService {
     private readonly cepQueryProvider: ICEPQueryProvider
   ) {}
 
-  public async execute(data: CreateClientRequestDTO): Promise<Client> {
+  public async execute(data: CreateClientDTO): Promise<Client> {
     const { cep, cnpj: rawCnpj = '', nfe_email } = data;
 
     const cnpj = rawCnpj

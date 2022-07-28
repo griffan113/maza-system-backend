@@ -1,0 +1,16 @@
+scalar DateTime
+scalar UUID
+
+input UpdateOrderDTO {
+  order_id: UUID!
+  client_id: UUID
+  observations: String
+  payment_method: OrderPaymentMethod
+  payment_date: DateTime
+  items: [CreateOrderItemDTO]
+  order_entries: [CreateOrderEntryDTO]
+}
+
+type Mutation {
+  updateOrder(updateOrderDTO: UpdateOrderDTO!): Order
+}

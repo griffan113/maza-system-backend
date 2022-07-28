@@ -1,0 +1,11 @@
+type WithPaginationProductsResponse {
+  metadata: PaginationMetadata
+  data: [Product]
+}
+
+type Query {
+  indexProducts(
+    paginationRequestDTO: PaginationRequestDTO
+    filter: String
+  ): WithPaginationProductsResponse
+}
