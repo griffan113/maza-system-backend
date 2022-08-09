@@ -90,7 +90,7 @@ export default class OrderResolver {
 
   @Mutation(() => Order, { name: 'createOrder' })
   public async create(
-    @Args('createOrderDTO', ValidationPipe)
+    @Args('createOrderDTO', new ValidationPipe({ transform: true }))
     createOrderRequestDTO: CreateOrderDTO
   ): Promise<Order> {
     const createOrder = await this.createOrderService.execute(

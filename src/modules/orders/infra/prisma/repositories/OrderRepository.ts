@@ -63,6 +63,8 @@ export default class OrderRepository implements IOrderRepository {
       include: {
         client: true,
         statuses: true,
+        order_entries: true,
+        items: true,
       },
     });
 
@@ -90,7 +92,7 @@ export default class OrderRepository implements IOrderRepository {
   }
 
   public async create({
-    statuses = [],
+    status,
     order_entries = [],
     items = [],
     ...rest
@@ -104,7 +106,11 @@ export default class OrderRepository implements IOrderRepository {
         order_entries: {
           createMany: { data: order_entries },
         },
-        statuses: { create: statuses },
+        statuses: {
+          create: {
+            status,
+          },
+        },
       },
       include: {
         client: true,

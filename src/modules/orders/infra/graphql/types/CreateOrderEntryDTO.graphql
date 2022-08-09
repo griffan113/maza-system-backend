@@ -4,5 +4,5 @@ input CreateOrderEntryDTO {
   description: String!
   diameter: Int
   quantity: Int!
-  price: Int!
+  price: Float!
 }
