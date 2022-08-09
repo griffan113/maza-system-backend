@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
-import CreateProductDTO from '@modules/products/dtos/CreateProductDTO';
+import CreateProductDTO from '@modules/products/dtos/CreateProduct.dto';
 import IProductRepository from '@modules/products/repositories/IProductRepository';
 
 @Injectable()

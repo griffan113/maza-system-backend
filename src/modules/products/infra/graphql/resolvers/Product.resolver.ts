@@ -1,17 +1,15 @@
 import {
-  ClassSerializerInterceptor,
   DefaultValuePipe,
   Inject,
   ParseUUIDPipe,
-  UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { Product } from '@shared/infra/graphql/graphql';
 import { PaginateService } from '@shared/services/Paginate.service';
-import CreateProductDTO from '@modules/products/dtos/CreateProductDTO';
-import UpdateProductDTO from '@modules/products/dtos/UpdateProductDTO';
+import CreateProductDTO from '@modules/products/dtos/CreateProduct.dto';
+import UpdateProductDTO from '@modules/products/dtos/UpdateProduct.dto';
 import CreateProductService from '@modules/products/services/CreateProduct.service';
 import IndexProductsService from '@modules/products/services/IndexProducts.service';
 import UpdateProductService from '@modules/products/services/UpdateProduct.service';
@@ -20,7 +18,6 @@ import ShowProductService from '@modules/products/services/ShowProduct.service';
 import PaginationRequestDTO from '@shared/dtos/PaginationRequest.dto';
 import { WithPaginationResponse } from '@shared/types/WithPaginationResponse';
 
-@UseInterceptors(ClassSerializerInterceptor)
 @Resolver('Product')
 export default class ProductResolver {
   constructor(

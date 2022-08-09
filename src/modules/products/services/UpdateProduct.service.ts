@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Product } from '@prisma/client';
 
-import UpdateProductDTO from '@modules/products/dtos/UpdateProductDTO';
+import UpdateProductDTO from '@modules/products/dtos/UpdateProduct.dto';
 import IProductRepository from '@modules/products/repositories/IProductRepository';
 
 @Injectable()

@@ -35,6 +35,7 @@ import ViaCepCEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/
       useClass: ViaCepCEPQueryProvider,
     },
   ],
+  exports: [{ provide: 'ClientRepository', useClass: ClientRepository }],
 })
 class ClientsModule {}
 

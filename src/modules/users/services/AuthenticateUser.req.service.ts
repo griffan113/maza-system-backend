@@ -1,10 +1,10 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
-import { User } from '@prisma/client';
 
 import authConfig from '@config/auth';
 import IUserRepository from '@modules/users/repositories/IUserRepository';
-import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import User from '@modules/users/infra/prisma/models/User';
 
 @Injectable()
 class AuthenticateUserService {
@@ -13,7 +13,7 @@ class AuthenticateUserService {
     private readonly usersRepository: IUserRepository,
 
     @Inject('HashProvider')
-    private readonly hashProvider: FakeHashProvider
+    private readonly hashProvider: IHashProvider
   ) {}
 
   public async execute({ email, password }): Promise<{

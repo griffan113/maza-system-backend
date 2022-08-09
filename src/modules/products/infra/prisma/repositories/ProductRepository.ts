@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 import IProductRepository from '@modules/products/repositories/IProductRepository';
 import { PrismaService } from '@shared/services/Prisma.service';
-import CreateProductDTO from '@modules/products/dtos/CreateProductDTO';
+import CreateProductDTO from '@modules/products/dtos/CreateProduct.dto';
 import Product from '@modules/products/infra/prisma/models/Product';
 import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 

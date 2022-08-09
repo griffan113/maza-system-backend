@@ -1,4 +1,4 @@
-import CreateProductDTO from '@modules/products/dtos/CreateProductDTO';
+import CreateProductDTO from '@modules/products/dtos/CreateProduct.dto';
 import PaginationWithFiltersDTO from '@shared/dtos/PaginationWithFilters.dto';
 import Product from '@modules/products/infra/prisma/models/Product';
 

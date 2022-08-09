@@ -45,6 +45,9 @@ export default class UpdateOrderService {
       order.payment_date = payment_date;
     }
 
+    if (payment_method) order.payment_method = payment_method;
+    if (observations) order.observations = observations;
+
     await this.orderRepository.update({
       order,
       statuses,

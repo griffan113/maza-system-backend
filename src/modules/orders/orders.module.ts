@@ -12,7 +12,7 @@ import ClientRepository from '@modules/clients/infra/prisma/repositories/ClientR
 @Module({
   providers: [
     OrderResolver,
-    { provide: 'OrderRepository', useValue: OrderRepository },
+    { provide: 'OrderRepository', useClass: OrderRepository },
     { provide: 'ClientRepository', useClass: ClientRepository },
     { provide: 'CreateOrderService', useClass: CreateOrderService },
     { provide: 'IndexOrdersService', useClass: IndexOrdersService },
