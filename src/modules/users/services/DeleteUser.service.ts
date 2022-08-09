@@ -1,7 +1,7 @@
-import { User } from '@prisma/client';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import IUserRepository from '@modules/users/repositories/IUserRepository';
+import User from '@modules/users/infra/prisma/models/User';
 
 interface IRequest {
   currentUserId: string;

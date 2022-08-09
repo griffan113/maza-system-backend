@@ -1,0 +1,11 @@
+type WithPaginationOrdersResponse {
+  metadata: PaginationMetadata
+  data: [Order]
+}
+
+type Query {
+  indexOrders(
+    paginationRequestDTO: PaginationRequestDTO
+    filter: String
+  ): WithPaginationOrdersResponse
+}

@@ -21,7 +21,6 @@ import ViaCepCEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/
     { provide: 'DeleteClientService', useClass: DeleteClientService },
     { provide: 'UpdateClientService', useClass: UpdateClientService },
     { provide: 'IndexClientsService', useClass: IndexClientsService },
-
     { provide: 'ShowClientService', useClass: ShowClientService },
     {
       provide: 'DocumentValidatorProvider',
@@ -36,6 +35,7 @@ import ViaCepCEPQueryProvider from '@modules/clients/providers/CEPQueryProvider/
       useClass: ViaCepCEPQueryProvider,
     },
   ],
+  exports: [{ provide: 'ClientRepository', useClass: ClientRepository }],
 })
 class ClientsModule {}
 

@@ -41,6 +41,7 @@ model Client {
   address            String?
   orders             Order[]
   contacts           ClientContact[]
+  last_order_number  String?
   created_at         DateTime        @default(now())
   updated_at         DateTime        @default(now())
 
@@ -70,7 +71,7 @@ enum OrderPaymentMethod {
 
 model Order {
   id             String              @id @default(uuid())
-  order_number   Int
+  order_number   String
   statuses       OrderStatus[]
   client_id      String
   client         Client              @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -81,7 +82,7 @@ model Order {
   payment_method OrderPaymentMethod?
   payment_date   DateTime?
   items          OrderItem[]
-  order_entries  OrderEntries[]
+  order_entries  OrderEntry[]
   created_at     DateTime            @default(now())
   updated_at     DateTime            @default(now())
 
@@ -99,16 +100,16 @@ enum OrderStatusEnum {
 
 model OrderStatus {
   id         String          @id @default(uuid())
-  date       DateTime
+  date       DateTime        @default(now())
   status     OrderStatusEnum
+  order      Order[]
   created_at DateTime        @default(now())
   updated_at DateTime        @default(now())
-  Order      Order[]
 
   @@map("order_statuses")
 }
 
-model OrderEntries {
+model OrderEntry {
   id          String   @id @default(uuid())
   order_id    String
   order       Order    @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -139,7 +140,6 @@ model OrderItem {
   total_price         Float
   type                OrderItemType
   sharpe_type         SharpeType?
-  description         String
   quantity            Int
   product_unity_price Float?
   code                String

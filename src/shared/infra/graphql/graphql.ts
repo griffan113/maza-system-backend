@@ -7,6 +7,10 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export type OrderPaymentMethod = "CARD" | "CASH" | "PIX" | "BANK_BILL";
+export type OrderItemType = "SHARPE" | "SELL" | "ESTIMATE";
+export type SharpeType = "COMPLETE" | "PARTIAL" | "WITH_REPAIR";
+export type OrderStatusEnum = "RECEPT" | "IN_PROGRESS" | "WAITING_WITHDRAW" | "WAITING_PAYMENT" | "DONE" | "CANCELED";
 export type UserRole = "ADMIN" | "PRODUCTION" | "EDITOR";
 
 export class CreateClientDTO {
@@ -41,6 +45,59 @@ export class CreateClientContactDTO {
     phone?: Nullable<string>;
 }
 
+export class CreateOrderDTO {
+    client_id: UUID;
+    observations?: Nullable<string>;
+    payment_method?: Nullable<OrderPaymentMethod>;
+    payment_date?: Nullable<DateTime>;
+    items?: Nullable<Nullable<CreateOrderItemDTO>[]>;
+    order_entries?: Nullable<Nullable<CreateOrderEntryDTO>[]>;
+}
+
+export class UpdateOrderDTO {
+    order_id: UUID;
+    client_id?: Nullable<UUID>;
+    observations?: Nullable<string>;
+    payment_method?: Nullable<OrderPaymentMethod>;
+    payment_date?: Nullable<DateTime>;
+    items?: Nullable<Nullable<CreateOrderItemDTO>[]>;
+    order_entries?: Nullable<Nullable<CreateOrderEntryDTO>[]>;
+}
+
+export class CreateOrderEntryDTO {
+    description: string;
+    diameter?: Nullable<number>;
+    quantity: number;
+    price: number;
+}
+
+export class CreateOrderItemDTO {
+    type: OrderItemType;
+    sharpe_type?: Nullable<SharpeType>;
+    quantity?: Nullable<number>;
+    product_unity_price?: Nullable<number>;
+    code?: Nullable<string>;
+    pallet_quantity?: Nullable<number>;
+    pallet_price?: Nullable<number>;
+    insertion_quantity?: Nullable<number>;
+    insertion_price?: Nullable<number>;
+    product_id?: Nullable<UUID>;
+}
+
+export class CreateProductDTO {
+    name: string;
+    teeth_number: number;
+    diameter: number;
+    price: number;
+}
+
+export class UpdateProductDTO {
+    product_id?: Nullable<string>;
+    teeth_number?: Nullable<number>;
+    diameter?: Nullable<number>;
+    price?: Nullable<number>;
+}
+
 export class CreateUserDTO {
     name: string;
     email: string;
@@ -69,6 +126,18 @@ export abstract class IMutation {
 
     abstract updateClient(updateClientDTO: UpdateClientDTO): Nullable<Client> | Promise<Nullable<Client>>;
 
+    abstract createOrder(createOrderDTO: CreateOrderDTO): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract deleteOrder(id: string): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract updateOrder(updateOrderDTO: UpdateOrderDTO): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract createProduct(createProductDTO: CreateProductDTO): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract deleteProduct(id: string): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract updateProduct(updateProductDTO: UpdateProductDTO): Nullable<Product> | Promise<Nullable<Product>>;
+
     abstract createUser(createUserDTO: CreateUserDTO): Nullable<User> | Promise<Nullable<User>>;
 
     abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
@@ -86,6 +155,14 @@ export abstract class IQuery {
 
     abstract showClient(client_id: string): Nullable<Client> | Promise<Nullable<Client>>;
 
+    abstract indexOrders(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationOrdersResponse> | Promise<Nullable<WithPaginationOrdersResponse>>;
+
+    abstract showOrder(order_id: string): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract indexProducts(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationProductsResponse> | Promise<Nullable<WithPaginationProductsResponse>>;
+
+    abstract showProduct(product_id: string): Nullable<Product> | Promise<Nullable<Product>>;
+
     abstract indexUsers(paginationRequestDTO?: Nullable<PaginationRequestDTO>, filter?: Nullable<string>): Nullable<WithPaginationUsersResponse> | Promise<Nullable<WithPaginationUsersResponse>>;
 
     abstract showUser(user_id: string): Nullable<User> | Promise<Nullable<User>>;
@@ -102,7 +179,9 @@ export class Client {
     cep: string;
     address_number?: Nullable<string>;
     address?: Nullable<string>;
+    orders?: Nullable<Nullable<Order>[]>;
     contacts?: Nullable<Nullable<ClientContact>[]>;
+    last_order_number?: Nullable<string>;
     created_at: DateTime;
     updated_at: DateTime;
 }
@@ -116,6 +195,85 @@ export class ClientContact {
     client_id: string;
     created_at?: Nullable<DateTime>;
     updated_at?: Nullable<DateTime>;
+}
+
+export class WithPaginationOrdersResponse {
+    metadata?: Nullable<PaginationMetadata>;
+    data?: Nullable<Nullable<Order>[]>;
+}
+
+export class Order {
+    id: UUID;
+    order_number: string;
+    statuses?: Nullable<Nullable<OrderStatus>[]>;
+    client_id: string;
+    client?: Nullable<Client>;
+    total_price: number;
+    total_quantity: number;
+    observations?: Nullable<string>;
+    delivery_fee?: Nullable<number>;
+    payment_method?: Nullable<OrderPaymentMethod>;
+    payment_date?: Nullable<DateTime>;
+    items?: Nullable<Nullable<OrderItem>[]>;
+    order_entries?: Nullable<Nullable<OrderEntry>[]>;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class OrderEntry {
+    id: UUID;
+    order_id: string;
+    order?: Nullable<Order>;
+    description: string;
+    diameter?: Nullable<number>;
+    quantity: number;
+    price: number;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class OrderItem {
+    id: UUID;
+    total_price: number;
+    type: OrderItemType;
+    sharpe_type?: Nullable<SharpeType>;
+    quantity: number;
+    product_unity_price?: Nullable<number>;
+    code: string;
+    product?: Nullable<Product>;
+    order?: Nullable<Order>;
+    pallet_quantity?: Nullable<number>;
+    pallet_price?: Nullable<number>;
+    insertion_quantity?: Nullable<number>;
+    insertion_price?: Nullable<number>;
+    order_id: string;
+    product_id: string;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class OrderStatus {
+    id: UUID;
+    date?: Nullable<DateTime>;
+    status?: Nullable<OrderStatusEnum>;
+    order?: Nullable<Nullable<Order>[]>;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+
+export class WithPaginationProductsResponse {
+    metadata?: Nullable<PaginationMetadata>;
+    data?: Nullable<Nullable<Product>[]>;
+}
+
+export class Product {
+    id: UUID;
+    name: string;
+    teeth_number: number;
+    diameter: number;
+    price: number;
+    created_at: DateTime;
+    updated_at: DateTime;
 }
 
 export class WithPaginationUsersResponse {

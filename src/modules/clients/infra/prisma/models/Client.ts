@@ -1,6 +1,7 @@
 import { Client as PrismaClient } from '@prisma/client';
 
 import ClientContact from '@modules/clients/infra/prisma/models/ClientContact';
+import Order from '@modules/orders/infra/prisma/models/Order';
 
 export default class Client implements PrismaClient {
   id: string;
@@ -23,7 +24,9 @@ export default class Client implements PrismaClient {
 
   address: string | null;
 
-  // orders: Order[]
+  last_order_number: string | null;
+
+  orders?: Order[];
 
   contacts?: ClientContact[];
 

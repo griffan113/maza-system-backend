@@ -1,0 +1,20 @@
+scalar DateTime
+scalar UUID
+
+enum OrderStatusEnum {
+  RECEPT
+  IN_PROGRESS
+  WAITING_WITHDRAW
+  WAITING_PAYMENT
+  DONE
+  CANCELED
+}
+
+type OrderStatus {
+  id: UUID!
+  date: DateTime
+  status: OrderStatusEnum
+  order: [Order]
+  created_at: DateTime!
+  updated_at: DateTime!
+}

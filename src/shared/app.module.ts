@@ -9,6 +9,7 @@ import OrdersModule from '@modules/orders/orders.module';
 import Container from '@shared/container/container.module';
 import ClientsModule from '@modules/clients/clients.module';
 import UsersModule from '@modules/users/users.module';
+import ProductsModule from '@modules/products/products.module';
 import { EnsureAuthenticated } from '@modules/users/infra/graphql/guards/EnsureAuthenticated.guard';
 
 @Module({
@@ -30,6 +31,7 @@ import { EnsureAuthenticated } from '@modules/users/infra/graphql/guards/EnsureA
     }),
     Container,
     OrdersModule,
+    ProductsModule,
     ClientsModule,
     UsersModule,
   ],
