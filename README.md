@@ -4,6 +4,14 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
+```
+docker build -t maza-packing-system-backend .
+
+docker run -p 3333:3333 --name maza-backend -d maza-backend
+
+docker exec -it maza-backend /bin/sh
+```
+
 ![ci](https://github.com/griffan113/maza-system-backend/actions/workflows/jest_development.yml/badge.svg)
 [![codecov](https://codecov.io/gh/griffan113/maza-system-backend/branch/master/graph/badge.svg?token=5AYT7LNEIF)](https://codecov.io/gh/griffan113/maza-system-backend)
 
